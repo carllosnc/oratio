@@ -478,6 +478,8 @@ fun PrayerListItemCard(
                 color = MaterialTheme.colorScheme.onSurface
             )
 
+            Spacer(modifier = Modifier.height(4.dp))
+
             // Subtitle / Original Latin Name
             val subtitleText = preferredTranslation?.subtitle ?: latinTranslation?.title
             subtitleText?.let { sub ->

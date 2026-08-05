@@ -40,6 +40,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -64,6 +65,11 @@ fun HomeScreen(
     onPrayerClick: (prayerId: String) -> Unit
 ) {
     val scope = rememberCoroutineScope()
+
+    LaunchedEffect(Unit) {
+        repository.initializeDatabaseIfNeeded()
+    }
+
     val prayers by repository.getAllPrayers().collectAsState(initial = emptyList())
     val categories by repository.getAllCategories().collectAsState(initial = emptyList())
     val languages by repository.getAllLanguages().collectAsState(initial = emptyList())

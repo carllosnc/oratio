@@ -12,9 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -31,7 +29,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.ScrollableTabRow
+import androidx.compose.material3.SecondaryScrollableTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -48,7 +46,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -68,8 +65,8 @@ fun MainPrayerScreen(
     val languages by repository.getAllLanguages().collectAsState(initial = emptyList())
     val prayers by repository.getAllPrayers().collectAsState(initial = emptyList())
 
-    var selectedLanguageCode by remember { mutableStateOf("pt") }
-    var secondaryLanguageCode by remember { mutableStateOf<String?>("la") } // Para modo paralelo (Latim por padrão)
+    var selectedLanguageCode by remember { mutableStateOf("en") }
+    var secondaryLanguageCode by remember { mutableStateOf<String?>("la") } // Parallel mode (Latin by default)
     var searchQuery by remember { mutableStateOf("") }
     var isBilingualMode by remember { mutableStateOf(true) }
 
@@ -102,7 +99,7 @@ fun MainPrayerScreen(
                             style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold)
                         )
                         Text(
-                            text = "Orações e Rezas Multilíngues",
+                            text = "Multilingual Prayers & Devotions",
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -129,15 +126,15 @@ fun MainPrayerScreen(
                     .fillMaxSize()
                     .padding(innerPadding)
             ) {
-                // Barra de busca
+                // Search Bar
                 OutlinedTextField(
                     value = searchQuery,
                     onValueChange = { searchQuery = it },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 8.dp),
-                    placeholder = { Text("Buscar oração ou trecho...") },
-                    leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Buscar") },
+                    placeholder = { Text("Search prayer or passage...") },
+                    leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Search") },
                     singleLine = true,
                     shape = RoundedCornerShape(12.dp),
                     colors = OutlinedTextFieldDefaults.colors(
@@ -146,10 +143,10 @@ fun MainPrayerScreen(
                     )
                 )
 
-                // Seleção de Idioma Principal
+                // Language Selector
                 if (languages.isNotEmpty()) {
                     Text(
-                        text = "Idioma Principal:",
+                        text = "Primary Language:",
                         style = MaterialTheme.typography.labelMedium,
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
                         color = MaterialTheme.colorScheme.primary
@@ -168,7 +165,7 @@ fun MainPrayerScreen(
                     }
                 }
 
-                // Chaveador do Modo Bilíngue
+                // Bilingual Mode Switcher
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -177,8 +174,8 @@ fun MainPrayerScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = if (isBilingualMode) "Modo Bilíngue: Latim + ${getLanguageName(selectedLanguageCode, languages)}"
-                        else "Modo Idioma Único",
+                        text = if (isBilingualMode) "Bilingual Mode: Latin + ${getLanguageName(selectedLanguageCode, languages)}"
+                        else "Single Language Mode",
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.SemiBold
                     )
@@ -193,7 +190,7 @@ fun MainPrayerScreen(
                             .padding(horizontal = 12.dp, vertical = 6.dp)
                     ) {
                         Text(
-                            text = if (isBilingualMode) "Bilíngue (Ativo)" else "Único",
+                            text = if (isBilingualMode) "Bilingual (Active)" else "Single",
                             style = MaterialTheme.typography.labelSmall,
                             color = if (isBilingualMode) MaterialTheme.colorScheme.onPrimaryContainer
                             else MaterialTheme.colorScheme.onSurface
@@ -201,7 +198,7 @@ fun MainPrayerScreen(
                     }
                 }
 
-                // Lista de Orações
+                // Prayers List
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
                     contentPadding = PaddingValues(16.dp),
@@ -250,7 +247,7 @@ fun PrayerCard(
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            // Header do Card
+            // Card Header
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -274,7 +271,7 @@ fun PrayerCard(
                 IconButton(onClick = onFavoriteToggle) {
                     Icon(
                         imageVector = if (prayerItem.prayer.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                        contentDescription = "Favorito",
+                        contentDescription = "Favorite",
                         tint = if (prayerItem.prayer.isFavorite) Color.Red else MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
@@ -282,13 +279,13 @@ fun PrayerCard(
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Conteúdo da Oração (Lado a Lado se Bilíngue, ou Único)
+            // Prayer Content (Side-by-side if Bilingual, Single Column otherwise)
             if (secondaryTranslation != null) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    // Idioma Secundário (ex: Latim)
+                    // Secondary Language Column (e.g., Latin)
                     Column(
                         modifier = Modifier
                             .weight(1f)
@@ -310,7 +307,7 @@ fun PrayerCard(
                         )
                     }
 
-                    // Idioma Principal (ex: Português)
+                    // Primary Language Column (e.g., English / Portuguese)
                     Column(
                         modifier = Modifier
                             .weight(1f)
@@ -333,7 +330,7 @@ fun PrayerCard(
                     }
                 }
             } else {
-                // Modo Único
+                // Single Language Mode
                 Text(
                     text = primaryTranslation?.content ?: "",
                     style = MaterialTheme.typography.bodyMedium,

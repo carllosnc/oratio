@@ -1,68 +1,68 @@
 # Oratio 🕊️
 
-**Oratio** é um aplicativo Android desenvolvido em **Kotlin** e **Jetpack Compose** projetado para reunir e disponibilizar orações e rezas em múltiplos idiomas (como Português, Latim, Inglês e Espanhol) com funcionamento **100% offline**.
+**Oratio** is an Android application built with **Kotlin** and **Jetpack Compose**, designed to organize and present prayers and devotions in multiple languages (such as Latin, Portuguese, English, and Spanish) with **100% offline-first capability**.
 
 ---
 
-## ✨ Funcionalidades Principais
+## ✨ Main Features
 
-- 🌐 **Suporte Multilíngue:** Orações disponíveis em **Latim** (`la`), **Português** (`pt`), **Inglês** (`en`) e **Espanhol** (`es`).
-- 📖 **Modo Bilíngue Paralelo:** Permite visualizar o texto original (ex: Latim) e a tradução (ex: Português) lado a lado em tempo real.
-- 💾 **Funcionamento Offline (Offline-First):** Armazenamento em banco de dados SQLite local gerenciado via **Room Database**, populado automaticamente no primeiro acesso através de um arquivo de semente em JSON.
-- 🔍 **Busca Rápida:** Pesquisa textual instantânea por títulos, categorias ou palavras-chave dentro do conteúdo das orações.
-- ⭐ **Favoritos:** Permite salvar orações favoritas para consulta rápida.
-- 🎨 **Interface Moderna:** Construída com **Jetpack Compose** e diretrizes de design do **Material Design 3**.
+- 🌐 **Multilingual Support:** Prayers available in **Latin** (`la`), **Portuguese** (`pt`), **English** (`en`), and **Spanish** (`es`).
+- 📖 **Parallel Bilingual Mode:** View the original text (e.g., Latin) alongside its translation (e.g., English or Portuguese) side by side in real time.
+- 💾 **Offline-First Storage:** Local SQLite database managed via **Room Database**, automatically pre-populated on first launch using a JSON seed file.
+- 🔍 **Fast Search:** Instant full-text search across titles, categories, or keywords within prayer contents.
+- ⭐ **Favorites:** Bookmark favorite prayers for quick access.
+- 🎨 **Modern Design:** Built with **Jetpack Compose** following **Material Design 3** guidelines.
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+## 🛠️ Tech Stack
 
-| Tecnologia | Descrição |
+| Technology | Description |
 | :--- | :--- |
-| **Kotlin** | Linguagem principal do projeto (v`2.2.10`) |
-| **Jetpack Compose** | Toolkit moderno para construção de interfaces declarativas |
-| **Material 3** | Componentes e temas visuais atualizados |
-| **Room Database** | Biblioteca oficial do Android para persistência SQLite (v`2.7.2`) |
-| **KSP** | Kotlin Symbol Processing para geração de código do Room (v`2.2.10-2.0.2`) |
-| **KotlinX Serialization** | Parsing e serialização de dados JSON (v`1.8.0`) |
+| **Kotlin** | Primary programming language (v`2.2.10`) |
+| **Jetpack Compose** | Modern declarative UI toolkit |
+| **Material 3** | Latest design system components and themes |
+| **Room Database** | Official Android library for SQLite persistence (v`2.7.2`) |
+| **KSP** | Kotlin Symbol Processing for Room code generation (v`2.2.10-2.0.2`) |
+| **KotlinX Serialization** | JSON parsing and data serialization (v`1.8.0`) |
 
 ---
 
-## 📂 Estrutura do Projeto
+## 📂 Project Structure
 
 ```text
 app/src/main/java/cnc/oratio/
 ├── data/
 │   ├── local/
 │   │   ├── dao/                 # Data Access Objects (PrayerDao)
-│   │   ├── database/            # OratioDatabase e DatabaseInitializer
-│   │   ├── entity/              # Entidades Room (Prayer, Translation, Category, Language)
-│   │   └── model/               # Modelos relacionais e de serialização JSON
-│   └── repository/              # PrayerRepository abstraindo a camada de dados
+│   │   ├── database/            # OratioDatabase and DatabaseInitializer
+│   │   ├── entity/              # Room Entities (Prayer, Translation, Category, Language)
+│   │   └── model/               # Relational models and JSON serialization DTOs
+│   └── repository/              # PrayerRepository abstraction layer
 └── ui/
-    ├── theme/                   # Tema visual, cores e tipografia Material 3
-    ├── PrayerScreen.kt          # Interface principal com navegação de idiomas e modo bilíngue
-    └── MainActivity.kt          # Activity principal e inicialização do repositório
+    ├── theme/                   # Material Design 3 theme, colors, and typography
+    ├── PrayerScreen.kt          # Main screen with language navigation and bilingual view
+    └── MainActivity.kt          # Main entry Activity and repository initialization
 ```
 
 ---
 
-## 🚀 Como Executar o Projeto
+## 🚀 How to Run the Project
 
-### Pré-requisitos
-- **Android Studio** (versão Ladybug ou superior recomendada)
-- **JDK 17** ou superior
+### Prerequisites
+- **Android Studio** (Ladybug release or newer recommended)
+- **JDK 17** or higher
 - **Android SDK 37**
 
-### Passos para Executar
+### Steps to Run
 
-1. **Clonar o repositório:**
+1. **Clone the repository:**
    ```bash
    git clone https://github.com/carllosnc/oratio.git
    cd oratio
    ```
 
-2. **Compilar a aplicação via linha de comando:**
+2. **Build the application via CLI:**
    - **Linux/macOS:**
      ```bash
      ./gradlew assembleDebug
@@ -72,34 +72,34 @@ app/src/main/java/cnc/oratio/
      .\gradlew.bat assembleDebug
      ```
 
-3. **Executar no Emulador ou Dispositivo Físico:**
-   Abra a pasta do projeto no Android Studio e clique em **Run (Shift + F10)**.
+3. **Run on Emulator or Physical Device:**
+   Open the project folder in Android Studio and click **Run (Shift + F10)**.
 
 ---
 
-## 📝 Adicionando Novas Orações
+## 📝 Adding New Prayers
 
-O projeto utiliza o arquivo semente localizado em `app/src/main/assets/prayers_seed.json`. Para adicionar novas orações ou traduções, basta incluir um novo objeto no JSON seguindo a estrutura:
+The application uses a seed file located at `app/src/main/assets/prayers_seed.json`. To add new prayers or translations, add a new JSON object following this structure:
 
 ```json
 {
-  "id": "nome_da_oracao",
+  "id": "prayer_unique_id",
   "categoryId": "basic",
-  "defaultTitle": "Título Padrão",
+  "defaultTitle": "Default Title",
   "translations": [
     {
       "languageCode": "la",
-      "title": "Título em Latim",
-      "subtitle": "Subtítulo",
-      "content": "Texto da oração em Latim...",
-      "notes": "Notas ou contexto histórico"
+      "title": "Title in Latin",
+      "subtitle": "Subtitle",
+      "content": "Prayer text in Latin...",
+      "notes": "Historical context or liturgical notes"
     },
     {
-      "languageCode": "pt",
-      "title": "Título em Português",
-      "subtitle": "Subtítulo",
-      "content": "Texto da oração em Português...",
-      "notes": "Notas em Português"
+      "languageCode": "en",
+      "title": "Title in English",
+      "subtitle": "Subtitle",
+      "content": "Prayer text in English...",
+      "notes": "Notes in English"
     }
   ]
 }
@@ -107,6 +107,6 @@ O projeto utiliza o arquivo semente localizado em `app/src/main/assets/prayers_s
 
 ---
 
-## 📄 Licença
+## 📄 License
 
-Este projeto está sob a licença **MIT**. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.

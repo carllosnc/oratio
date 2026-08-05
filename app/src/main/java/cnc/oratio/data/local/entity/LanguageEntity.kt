@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 @Entity(tableName = "languages")
 data class LanguageEntity(
-    @PrimaryKey val code: String, // ex: "la", "pt", "en", "es"
-    val name: String,             // ex: "Latina", "Português"
-    val flagIcon: String          // ex: "🌐", "🇧🇷"
+    @PrimaryKey val code: String, // e.g., "la", "pt", "en", "es"
+    val name: String,             // e.g., "Latina", "Portuguese"
+    val flagIcon: String          // e.g., "🌐", "🇧🇷"
 )

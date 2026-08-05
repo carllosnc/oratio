@@ -12,11 +12,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
@@ -30,6 +28,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -54,9 +53,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cnc.oratio.data.local.model.PrayerWithTranslations
 import cnc.oratio.data.repository.PrayerRepository
-import kotlinx.coroutines.launch
-
 import cnc.oratio.ui.theme.GermaniaOneFontFamily
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -261,88 +259,93 @@ fun PrayerListItemCard(
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
     ) {
-        Row(
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+                .padding(16.dp)
         ) {
-            Column(modifier = Modifier.weight(1f)) {
-                // Title
+            // Title
+            Text(
+                text = preferredTranslation?.title ?: prayerItem.prayer.defaultTitle,
+                style = MaterialTheme.typography.titleLarge,
+                fontFamily = GermaniaOneFontFamily,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+
+            // Subtitle / Original Latin Name
+            val subtitleText = preferredTranslation?.subtitle ?: latinTranslation?.title
+            subtitleText?.let { sub ->
                 Text(
-                    text = preferredTranslation?.title ?: prayerItem.prayer.defaultTitle,
-                    style = MaterialTheme.typography.titleLarge,
-                    fontFamily = GermaniaOneFontFamily,
-                    color = MaterialTheme.colorScheme.onSurface
+                    text = sub,
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.primary
                 )
+            }
 
-                // Subtitle / Original Latin Name
-                val subtitleText = preferredTranslation?.subtitle ?: latinTranslation?.title
-                subtitleText?.let { sub ->
-                    Text(
-                        text = sub,
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                }
+            Spacer(modifier = Modifier.height(6.dp))
 
-                Spacer(modifier = Modifier.height(6.dp))
+            // Preview snippet
+            preferredTranslation?.content?.let { content ->
+                val cleanSnippet = content.replace("\n", " ").replace(Regex("\\s+"), " ")
+                Text(
+                    text = cleanSnippet.take(90) + if (cleanSnippet.length > 90) "..." else "",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    lineHeight = 16.sp
+                )
+            }
 
-                // Preview snippet
-                preferredTranslation?.content?.let { content ->
-                    val cleanSnippet = content.replace("\n", " ").replace(Regex("\\s+"), " ")
-                    Text(
-                        text = cleanSnippet.take(90) + if (cleanSnippet.length > 90) "..." else "",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        lineHeight = 16.sp
-                    )
-                }
+            Spacer(modifier = Modifier.height(10.dp))
 
-                Spacer(modifier = Modifier.height(8.dp))
-
-                // Available Language Badges
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(6.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    prayerItem.translations.forEach { tr ->
-                        val flag = when (tr.languageCode) {
-                            "la" -> "🌐 Latin"
-                            "pt" -> "🇧🇷 PT"
-                            "en" -> "🇺🇸 EN"
-                            "es" -> "🇪🇸 ES"
-                            else -> tr.languageCode.uppercase()
-                        }
-                        val isSelected = tr.languageCode == preferredLanguageCode
-                        Box(
-                            modifier = Modifier
-                                .clip(RoundedCornerShape(6.dp))
-                                .background(
-                                    if (isSelected) MaterialTheme.colorScheme.primaryContainer
-                                    else MaterialTheme.colorScheme.surfaceContainerHigh
-                                )
-                                .padding(horizontal = 6.dp, vertical = 2.dp)
-                        ) {
-                            Text(
-                                text = flag,
-                                style = MaterialTheme.typography.labelSmall,
-                                fontSize = 10.sp,
-                                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-                                color = if (isSelected) MaterialTheme.colorScheme.onPrimaryContainer
-                                else MaterialTheme.colorScheme.onSurface
+            // Available Language Badges
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                prayerItem.translations.forEach { tr ->
+                    val flag = when (tr.languageCode) {
+                        "la" -> "🌐 Latin"
+                        "pt" -> "🇧🇷 PT"
+                        "en" -> "🇺🇸 EN"
+                        "es" -> "🇪🇸 ES"
+                        else -> tr.languageCode.uppercase()
+                    }
+                    val isSelected = tr.languageCode == preferredLanguageCode
+                    Box(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(6.dp))
+                            .background(
+                                if (isSelected) MaterialTheme.colorScheme.primaryContainer
+                                else MaterialTheme.colorScheme.surfaceContainerHigh
                             )
-                        }
+                            .padding(horizontal = 6.dp, vertical = 2.dp)
+                    ) {
+                        Text(
+                            text = flag,
+                            style = MaterialTheme.typography.labelSmall,
+                            fontSize = 10.sp,
+                            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
+                            color = if (isSelected) MaterialTheme.colorScheme.onPrimaryContainer
+                            else MaterialTheme.colorScheme.onSurface
+                        )
                     }
                 }
             }
 
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.height(12.dp))
 
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.SpaceBetween
+            HorizontalDivider(
+                color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f),
+                thickness = 1.dp
+            )
+
+            Spacer(modifier = Modifier.height(4.dp))
+
+            // Bottom action bar with Favorite at left extremity and raw Arrow at right extremity
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(onClick = onFavoriteToggle) {
                     Icon(
@@ -352,16 +355,11 @@ fun PrayerListItemCard(
                     )
                 }
 
-                Box(
-                    modifier = Modifier
-                        .clip(CircleShape)
-                        .background(MaterialTheme.colorScheme.primaryContainer)
-                        .padding(8.dp)
-                ) {
+                IconButton(onClick = onPrayerClick) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowForward,
                         contentDescription = "View Prayer",
-                        tint = MaterialTheme.colorScheme.onPrimaryContainer
+                        tint = MaterialTheme.colorScheme.primary
                     )
                 }
             }

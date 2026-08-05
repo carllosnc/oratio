@@ -133,7 +133,7 @@
           "languageCode": "pt",
           "title": "Salmo 23 (22)",
           "subtitle": "O Senhor é o Meu Pastor",
-          "content": "O Senhor é o meu pastor; nada me faltará.\nEm verdes pastos me faz descansar, conduz-me suavemente a águas tranquilas.\nRefrigera a minha alma; guia-me pelas veredas da justiça por amor do seu nome.\nAinda que eu andasse pelo vale da sombra da morte, não temeria mal algum, porque tu estás comigo; a tua vara e o teu cajado me consolam.\nPreparas uma mesa perante mim na presença dos meus inimigos, unges a minha cabeça com óleo, o meu cálice transborda.\nCertamente que a bondade e a misericórdia me seguirão todos os dias da minha vida; e habitarei na casa do Senhor por longos dias.\nAmém.",
+          "content": "O Senhor é o meu pastor; nada me faltará.\nEm verdes pastos me faz descansar, conduz-me suavemente a águas tranquilas.\nRefrigera a minha alma; guia-me pelas veredas da justiça por amor do seu nome.\nAinda que eu structures pelo vale da sombra da morte, não temeria mal algum, porque tu estás comigo; a tua vara e o teu cajado me consolam.\nPreparas uma mesa perante mim na presença dos meus inimigos, unges a minha cabeça com óleo, o meu cálice transborda.\nCertamente que a bondade e a misericórdia me seguirão todos os dias da minha vida; e habitarei na casa do Senhor por longos dias.\nAmém.",
           "notes": "Texto Bíblico Tradicional."
         },
         {
@@ -149,6 +149,181 @@
           "subtitle": "El Señor es mi Pastor",
           "content": "El Señor es mi pastor, nada me falta; en verdes prados me hace recostar, me conduce hacia fuentes tranquilas y repara mis fuerzas.\nMe guía por el sendero justo, por el honor de su nombre.\nAunque camine por cañadas oscuras, nada temo, porque tú vas conmigo: tu vara y tu cayado me sosiegan.\nPreparas una mesa ante mí, enfrente de mis enemigos; me unges la cabeza con perfume, y mi copa rebosa.\nTu bondad y tu misericordia me acompañan todos los días de mi vida, y habitaré en la casa del Señor por años sin término.\nAmén.",
           "notes": "Texto Bíblico Tradicional."
+        }
+      ]
+    },
+    {
+      "id": "credo",
+      "categoryId": "basic",
+      "defaultTitle": "Apostles' Creed / Symbolum Apostolorum",
+      "translations": [
+        {
+          "languageCode": "la",
+          "title": "Symbolum Apostolorum",
+          "subtitle": "Credo in Deum",
+          "content": "Credo in Deum Patrem omnipotentem, Creatorem caeli et terrae.\nEt in Iesum Christum, Filium eius unicum, Dominum nostrum: qui conceptus est de Spiritu Sancto, natus ex Maria Virgine, passus sub Pontio Pilato, crucifixus, mortuus, et sepultus: descendit ad inferos; tertia die resurrexit a mortuis; ascendit ad caelos; sedet ad dexteram Dei Patris omnipotentis: inde venturus est iudicare vivos et mortuos.\nCredo in Spiritum Sanctum, sanctam Ecclesiam catholicam, sanctorum communionem, remissionem peccatorum, carnis resurrectionem, vitam aeternam.\nAmen.",
+          "notes": "Traditional Latin Creed."
+        },
+        {
+          "languageCode": "pt",
+          "title": "Creio em Deus Pai",
+          "subtitle": "Símbolo dos Apóstolos",
+          "content": "Creio em Deus Pai todo-poderoso, Criador do céu e da terra.\nE em Jesus Cristo, seu único Filho, nosso Senhor, que foi concebido pelo poder do Espírito Santo, nasceu da Virgem Maria, padeceu sob Pôncio Pilatos, foi crucificado, morto e sepultado; desceu à mansão dos mortos; ressuscitou ao terceiro dia, subiu aos céus, está sentado à direita de Deus Pai todo-poderoso, de onde há de vir a julgar os vivos e os mortos.\nCreio no Espírito Santo, na santa Igreja Católica, na comunhão dos santos, na remissão dos pecados, na ressurreição da carne, na vida eterna.\nAmém.",
+          "notes": "Texto Tradicional dos Apóstolos."
+        },
+        {
+          "languageCode": "en",
+          "title": "Apostles' Creed",
+          "subtitle": "I Believe in God",
+          "content": "I believe in God, the Father Almighty, Creator of heaven and earth.\nAnd in Jesus Christ, his only Son, our Lord, who was conceived by the Holy Spirit, born of the Virgin Mary, suffered under Pontius Pilate, was crucified, died and was buried; he descended into hell; on the third day he rose again from the dead; he ascended into heaven, and is seated at the right hand of God the Father Almighty; from there he will come to judge the living and the dead.\nI believe in the Holy Spirit, the holy catholic Church, the communion of saints, the forgiveness of sins, the resurrection of the body, and life everlasting.\nAmen.",
+          "notes": "Traditional Apostles' Creed."
+        },
+        {
+          "languageCode": "es",
+          "title": "Creo en Dios Padre",
+          "subtitle": "Símbolo de los Apóstoles",
+          "content": "Creo en Dios, Padre Todopoderoso, Creador del cielo y de la tierra.\nCreo en Jesucristo, su único Hijo, nuestro Señor, que fue concebido por obra y gracia del Espíritu Santo, nació de Santa María Virgen, padeció bajo el poder de Poncio Pilato, fue crucificado, muerto y sepultado, descendió a los infiernos, al tercer día resucitó de entre los muertos, subió a los cielos y está sentado a la derecha de Dios, Padre todopoderoso. Desde allí ha de venir a juzgar a vivos y muertos.\nCreo en el Espíritu Santo, la santa Iglesia católica, la comunión de los santos, el perdón de los pecados, la resurrección de la carne y la vida eterna.\nAmén.",
+          "notes": "Credo de los Apóstoles."
+        }
+      ]
+    },
+    {
+      "id": "salve_regina",
+      "categoryId": "marian",
+      "defaultTitle": "Hail Holy Queen / Salve Regina",
+      "translations": [
+        {
+          "languageCode": "la",
+          "title": "Salve Regina",
+          "subtitle": "Mater Misericordiae",
+          "content": "Salve, Regina, Mater misericordiae;\nvita, dulcedo, et spes nostra, salve.\nAd te clamamus exsules filii Hevae;\nad te suspiramus gementes et flentes in hac lacrimarum valle.\nEia ergo, advocata nostra, illos tuos misericordes oculos ad nos converte;\net Iesum, benedictum fructum ventris tui, nobis post hoc exsilium ostende.\nO clemens, o pia, o dulcis Virgo Maria.\nAmen.",
+          "notes": "Marian Antiphon in Latin."
+        },
+        {
+          "languageCode": "pt",
+          "title": "Salve Rainha",
+          "subtitle": "Mãe de Misericórdia",
+          "content": "Salve, Rainha, Mãe de misericórdia,\nvida, doçura e esperança nossa, salve!\nA vós bradamos os degredados filhos de Eva.\nA vós suspiramos, gemendo e chorando neste vale de lágrimas.\nEia, pois, advogada nossa, esses vossos olhos misericordiosos a nós voltai,\ne depois deste desterro, mostrai-nos Jesus, bendito fruto do vosso ventre.\nÓ clemente, ó piedosa, ó doce sempre Virgem Maria.\nAmém.",
+          "notes": "Oração Mariana Tradicional."
+        },
+        {
+          "languageCode": "en",
+          "title": "Hail Holy Queen",
+          "subtitle": "Mother of Mercy",
+          "content": "Hail, holy Queen, Mother of mercy,\nour life, our sweetness and our hope.\nTo thee do we cry, poor banished children of Eve;\nto thee do we send up our sighs, mourning and weeping in this valley of tears.\nTurn then, most gracious advocate, thine eyes of mercy toward us,\nand after this our exile, show unto us the blessed fruit of thy womb, Jesus.\nO clement, O loving, O sweet Virgin Mary.\nAmen.",
+          "notes": "Traditional Marian Prayer."
+        },
+        {
+          "languageCode": "es",
+          "title": "Dios te Salve, Reina y Madre",
+          "subtitle": "Madre de Misericordia",
+          "content": "Dios te salve, Reina y Madre de misericordia,\nvida, dulzura y esperanza nuestra; Dios te salve.\nA ti llamamos los desterrados hijos de Eva;\na ti suspiramos, gimiendo y llorando en este valle de lágrimas.\nEa, pues, Señora, abogada nuestra, vuelve a nosotros esos tus ojos misericordiosos;\ny después de este destierro, muéstranos a Jesús, fruto bendito de tu vientre.\n¡Oh clemente, oh piadosa, oh dulce Virgen María!\nAmén.",
+          "notes": "Oración Mariana Tradicional."
+        }
+      ]
+    },
+    {
+      "id": "angele_dei",
+      "categoryId": "basic",
+      "defaultTitle": "Guardian Angel Prayer / Angele Dei",
+      "translations": [
+        {
+          "languageCode": "la",
+          "title": "Angele Dei",
+          "subtitle": "Oratio ad Angelum Custodem",
+          "content": "Angele Dei,\nqui custos es mei,\nme, tibi commissum pietate superna,\nillumina, custodi,\nrege et guberna.\nAmen.",
+          "notes": "Traditional Latin Prayer."
+        },
+        {
+          "languageCode": "pt",
+          "title": "Santo Anjo do Senhor",
+          "subtitle": "Oração ao Anjo da Guarda",
+          "content": "Santo Anjo do Senhor,\nmeu zeloso guardador,\nse a ti me confiou a piedade divina,\nsempre me rege, me guarda,\nme governa e ilumina.\nAmém.",
+          "notes": "Oração Tradicional ao Anjo da Guarda."
+        },
+        {
+          "languageCode": "en",
+          "title": "Angel of God",
+          "subtitle": "Guardian Angel Prayer",
+          "content": "Angel of God,\nmy guardian dear,\nto whom God's love commits me here,\never this day be at my side,\nto light and guard, to rule and guide.\nAmen.",
+          "notes": "Traditional Guardian Angel Prayer."
+        },
+        {
+          "languageCode": "es",
+          "title": "Ángel de mi Guarda",
+          "subtitle": "Oración al Ángel Custodio",
+          "content": "Ángel de mi guarda,\ndulce compañía,\nno me desampares ni de noche ni de día.\nNo me dejes solo que me perdería,\nhasta que me pongas en paz y alegría con todos los santos, Jesús, José y María.\nAmén.",
+          "notes": "Oración Tradicional."
+        }
+      ]
+    },
+    {
+      "id": "sancte_michael",
+      "categoryId": "basic",
+      "defaultTitle": "St. Michael Prayer / Sancte Michael Archangele",
+      "translations": [
+        {
+          "languageCode": "la",
+          "title": "Sancte Michael Archangele",
+          "subtitle": "Oratio ad S. Michael",
+          "content": "Sancte Michael Archangele, defende nos in proelio;\ncontra nequitiam et insidias diaboli esto praesidium.\nImperet illi Deus, supplices deprecamur:\ntuque, Princeps militiae caelestis, Satanam aliosque spiritus malignos,\nqui ad perditionem animarum pervagantur in mundo,\ndivina virtute in infernum detrude.\nAmen.",
+          "notes": "Prayer of Pope Leo XIII."
+        },
+        {
+          "languageCode": "pt",
+          "title": "São Miguel Arcanjo",
+          "subtitle": "Oração de Proteção",
+          "content": "São Miguel Arcanjo, defendei-nos no combate,\nsede o nosso refúgio contra as maldades e ciladas do demônio.\nOrdene-lhe Deus, instantemente o pedimos,\ne vós, príncipe da milícia celeste, pela virtude divina,\nprecipitai no inferno a Satanás e aos outros espíritos malignos,\nque vagam pelo mundo para perder as almas.\nAmém.",
+          "notes": "Oração do Papa Leão XIII."
+        },
+        {
+          "languageCode": "en",
+          "title": "St. Michael the Archangel",
+          "subtitle": "Prayer for Protection",
+          "content": "St. Michael the Archangel, defend us in battle.\nBe our defense against the wickedness and snares of the Devil.\nMay God rebuke him, we humbly pray,\nand do thou, O Prince of the heavenly hosts, by the power of God,\nthrust into hell Satan and all the evil spirits,\nwho prowl about the world seeking the ruin of souls.\nAmen.",
+          "notes": "Prayer of Pope Leo XIII."
+        },
+        {
+          "languageCode": "es",
+          "title": "San Miguel Arcángel",
+          "subtitle": "Oración de Protección",
+          "content": "San Miguel Arcángel, defiéndenos en la pelea.\Sé nuestro amparo contra la maldad y las asechanzas del demonio.\n¡Que Dios manifieste sobre él su poder!, es nuestra humilde súplica;\ny tú, oh Príncipe de la Milicia Celestial, con la fuerza que Dios te ha conferido,\nadentre en el infierno a Satanás y a los demás espíritus malignos,\nque vagan por el mundo para la perdición de las almas.\nAmén.",
+          "notes": "Oración del Papa León XIII."
+        }
+      ]
+    },
+    {
+      "id": "anima_christi",
+      "categoryId": "basic",
+      "defaultTitle": "Soul of Christ / Anima Christi",
+      "translations": [
+        {
+          "languageCode": "la",
+          "title": "Anima Christi",
+          "subtitle": "Sanctifica me",
+          "content": "Anima Christi, sanctifica me.\nCorpus Christi, salva me.\nSanguis Christi, inebria me.\nAqua lateris Christi, lava me.\nPassio Christi, conforta me.\nO bone Iesu, exaudi me.\nIntra tua vulnera absconde me.\nNe permittas me separari a te.\nAb hoste maligno defende me.\nIn hora mortis meae voca me.\nEt iube me venire ad te,\nut cum Sanctis tuis laudem te in saecula saeculorum.\nAmen.",
+          "notes": "14th Century Prayer."
+        },
+        {
+          "languageCode": "pt",
+          "title": "Alma de Cristo",
+          "subtitle": "Oração Pós-Comunhão",
+          "content": "Alma de Cristo, santificai-me.\nCorpo de Cristo, salvai-me.\nSangue de Cristo, inebriai-me.\nÁgua do lado de Cristo, lavai-me.\nPaixão de Cristo, confortai-me.\nÓ bom Jesus, ouvi-me.\nDentro das vossas chagas, escondei-me.\nNão me me permitais separar de Vós.\nDo inimigo maligno, defendei-me.\nNa hora da minha morte, chamai-me.\nE mandai-me ir para Vós,\npara que Vos louve com os vossos Santos pelos séculos dos séculos.\nAmém.",
+          "notes": "Oração do Século XIV."
+        },
+        {
+          "languageCode": "en",
+          "title": "Soul of Christ",
+          "subtitle": "Post-Communion Prayer",
+          "content": "Soul of Christ, sanctify me.\nBody of Christ, save me.\nBlood of Christ, inebriate me.\nWater from the side of Christ, wash me.\nPassion of Christ, strengthen me.\nO good Jesus, hear me.\nWithin thy wounds hide me.\nSuffer me not to be separated from thee.\nFrom the malicious enemy defend me.\nIn the hour of my death call me.\nAnd bid me come unto thee,\nthat with thy Saints I may praise thee for ever and ever.\nAmen.",
+          "notes": "14th Century Traditional Prayer."
+        },
+        {
+          "languageCode": "es",
+          "title": "Alma de Cristo",
+          "subtitle": "Oración Post-Comunión",
+          "content": "Alma de Cristo, santifícame.\nCuerpo de Cristo, sálvame.\nSangre de Cristo, embriágame.\nAgua del costado de Cristo, lávame.\nPasión de Cristo, confórtame.\n¡Oh, buen Jesús!, óyeme.\nDentro de tus llagas, escóndeme.\nNo permitas que me aparte de Ti.\nDel enemigo malo, defiéndeme.\nEn la hora de mi muerte, llámame.\nY mándame ir a Ti,\npara que con tus santos te alabe por los siglos de los siglos.\nAmén.",
+          "notes": "Oración Tradicional del Siglo XIV."
         }
       ]
     }

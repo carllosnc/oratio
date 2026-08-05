@@ -8,6 +8,7 @@ import androidx.room.Transaction
 import cnc.oratio.data.local.entity.CategoryEntity
 import cnc.oratio.data.local.entity.LanguageEntity
 import cnc.oratio.data.local.entity.PrayerEntity
+import cnc.oratio.data.local.entity.PrayerLogEntity
 import cnc.oratio.data.local.entity.PrayerTranslationEntity
 import cnc.oratio.data.local.model.PrayerWithTranslations
 import kotlinx.coroutines.flow.Flow
@@ -66,4 +67,17 @@ interface PrayerDao {
            OR t.content LIKE '%' || :query || '%'
     """)
     fun searchPrayers(query: String): Flow<List<PrayerWithTranslations>>
+
+    // Prayer Log Methods
+    @Query("SELECT dateString FROM prayer_logs WHERE prayerId = :prayerId")
+    fun getPrayerLogsForPrayer(prayerId: String): Flow<List<String>>
+
+    @Query("SELECT * FROM prayer_logs")
+    fun getAllPrayerLogs(): Flow<List<PrayerLogEntity>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertPrayerLog(log: PrayerLogEntity)
+
+    @Query("DELETE FROM prayer_logs WHERE prayerId = :prayerId AND dateString = :dateString")
+    suspend fun deletePrayerLog(prayerId: String, dateString: String)
 }

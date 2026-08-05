@@ -6,6 +6,7 @@ import cnc.oratio.data.local.database.DatabaseInitializer
 import cnc.oratio.data.local.database.OratioDatabase
 import cnc.oratio.data.local.entity.CategoryEntity
 import cnc.oratio.data.local.entity.LanguageEntity
+import cnc.oratio.data.local.entity.PrayerLogEntity
 import cnc.oratio.data.local.model.PrayerWithTranslations
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -51,4 +52,14 @@ class PrayerRepository(
     }
 
     fun searchPrayers(query: String): Flow<List<PrayerWithTranslations>> = prayerDao.searchPrayers(query)
+
+    fun getPrayerLogs(prayerId: String): Flow<List<String>> = prayerDao.getPrayerLogsForPrayer(prayerId)
+
+    suspend fun togglePrayerDate(prayerId: String, dateString: String, isCurrentlyMarked: Boolean) {
+        if (isCurrentlyMarked) {
+            prayerDao.deletePrayerLog(prayerId, dateString)
+        } else {
+            prayerDao.insertPrayerLog(PrayerLogEntity(prayerId, dateString))
+        }
+    }
 }

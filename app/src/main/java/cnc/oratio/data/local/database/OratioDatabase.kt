@@ -8,6 +8,7 @@ import cnc.oratio.data.local.dao.PrayerDao
 import cnc.oratio.data.local.entity.CategoryEntity
 import cnc.oratio.data.local.entity.LanguageEntity
 import cnc.oratio.data.local.entity.PrayerEntity
+import cnc.oratio.data.local.entity.PrayerLogEntity
 import cnc.oratio.data.local.entity.PrayerTranslationEntity
 
 @Database(
@@ -15,9 +16,10 @@ import cnc.oratio.data.local.entity.PrayerTranslationEntity
         LanguageEntity::class,
         CategoryEntity::class,
         PrayerEntity::class,
-        PrayerTranslationEntity::class
+        PrayerTranslationEntity::class,
+        PrayerLogEntity::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class OratioDatabase : RoomDatabase() {
@@ -34,7 +36,9 @@ abstract class OratioDatabase : RoomDatabase() {
                     context.applicationContext,
                     OratioDatabase::class.java,
                     "oratio_database.db"
-                ).build()
+                )
+                    .fallbackToDestructiveMigration()
+                    .build()
                 INSTANCE = instance
                 instance
             }

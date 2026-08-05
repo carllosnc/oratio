@@ -29,6 +29,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.automirrored.filled.VolumeUp
+import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Language
@@ -68,7 +69,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cnc.oratio.data.local.model.PrayerWithTranslations
 import cnc.oratio.data.repository.PrayerRepository
+import cnc.oratio.ui.components.PrayerCalendarFloatCard
 import cnc.oratio.ui.theme.GermaniaOneFontFamily
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import java.util.Locale
 
@@ -94,10 +97,20 @@ fun HomeScreen(
     var showOnlyFavorites by remember { mutableStateOf(false) }
     var showLanguageMenu by remember { mutableStateOf(false) }
 
-    // Audio Narration State for Home Screen Cards
+    // Audio State
     var playingPrayerId by remember { mutableStateOf<String?>(null) }
     var mediaPlayer by remember { mutableStateOf<MediaPlayer?>(null) }
     var tts by remember { mutableStateOf<TextToSpeech?>(null) }
+
+    // Calendar Tracking State
+    var activeCalendarPrayerId by remember { mutableStateOf<String?>(null) }
+    val activeCalendarPrayerLogs by remember(activeCalendarPrayerId) {
+        if (activeCalendarPrayerId != null) {
+            repository.getPrayerLogs(activeCalendarPrayerId!!)
+        } else {
+            flowOf(emptyList())
+        }
+    }.collectAsState(initial = emptyList())
 
     DisposableEffect(context) {
         var textToSpeech: TextToSpeech? = null
@@ -123,6 +136,7 @@ fun HomeScreen(
             tts?.stop()
             playingPrayerId = null
         } else {
+            activeCalendarPrayerId = null // Close calendar if playing audio
             mediaPlayer?.stop()
             mediaPlayer?.release()
             mediaPlayer = null
@@ -204,6 +218,10 @@ fun HomeScreen(
     val activePlayingTranslation = activePlayingPrayer?.translations?.find { it.languageCode == userLanguageCode }
         ?: activePlayingPrayer?.translations?.firstOrNull()
 
+    val activeCalendarPrayer = prayers.find { it.prayer.id == activeCalendarPrayerId }
+    val activeCalendarPrayerTranslation = activeCalendarPrayer?.translations?.find { it.languageCode == userLanguageCode }
+        ?: activeCalendarPrayer?.translations?.firstOrNull()
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -258,66 +276,88 @@ fun HomeScreen(
             )
         },
         bottomBar = {
-            AnimatedVisibility(
-                visible = playingPrayerId != null,
-                enter = slideInVertically(initialOffsetY = { it }) + fadeIn(),
-                exit = slideOutVertically(targetOffsetY = { it }) + fadeOut()
-            ) {
-                Surface(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    shape = RoundedCornerShape(16.dp),
-                    color = MaterialTheme.colorScheme.surfaceContainerHigh,
-                    tonalElevation = 6.dp,
-                    shadowElevation = 6.dp
+            // Floating Audio Mini Player or Floating Prayer Calendar Card
+            Box {
+                AnimatedVisibility(
+                    visible = activeCalendarPrayerId != null,
+                    enter = slideInVertically(initialOffsetY = { it }) + fadeIn(),
+                    exit = slideOutVertically(targetOffsetY = { it }) + fadeOut()
                 ) {
-                    Row(
+                    PrayerCalendarFloatCard(
+                        prayerTitle = activeCalendarPrayerTranslation?.title ?: activeCalendarPrayer?.prayer?.defaultTitle ?: "Prayer Calendar",
+                        markedDates = activeCalendarPrayerLogs,
+                        onToggleDate = { dateStr, isMarked ->
+                            scope.launch {
+                                activeCalendarPrayerId?.let { pId ->
+                                    repository.togglePrayerDate(pId, dateStr, isMarked)
+                                }
+                            }
+                        },
+                        onClose = { activeCalendarPrayerId = null }
+                    )
+                }
+
+                AnimatedVisibility(
+                    visible = playingPrayerId != null && activeCalendarPrayerId == null,
+                    enter = slideInVertically(initialOffsetY = { it }) + fadeIn(),
+                    exit = slideOutVertically(targetOffsetY = { it }) + fadeOut()
+                ) {
+                    Surface(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 12.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
+                            .padding(16.dp),
+                        shape = RoundedCornerShape(16.dp),
+                        color = MaterialTheme.colorScheme.surfaceContainerHigh,
+                        tonalElevation = 6.dp,
+                        shadowElevation = 6.dp
                     ) {
                         Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp, vertical = 12.dp),
                             verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.weight(1f)
+                            horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Filled.VolumeUp,
-                                contentDescription = "Playing Audio",
-                                tint = MaterialTheme.colorScheme.primary
-                            )
-
-                            Spacer(modifier = Modifier.width(12.dp))
-
-                            Column {
-                                Text(
-                                    text = activePlayingTranslation?.title ?: activePlayingPrayer?.prayer?.defaultTitle ?: "Playing Prayer",
-                                    style = MaterialTheme.typography.titleSmall,
-                                    color = MaterialTheme.colorScheme.onSurface,
-                                    maxLines = 1
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier.weight(1f)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Filled.VolumeUp,
+                                    contentDescription = "Playing Audio",
+                                    tint = MaterialTheme.colorScheme.primary
                                 )
-                                Text(
-                                    text = "Audio Narration • Playing",
-                                    style = MaterialTheme.typography.labelSmall,
-                                    color = MaterialTheme.colorScheme.primary
+
+                                Spacer(modifier = Modifier.width(12.dp))
+
+                                Column {
+                                    Text(
+                                        text = activePlayingTranslation?.title ?: activePlayingPrayer?.prayer?.defaultTitle ?: "Playing Prayer",
+                                        style = MaterialTheme.typography.titleSmall,
+                                        color = MaterialTheme.colorScheme.onSurface,
+                                        maxLines = 1
+                                    )
+                                    Text(
+                                        text = "Audio Narration • Playing",
+                                        style = MaterialTheme.typography.labelSmall,
+                                        color = MaterialTheme.colorScheme.primary
+                                    )
+                                }
+                            }
+
+                            IconButton(onClick = {
+                                mediaPlayer?.stop()
+                                mediaPlayer?.release()
+                                mediaPlayer = null
+                                tts?.stop()
+                                playingPrayerId = null
+                            }) {
+                                Icon(
+                                    imageVector = Icons.Default.Stop,
+                                    contentDescription = "Stop Playback",
+                                    tint = Color.Red
                                 )
                             }
-                        }
-
-                        IconButton(onClick = {
-                            mediaPlayer?.stop()
-                            mediaPlayer?.release()
-                            mediaPlayer = null
-                            tts?.stop()
-                            playingPrayerId = null
-                        }) {
-                            Icon(
-                                imageVector = Icons.Default.Stop,
-                                contentDescription = "Stop Playback",
-                                tint = Color.Red
-                            )
                         }
                     }
                 }
@@ -420,6 +460,7 @@ fun HomeScreen(
                             prayerItem = prayerItem,
                             preferredLanguageCode = userLanguageCode,
                             isPlayingThisPrayer = playingPrayerId == prayerItem.prayer.id,
+                            isCalendarActiveThisPrayer = activeCalendarPrayerId == prayerItem.prayer.id,
                             onPrayerClick = {
                                 if (playingPrayerId != null) {
                                     mediaPlayer?.stop()
@@ -437,6 +478,9 @@ fun HomeScreen(
                             },
                             onAudioToggle = {
                                 toggleAudioForPrayer(prayerItem)
+                            },
+                            onCalendarToggle = {
+                                activeCalendarPrayerId = if (activeCalendarPrayerId == prayerItem.prayer.id) null else prayerItem.prayer.id
                             }
                         )
                     }
@@ -451,9 +495,11 @@ fun PrayerListItemCard(
     prayerItem: PrayerWithTranslations,
     preferredLanguageCode: String,
     isPlayingThisPrayer: Boolean,
+    isCalendarActiveThisPrayer: Boolean,
     onPrayerClick: () -> Unit,
     onFavoriteToggle: () -> Unit,
-    onAudioToggle: () -> Unit
+    onAudioToggle: () -> Unit,
+    onCalendarToggle: () -> Unit
 ) {
     val preferredTranslation = prayerItem.translations.find { it.languageCode == preferredLanguageCode }
         ?: prayerItem.translations.find { it.languageCode == "en" }
@@ -554,7 +600,7 @@ fun PrayerListItemCard(
                 thickness = 1.dp
             )
 
-            // Bottom Action Bar with Tight Padding
+            // Bottom Action Bar with Favorite, Audio & Calendar at left, Arrow at right
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -576,6 +622,14 @@ fun PrayerListItemCard(
                             imageVector = if (isPlayingThisPrayer) Icons.Default.Stop else Icons.AutoMirrored.Filled.VolumeUp,
                             contentDescription = "Audio Playback",
                             tint = if (isPlayingThisPrayer) Color.Red else MaterialTheme.colorScheme.primary
+                        )
+                    }
+
+                    IconButton(onClick = onCalendarToggle) {
+                        Icon(
+                            imageVector = Icons.Default.CalendarMonth,
+                            contentDescription = "Prayer Calendar Tracking",
+                            tint = if (isCalendarActiveThisPrayer) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                 }

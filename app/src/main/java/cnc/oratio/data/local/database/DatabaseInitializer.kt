@@ -17,13 +17,11 @@ object DatabaseInitializer {
     }
 
     suspend fun populateIfEmpty(context: Context, prayerDao: PrayerDao) = withContext(Dispatchers.IO) {
-        val existingCount = prayerDao.getPrayerCount()
-        Log.d("DatabaseInitializer", "Existing prayer count: $existingCount")
-        if (existingCount > 0) return@withContext
-
         try {
             val jsonString = context.assets.open("prayers_seed.json").bufferedReader().use { it.readText() }
             val seedData = jsonFormatter.decodeFromString<SeedDataPayload>(jsonString)
+
+            val existingPrayers = prayerDao.getExistingPrayersDirect().associateBy { it.id }
 
             prayerDao.insertLanguages(seedData.languages)
             prayerDao.insertCategories(seedData.categories)
@@ -32,11 +30,13 @@ object DatabaseInitializer {
             val translationEntities = mutableListOf<PrayerTranslationEntity>()
 
             seedData.prayers.forEach { seedItem ->
+                val existing = existingPrayers[seedItem.id]
                 prayerEntities.add(
                     PrayerEntity(
                         id = seedItem.id,
                         categoryId = seedItem.categoryId,
-                        defaultTitle = seedItem.defaultTitle
+                        defaultTitle = seedItem.defaultTitle,
+                        isFavorite = existing?.isFavorite ?: false
                     )
                 )
 
@@ -57,7 +57,7 @@ object DatabaseInitializer {
 
             prayerDao.insertPrayers(prayerEntities)
             prayerDao.insertTranslations(translationEntities)
-            Log.d("DatabaseInitializer", "Successfully seeded database with ${prayerEntities.size} prayers!")
+            Log.d("DatabaseInitializer", "Successfully synced database seed with ${prayerEntities.size} prayers!")
         } catch (e: Exception) {
             Log.e("DatabaseInitializer", "Error seeding database", e)
         }

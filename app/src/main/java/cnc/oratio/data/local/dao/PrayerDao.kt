@@ -30,6 +30,9 @@ interface PrayerDao {
     @Query("SELECT COUNT(*) FROM prayers")
     suspend fun getPrayerCount(): Int
 
+    @Query("SELECT * FROM prayers")
+    suspend fun getExistingPrayersDirect(): List<PrayerEntity>
+
     @Query("SELECT * FROM languages")
     fun getAllLanguages(): Flow<List<LanguageEntity>>
 

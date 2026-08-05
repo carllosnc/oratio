@@ -7,8 +7,9 @@
   ],
   "categories": [
     { "id": "basic", "name": "Basic Prayers", "displayOrder": 1 },
-    { "id": "marian", "name": "Marian Prayers", "displayOrder": 2 },
-    { "id": "rosary", "name": "Holy Rosary", "displayOrder": 3 }
+    { "id": "psalms", "name": "Psalms", "displayOrder": 2 },
+    { "id": "marian", "name": "Marian Prayers", "displayOrder": 3 },
+    { "id": "rosary", "name": "Holy Rosary", "displayOrder": 4 }
   ],
   "prayers": [
     {
@@ -113,6 +114,41 @@
           "subtitle": "Doxología Menor",
           "content": "Gloria al Padre y al Hijo y al Espírito Santo. Como era en el principio, ahora y siempre, por los siglos de los siglos. Amén.",
           "notes": "Traditional Spanish text."
+        }
+      ]
+    },
+    {
+      "id": "psalm_23",
+      "categoryId": "psalms",
+      "defaultTitle": "Psalm 23 / Psalmus 23",
+      "translations": [
+        {
+          "languageCode": "la",
+          "title": "Psalmus 23 (22)",
+          "subtitle": "Dominus pascit me",
+          "content": "Dominus pascit me, et nihil mihi deerit: in pascuis herbidis me collocavit. Super aquas quietis deduxit me; animam meam refecit. Deduxit me super semitas iustitiae propter nomen suum. Nam etsi ambulavero in valle umbrae mortis, non timebo mala, quoniam tu mecum es. Virga tua et baculus tuus, ipsa me consolata sunt. Parasti in conspectu meo mensam adversus eos qui tribulant me; impinguasti in oleo caput meum, et calix meus redundans est. Etenim benignitas et misericordia subsequentur me omnibus diebus vitae meae; et habitabo in domo Domini in longitudinem dierum. Amen.",
+          "notes": "Vulgata Clementina text."
+        },
+        {
+          "languageCode": "pt",
+          "title": "Salmo 23 (22)",
+          "subtitle": "O Senhor é o Meu Pastor",
+          "content": "O Senhor é o meu pastor; nada me faltará. Em verdes pastos me faz descansar, conduz-me suavemente a águas tranquilas. Refrigera a minha alma; guia-me pelas veredas da justiça por amor do seu nome. Ainda que eu andasse pelo vale da sombra da morte, não temeria mal algum, porque tu estás comigo; a tua vara e o teu cajado me consolam. Preparas uma mesa perante mim na presença dos meus inimigos, unges a minha cabeça com óleo, o meu cálice transborda. Certamente que a bondade e a misericórdia me seguirão todos os dias da minha vida; e habitarei na casa do Senhor por longos dias. Amém.",
+          "notes": "Texto Bíblico Tradicional."
+        },
+        {
+          "languageCode": "en",
+          "title": "Psalm 23",
+          "subtitle": "The Lord is My Shepherd",
+          "content": "The Lord is my shepherd; I shall not want. He maketh me to lie down in green pastures: he leadeth me beside the still waters. He restoreth my soul: he leadeth me in the paths of righteousness for his name's sake. Yea, though I walk through the valley of the shadow of death, I will fear no evil: for thou art with me; thy rod and thy staff they comfort me. Thou preparest a table before me in the presence of mine enemies: thou anointest my head with oil; my cup runneth over. Surely goodness and mercy shall follow me all the days of my life: and I will dwell in the house of the Lord for ever. Amen.",
+          "notes": "Traditional English text."
+        },
+        {
+          "languageCode": "es",
+          "title": "Salmo 23 (22)",
+          "subtitle": "El Señor es mi Pastor",
+          "content": "El Señor es mi pastor, nada me falta; en verdes prados me hace recostar, me conduce hacia fuentes tranquilas y repara mis fuerzas. Me guía por el sendero justo, por el honor de su nombre. Aunque camine por cañadas oscuras, nada temo, porque tú vas conmigo: tu vara y tu cayado me sosiegan. Preparas una mesa ante mí, enfrente de mis enemigos; me unges la cabeza con perfume, y mi copa rebosa. Tu bondad y tu misericordia me acompañan todos los días de mi vida, y habitaré en la casa del Señor por años sin término. Amén.",
+          "notes": "Texto Bíblico Tradicional."
         }
       ]
     }

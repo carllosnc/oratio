@@ -8,8 +8,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import cnc.oratio.R
 
-val BokorFontFamily = FontFamily(
-    Font(R.font.bokor_regular, FontWeight.Normal)
+val GermaniaOneFontFamily = FontFamily(
+    Font(R.font.germania_one_regular, FontWeight.Normal)
 )
 
 val InterFontFamily = FontFamily(
@@ -20,35 +20,35 @@ val InterFontFamily = FontFamily(
 
 val Typography = Typography(
     headlineLarge = TextStyle(
-        fontFamily = BokorFontFamily,
+        fontFamily = GermaniaOneFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 36.sp,
         lineHeight = 44.sp,
         letterSpacing = 0.5.sp
     ),
     headlineMedium = TextStyle(
-        fontFamily = BokorFontFamily,
+        fontFamily = GermaniaOneFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 30.sp,
         lineHeight = 38.sp,
         letterSpacing = 0.5.sp
     ),
     headlineSmall = TextStyle(
-        fontFamily = BokorFontFamily,
+        fontFamily = GermaniaOneFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 26.sp,
         lineHeight = 34.sp,
         letterSpacing = 0.5.sp
     ),
     titleLarge = TextStyle(
-        fontFamily = BokorFontFamily,
+        fontFamily = GermaniaOneFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 28.sp,
         lineHeight = 34.sp,
         letterSpacing = 0.5.sp
     ),
     titleMedium = TextStyle(
-        fontFamily = BokorFontFamily,
+        fontFamily = GermaniaOneFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 24.sp,
         lineHeight = 30.sp,

@@ -54,7 +54,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cnc.oratio.data.local.entity.LanguageEntity
 import cnc.oratio.data.repository.PrayerRepository
-import cnc.oratio.ui.theme.BokorFontFamily
+import cnc.oratio.ui.theme.GermaniaOneFontFamily
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -82,7 +82,7 @@ fun PrayerDetailScreen(
                         text = prayer?.prayer?.defaultTitle ?: "Prayer Details",
                         maxLines = 1,
                         style = MaterialTheme.typography.titleMedium,
-                        fontFamily = BokorFontFamily
+                        fontFamily = GermaniaOneFontFamily
                     )
                 },
                 navigationIcon = {
@@ -190,7 +190,7 @@ fun PrayerDetailScreen(
                             Text(
                                 text = primaryTranslation?.title ?: prayer.prayer.defaultTitle,
                                 style = MaterialTheme.typography.headlineSmall,
-                                fontFamily = BokorFontFamily,
+                                fontFamily = GermaniaOneFontFamily,
                                 color = MaterialTheme.colorScheme.onSurface
                             )
                             primaryTranslation?.subtitle?.let { sub ->

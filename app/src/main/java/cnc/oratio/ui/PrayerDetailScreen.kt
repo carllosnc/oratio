@@ -242,27 +242,6 @@ fun PrayerDetailScreen(
                     containerColor = MaterialTheme.colorScheme.surfaceContainer
                 )
             )
-        },
-        floatingActionButton = {
-            if (prayer != null) {
-                ExtendedFloatingActionButton(
-                    onClick = { toggleAudioPlayback() },
-                    containerColor = if (isSpeaking) MaterialTheme.colorScheme.errorContainer else MaterialTheme.colorScheme.primaryContainer,
-                    contentColor = if (isSpeaking) MaterialTheme.colorScheme.onErrorContainer else MaterialTheme.colorScheme.onPrimaryContainer
-                ) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(
-                            imageVector = if (isSpeaking) Icons.Default.Stop else Icons.AutoMirrored.Filled.VolumeUp,
-                            contentDescription = "Audio Narration"
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(
-                            text = if (isSpeaking) "Stop Narration" else "Listen Audio",
-                            style = MaterialTheme.typography.labelLarge
-                        )
-                    }
-                }
-            }
         }
     ) { innerPadding ->
         if (prayer == null) {
@@ -408,8 +387,6 @@ fun PrayerDetailScreen(
                             )
                         }
                     }
-
-                    Spacer(modifier = Modifier.height(80.dp)) // Padding for FAB
                 }
             }
         }

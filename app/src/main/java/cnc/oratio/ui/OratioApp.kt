@@ -1,5 +1,9 @@
 package cnc.oratio.ui
 
+import androidx.compose.animation.core.CubicBezierEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -15,13 +19,41 @@ sealed class Screen(val route: String) {
     }
 }
 
+// iOS-style cubic bezier easing curve (ease-in-out curve matching iOS UINavigationController)
+private val IosTransitionEasing = CubicBezierEasing(0.25f, 0.1f, 0.25f, 1.0f)
+private const val IosTransitionDuration = 400
+
 @Composable
 fun OratioApp(repository: PrayerRepository) {
     val navController = rememberNavController()
 
     NavHost(
         navController = navController,
-        startDestination = Screen.Home.route
+        startDestination = Screen.Home.route,
+        enterTransition = {
+            slideInHorizontally(
+                initialOffsetX = { fullWidth -> fullWidth },
+                animationSpec = tween(IosTransitionDuration, easing = IosTransitionEasing)
+            )
+        },
+        exitTransition = {
+            slideOutHorizontally(
+                targetOffsetX = { fullWidth -> -fullWidth / 4 },
+                animationSpec = tween(IosTransitionDuration, easing = IosTransitionEasing)
+            )
+        },
+        popEnterTransition = {
+            slideInHorizontally(
+                initialOffsetX = { fullWidth -> -fullWidth / 4 },
+                animationSpec = tween(IosTransitionDuration, easing = IosTransitionEasing)
+            )
+        },
+        popExitTransition = {
+            slideOutHorizontally(
+                targetOffsetX = { fullWidth -> fullWidth },
+                animationSpec = tween(IosTransitionDuration, easing = IosTransitionEasing)
+            )
+        }
     ) {
         composable(Screen.Home.route) {
             HomeScreen(

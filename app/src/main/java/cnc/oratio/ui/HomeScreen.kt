@@ -541,7 +541,7 @@ fun PrayerListItemCard(
             Spacer(modifier = Modifier.height(12.dp))
 
             HorizontalDivider(
-                color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f),
+                color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.7f),
                 thickness = 1.dp
             )
 

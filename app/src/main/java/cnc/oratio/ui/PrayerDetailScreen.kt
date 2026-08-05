@@ -420,7 +420,7 @@ fun PrayerDetailScreen(
                                 if (index < paragraphs.lastIndex) {
                                     Spacer(modifier = Modifier.height(14.dp))
                                     HorizontalDivider(
-                                        color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.4f),
+                                        color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.8f),
                                         thickness = 1.dp
                                     )
                                     Spacer(modifier = Modifier.height(14.dp))

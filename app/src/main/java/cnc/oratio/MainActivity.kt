@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import cnc.oratio.data.repository.PrayerRepository
-import cnc.oratio.ui.MainPrayerScreen
+import cnc.oratio.ui.OratioApp
 import cnc.oratio.ui.theme.OratioTheme
 
 class MainActivity : ComponentActivity() {
@@ -17,7 +17,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             OratioTheme {
-                MainPrayerScreen(repository = repository)
+                OratioApp(repository = repository)
             }
         }
     }

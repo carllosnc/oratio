@@ -5,18 +5,14 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -71,8 +67,6 @@ fun PrayerDetailScreen(
     val languages by repository.getAllLanguages().collectAsState(initial = emptyList())
 
     var selectedLanguageCode by remember { mutableStateOf("en") }
-    var isBilingualMode by remember { mutableStateOf(true) }
-    var secondaryLanguageCode by remember { mutableStateOf<String?>("la") }
 
     val prayer = prayerWithTranslations
 
@@ -139,14 +133,8 @@ fun PrayerDetailScreen(
             }
         } else {
             val primaryTranslation = prayer.translations.find { it.languageCode == selectedLanguageCode }
-                ?: prayer.translations.find { it.languageCode == "pt" }
+                ?: prayer.translations.find { it.languageCode == "en" }
                 ?: prayer.translations.firstOrNull()
-
-            val secondaryTranslation = secondaryLanguageCode?.let { langCode ->
-                if (langCode != selectedLanguageCode) {
-                    prayer.translations.find { it.languageCode == langCode }
-                } else null
-            }
 
             Column(
                 modifier = Modifier
@@ -167,40 +155,6 @@ fun PrayerDetailScreen(
                                 text = { Text("${lang.flagIcon} ${lang.name}") }
                             )
                         }
-                    }
-                }
-
-                // Bilingual Toggle Switch Bar
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 8.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = if (isBilingualMode) "Bilingual View: Latin + ${getLanguageName(selectedLanguageCode, languages)}"
-                        else "Single Language View",
-                        style = MaterialTheme.typography.bodyMedium,
-                        fontWeight = FontWeight.SemiBold,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                    Box(
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(20.dp))
-                            .background(
-                                if (isBilingualMode) MaterialTheme.colorScheme.primaryContainer
-                                else MaterialTheme.colorScheme.surfaceContainerHigh
-                            )
-                            .clickable { isBilingualMode = !isBilingualMode }
-                            .padding(horizontal = 12.dp, vertical = 6.dp)
-                    ) {
-                        Text(
-                            text = if (isBilingualMode) "Bilingual ON" else "Single ON",
-                            style = MaterialTheme.typography.labelSmall,
-                            color = if (isBilingualMode) MaterialTheme.colorScheme.onPrimaryContainer
-                            else MaterialTheme.colorScheme.onSurface
-                        )
                     }
                 }
 
@@ -238,89 +192,20 @@ fun PrayerDetailScreen(
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    // Prayer Content
-                    if (isBilingualMode && secondaryTranslation != null) {
-                        // Side-by-side or Stacked Parallel Layout
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(12.dp)
-                        ) {
-                            // Column 1: Latin / Original
-                            Column(
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .clip(RoundedCornerShape(12.dp))
-                                    .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))
-                                    .padding(14.dp)
-                            ) {
-                                Text(
-                                    text = secondaryTranslation.title,
-                                    style = MaterialTheme.typography.labelMedium,
-                                    fontWeight = FontWeight.Bold,
-                                    color = MaterialTheme.colorScheme.primary
-                                )
-                                secondaryTranslation.subtitle?.let {
-                                    Text(
-                                        text = it,
-                                        style = MaterialTheme.typography.labelSmall,
-                                        color = MaterialTheme.colorScheme.outline
-                                    )
-                                }
-                                Spacer(modifier = Modifier.height(8.dp))
-                                Text(
-                                    text = secondaryTranslation.content,
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    lineHeight = 22.sp,
-                                    color = MaterialTheme.colorScheme.onSurface
-                                )
-                            }
-
-                            // Column 2: Selected Translation
-                            Column(
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .clip(RoundedCornerShape(12.dp))
-                                    .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))
-                                    .padding(14.dp)
-                            ) {
-                                Text(
-                                    text = primaryTranslation?.title ?: "",
-                                    style = MaterialTheme.typography.labelMedium,
-                                    fontWeight = FontWeight.Bold,
-                                    color = MaterialTheme.colorScheme.secondary
-                                )
-                                primaryTranslation?.subtitle?.let {
-                                    Text(
-                                        text = it,
-                                        style = MaterialTheme.typography.labelSmall,
-                                        color = MaterialTheme.colorScheme.outline
-                                    )
-                                }
-                                Spacer(modifier = Modifier.height(8.dp))
-                                Text(
-                                    text = primaryTranslation?.content ?: "",
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    lineHeight = 22.sp,
-                                    color = MaterialTheme.colorScheme.onSurface
-                                )
-                            }
-                        }
-                    } else {
-                        // Single Column Full-width View
-                        Card(
-                            modifier = Modifier.fillMaxWidth(),
-                            shape = RoundedCornerShape(16.dp),
-                            colors = CardDefaults.cardColors(
-                                containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f)
-                            )
-                        ) {
-                            Text(
-                                text = primaryTranslation?.content ?: "",
-                                style = MaterialTheme.typography.bodyLarge,
-                                lineHeight = 26.sp,
-                                modifier = Modifier.padding(18.dp)
-                            )
-                        }
+                    // Prayer Content View
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(16.dp),
+                        colors = CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f)
+                        )
+                    ) {
+                        Text(
+                            text = primaryTranslation?.content ?: "",
+                            style = MaterialTheme.typography.bodyLarge,
+                            lineHeight = 26.sp,
+                            modifier = Modifier.padding(18.dp)
+                        )
                     }
 
                     // Historical / Liturgical Notes Section

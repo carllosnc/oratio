@@ -264,7 +264,7 @@ fun PrayerListItemCard(
                 // Title
                 Text(
                     text = preferredTranslation?.title ?: prayerItem.prayer.defaultTitle,
-                    style = MaterialTheme.typography.titleMedium,
+                    style = MaterialTheme.typography.titleLarge,
                     fontFamily = BokorFontFamily,
                     color = MaterialTheme.colorScheme.onSurface
                 )

@@ -16,43 +16,43 @@ val Typography = Typography(
     titleLarge = TextStyle(
         fontFamily = BokorFontFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 26.sp,
-        lineHeight = 32.sp,
+        fontSize = 28.sp,
+        lineHeight = 34.sp,
         letterSpacing = 0.5.sp
     ),
     titleMedium = TextStyle(
         fontFamily = BokorFontFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 22.sp,
-        lineHeight = 28.sp,
+        fontSize = 24.sp,
+        lineHeight = 30.sp,
         letterSpacing = 0.5.sp
     ),
     titleSmall = TextStyle(
-        fontFamily = BokorFontFamily,
-        fontWeight = FontWeight.Normal,
-        fontSize = 18.sp,
-        lineHeight = 24.sp,
-        letterSpacing = 0.5.sp
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Medium,
+        fontSize = 15.sp,
+        lineHeight = 20.sp,
+        letterSpacing = 0.1.sp
     ),
     headlineLarge = TextStyle(
         fontFamily = BokorFontFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 34.sp,
-        lineHeight = 42.sp,
+        fontSize = 36.sp,
+        lineHeight = 44.sp,
         letterSpacing = 0.5.sp
     ),
     headlineMedium = TextStyle(
         fontFamily = BokorFontFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 28.sp,
-        lineHeight = 36.sp,
+        fontSize = 30.sp,
+        lineHeight = 38.sp,
         letterSpacing = 0.5.sp
     ),
     headlineSmall = TextStyle(
         fontFamily = BokorFontFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 24.sp,
-        lineHeight = 32.sp,
+        fontSize = 26.sp,
+        lineHeight = 34.sp,
         letterSpacing = 0.5.sp
     ),
     bodyLarge = TextStyle(
@@ -61,5 +61,12 @@ val Typography = Typography(
         fontSize = 16.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.5.sp
+    ),
+    labelLarge = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Medium,
+        fontSize = 14.sp,
+        lineHeight = 20.sp,
+        letterSpacing = 0.1.sp
     )
 )

@@ -56,6 +56,8 @@ import kotlinx.coroutines.launch
 
 import cnc.oratio.ui.theme.BokorFontFamily
 
+import androidx.compose.ui.text.font.FontFamily
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PrayerDetailScreen(
@@ -159,7 +161,12 @@ fun PrayerDetailScreen(
                                     selectedLanguageCode = lang.code
                                     repository.setUserLanguage(lang.code)
                                 },
-                                text = { Text("${lang.flagIcon} ${lang.name}") }
+                                text = {
+                                    Text(
+                                        text = "${lang.flagIcon} ${lang.name}",
+                                        fontFamily = FontFamily.Default
+                                    )
+                                }
                             )
                         }
                     }

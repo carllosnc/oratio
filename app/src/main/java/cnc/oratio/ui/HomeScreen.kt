@@ -74,23 +74,16 @@ fun HomeScreen(
     val categories by repository.getAllCategories().collectAsState(initial = emptyList())
     val languages by repository.getAllLanguages().collectAsState(initial = emptyList())
 
-    var searchQuery by remember { mutableStateOf("") }
     var selectedCategoryId by remember { mutableStateOf<String?>(null) }
     var showOnlyFavorites by remember { mutableStateOf(false) }
     var preferredLanguageCode by remember { mutableStateOf("en") }
 
-    val filteredPrayers = remember(prayers, searchQuery, selectedCategoryId, showOnlyFavorites) {
+    val filteredPrayers = remember(prayers, selectedCategoryId, showOnlyFavorites) {
         prayers.filter { item ->
             val matchesCategory = selectedCategoryId == null || item.prayer.categoryId == selectedCategoryId
             val matchesFavorite = !showOnlyFavorites || item.prayer.isFavorite
-            val matchesSearch = searchQuery.isBlank() ||
-                    item.prayer.defaultTitle.contains(searchQuery, ignoreCase = true) ||
-                    item.translations.any { tr ->
-                        tr.title.contains(searchQuery, ignoreCase = true) ||
-                                tr.content.contains(searchQuery, ignoreCase = true)
-                    }
 
-            matchesCategory && matchesFavorite && matchesSearch
+            matchesCategory && matchesFavorite
         }
     }
 
@@ -122,22 +115,6 @@ fun HomeScreen(
                 .padding(innerPadding)
                 .background(MaterialTheme.colorScheme.background)
         ) {
-            // Search Input Field
-            OutlinedTextField(
-                value = searchQuery,
-                onValueChange = { searchQuery = it },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-                placeholder = { Text("Search prayers (e.g. Our Father, Hail Mary)...") },
-                leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Search") },
-                singleLine = true,
-                shape = RoundedCornerShape(14.dp),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = MaterialTheme.colorScheme.primary,
-                    unfocusedBorderColor = MaterialTheme.colorScheme.outlineVariant
-                )
-            )
 
             // Category Filter Chips
             LazyRow(

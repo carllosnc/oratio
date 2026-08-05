@@ -170,7 +170,7 @@ fun PrayerDetailScreen(
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(16.dp),
                         colors = CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.4f)
+                            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
                         )
                     ) {
                         Column(modifier = Modifier.padding(16.dp)) {
@@ -197,7 +197,7 @@ fun PrayerDetailScreen(
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(16.dp),
                         colors = CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f)
+                            containerColor = MaterialTheme.colorScheme.surfaceContainerLow
                         )
                     ) {
                         Text(

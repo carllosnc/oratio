@@ -163,7 +163,13 @@ fun HomeScreen(
                             selectedCategoryId = null
                             showOnlyFavorites = false
                         },
-                        label = { Text("All Prayers") }
+                        label = { Text("All Prayers") },
+                        colors = FilterChipDefaults.filterChipColors(
+                            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+                            labelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                            selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                            selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer
+                        )
                     )
                 }
 
@@ -173,7 +179,10 @@ fun HomeScreen(
                         onClick = { showOnlyFavorites = !showOnlyFavorites },
                         label = { Text("Favorites ⭐") },
                         colors = FilterChipDefaults.filterChipColors(
-                            selectedContainerColor = MaterialTheme.colorScheme.primaryContainer
+                            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+                            labelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                            selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                            selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer
                         )
                     )
                 }
@@ -185,7 +194,13 @@ fun HomeScreen(
                             selectedCategoryId = if (selectedCategoryId == category.id) null else category.id
                             showOnlyFavorites = false
                         },
-                        label = { Text(category.name) }
+                        label = { Text(category.name) },
+                        colors = FilterChipDefaults.filterChipColors(
+                            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+                            labelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                            selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                            selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer
+                        )
                     )
                 }
             }

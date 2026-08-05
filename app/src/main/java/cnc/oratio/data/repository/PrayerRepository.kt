@@ -8,11 +8,26 @@ import cnc.oratio.data.local.entity.CategoryEntity
 import cnc.oratio.data.local.entity.LanguageEntity
 import cnc.oratio.data.local.model.PrayerWithTranslations
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class PrayerRepository(
     private val context: Context,
     private val prayerDao: PrayerDao = OratioDatabase.getInstance(context).prayerDao()
 ) {
+
+    private val prefs = context.getSharedPreferences("oratio_preferences", Context.MODE_PRIVATE)
+
+    private val _userLanguageCode = MutableStateFlow(
+        prefs.getString("user_language_code", "en") ?: "en"
+    )
+    val userLanguageCode: StateFlow<String> = _userLanguageCode.asStateFlow()
+
+    fun setUserLanguage(languageCode: String) {
+        prefs.edit().putString("user_language_code", languageCode).apply()
+        _userLanguageCode.value = languageCode
+    }
 
     suspend fun initializeDatabaseIfNeeded() {
         DatabaseInitializer.populateIfEmpty(context, prayerDao)

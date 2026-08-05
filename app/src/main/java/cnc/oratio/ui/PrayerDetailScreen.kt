@@ -65,8 +65,9 @@ fun PrayerDetailScreen(
     val scope = rememberCoroutineScope()
     val prayerWithTranslations by repository.getPrayerById(prayerId).collectAsState(initial = null)
     val languages by repository.getAllLanguages().collectAsState(initial = emptyList())
+    val userLanguageCode by repository.userLanguageCode.collectAsState()
 
-    var selectedLanguageCode by remember { mutableStateOf("en") }
+    var selectedLanguageCode by remember(userLanguageCode) { mutableStateOf(userLanguageCode) }
 
     val prayer = prayerWithTranslations
 
@@ -151,7 +152,10 @@ fun PrayerDetailScreen(
                         languages.forEach { lang ->
                             Tab(
                                 selected = selectedLanguageCode == lang.code,
-                                onClick = { selectedLanguageCode = lang.code },
+                                onClick = {
+                                    selectedLanguageCode = lang.code
+                                    repository.setUserLanguage(lang.code)
+                                },
                                 text = { Text("${lang.flagIcon} ${lang.name}") }
                             )
                         }

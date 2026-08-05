@@ -22,19 +22,17 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material.icons.filled.FilterList
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Language
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -73,10 +71,11 @@ fun HomeScreen(
     val prayers by repository.getAllPrayers().collectAsState(initial = emptyList())
     val categories by repository.getAllCategories().collectAsState(initial = emptyList())
     val languages by repository.getAllLanguages().collectAsState(initial = emptyList())
+    val userLanguageCode by repository.userLanguageCode.collectAsState()
 
     var selectedCategoryId by remember { mutableStateOf<String?>(null) }
     var showOnlyFavorites by remember { mutableStateOf(false) }
-    var preferredLanguageCode by remember { mutableStateOf("en") }
+    var showLanguageMenu by remember { mutableStateOf(false) }
 
     val filteredPrayers = remember(prayers, selectedCategoryId, showOnlyFavorites) {
         prayers.filter { item ->
@@ -103,6 +102,37 @@ fun HomeScreen(
                         )
                     }
                 },
+                actions = {
+                    Box {
+                        IconButton(onClick = { showLanguageMenu = true }) {
+                            Icon(
+                                imageVector = Icons.Default.Language,
+                                contentDescription = "Change Language",
+                                tint = MaterialTheme.colorScheme.primary
+                            )
+                        }
+
+                        DropdownMenu(
+                            expanded = showLanguageMenu,
+                            onDismissRequest = { showLanguageMenu = false }
+                        ) {
+                            languages.forEach { lang ->
+                                DropdownMenuItem(
+                                    text = {
+                                        Text(
+                                            text = "${lang.flagIcon} ${lang.name}",
+                                            fontWeight = if (lang.code == userLanguageCode) FontWeight.Bold else FontWeight.Normal
+                                        )
+                                    },
+                                    onClick = {
+                                        repository.setUserLanguage(lang.code)
+                                        showLanguageMenu = false
+                                    }
+                                )
+                            }
+                        }
+                    }
+                },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.surfaceContainer
                 )
@@ -115,6 +145,7 @@ fun HomeScreen(
                 .padding(innerPadding)
                 .background(MaterialTheme.colorScheme.background)
         ) {
+            Spacer(modifier = Modifier.height(8.dp))
 
             // Category Filter Chips
             LazyRow(
@@ -181,7 +212,7 @@ fun HomeScreen(
                     items(filteredPrayers, key = { it.prayer.id }) { prayerItem ->
                         PrayerListItemCard(
                             prayerItem = prayerItem,
-                            preferredLanguageCode = preferredLanguageCode,
+                            preferredLanguageCode = userLanguageCode,
                             onPrayerClick = { onPrayerClick(prayerItem.prayer.id) },
                             onFavoriteToggle = {
                                 scope.launch {
@@ -204,7 +235,7 @@ fun PrayerListItemCard(
     onFavoriteToggle: () -> Unit
 ) {
     val preferredTranslation = prayerItem.translations.find { it.languageCode == preferredLanguageCode }
-        ?: prayerItem.translations.find { it.languageCode == "pt" }
+        ?: prayerItem.translations.find { it.languageCode == "en" }
         ?: prayerItem.translations.firstOrNull()
 
     val latinTranslation = prayerItem.translations.find { it.languageCode == "la" }
@@ -272,16 +303,23 @@ fun PrayerListItemCard(
                             "es" -> "🇪🇸 ES"
                             else -> tr.languageCode.uppercase()
                         }
+                        val isSelected = tr.languageCode == preferredLanguageCode
                         Box(
                             modifier = Modifier
                                 .clip(RoundedCornerShape(6.dp))
-                                .background(MaterialTheme.colorScheme.surfaceContainerHigh)
+                                .background(
+                                    if (isSelected) MaterialTheme.colorScheme.primaryContainer
+                                    else MaterialTheme.colorScheme.surfaceContainerHigh
+                                )
                                 .padding(horizontal = 6.dp, vertical = 2.dp)
                         ) {
                             Text(
                                 text = flag,
                                 style = MaterialTheme.typography.labelSmall,
-                                fontSize = 10.sp
+                                fontSize = 10.sp,
+                                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
+                                color = if (isSelected) MaterialTheme.colorScheme.onPrimaryContainer
+                                else MaterialTheme.colorScheme.onSurface
                             )
                         }
                     }

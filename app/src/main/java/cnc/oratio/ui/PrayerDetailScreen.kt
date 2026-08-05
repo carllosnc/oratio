@@ -3,6 +3,9 @@ package cnc.oratio.ui
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.os.Bundle
+import android.speech.tts.TextToSpeech
+import android.speech.tts.UtteranceProgressListener
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -13,19 +16,24 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.VolumeUp
 import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Stop
+import androidx.compose.material.icons.filled.VolumeUp
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -37,6 +45,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -56,6 +65,7 @@ import cnc.oratio.data.local.entity.LanguageEntity
 import cnc.oratio.data.repository.PrayerRepository
 import cnc.oratio.ui.theme.GermaniaOneFontFamily
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -77,6 +87,70 @@ fun PrayerDetailScreen(
         ?: prayer?.translations?.find { it.languageCode == "en" }
         ?: prayer?.translations?.firstOrNull()
 
+    // TextToSpeech Engine Setup for Solemn Deep Male Voice
+    var tts by remember { mutableStateOf<TextToSpeech?>(null) }
+    var isSpeaking by remember { mutableStateOf(false) }
+
+    DisposableEffect(context) {
+        var textToSpeech: TextToSpeech? = null
+        textToSpeech = TextToSpeech(context) { status ->
+            if (status == TextToSpeech.SUCCESS) {
+                tts = textToSpeech
+            }
+        }
+        onDispose {
+            textToSpeech?.stop()
+            textToSpeech?.shutdown()
+        }
+    }
+
+    val toggleAudioPlayback = {
+        if (isSpeaking) {
+            tts?.stop()
+            isSpeaking = false
+        } else {
+            primaryTranslation?.content?.let { textToRead ->
+                val locale = when (selectedLanguageCode) {
+                    "la" -> Locale.forLanguageTag("it-IT") // Italian locale for authentic Latin pronunciation
+                    "pt" -> Locale.forLanguageTag("pt-BR")
+                    "en" -> Locale.forLanguageTag("en-US")
+                    "es" -> Locale.forLanguageTag("es-ES")
+                    else -> Locale.getDefault()
+                }
+
+                tts?.language = locale
+                tts?.setPitch(0.65f) // Deep male pitch
+                tts?.setSpeechRate(0.82f) // Solemn, reverent pace
+
+                // Attempt to pick a male voice if available on device
+                tts?.voices?.find { voice ->
+                    voice.locale.language == locale.language &&
+                    voice.name.contains("male", ignoreCase = true)
+                }?.let { maleVoice ->
+                    tts?.voice = maleVoice
+                }
+
+                tts?.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
+                    override fun onStart(utteranceId: String?) {
+                        isSpeaking = true
+                    }
+                    override fun onDone(utteranceId: String?) {
+                        isSpeaking = false
+                    }
+                    override fun onError(utteranceId: String?) {
+                        isSpeaking = false
+                    }
+                })
+
+                val params = Bundle().apply {
+                    putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "PRAYER_AUDIO_ID")
+                }
+                tts?.speak(textToRead, TextToSpeech.QUEUE_FLUSH, params, "PRAYER_AUDIO_ID")
+                isSpeaking = true
+            }
+        }
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -89,7 +163,10 @@ fun PrayerDetailScreen(
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = onBackClick) {
+                    IconButton(onClick = {
+                        tts?.stop()
+                        onBackClick()
+                    }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back"
@@ -98,6 +175,14 @@ fun PrayerDetailScreen(
                 },
                 actions = {
                     prayer?.let { item ->
+                        IconButton(onClick = { toggleAudioPlayback() }) {
+                            Icon(
+                                imageVector = if (isSpeaking) Icons.Default.Stop else Icons.AutoMirrored.Filled.VolumeUp,
+                                contentDescription = "Audio Playback",
+                                tint = if (isSpeaking) Color.Red else MaterialTheme.colorScheme.primary
+                            )
+                        }
+
                         IconButton(onClick = {
                             scope.launch {
                                 repository.toggleFavorite(item.prayer.id, !item.prayer.isFavorite)
@@ -128,6 +213,27 @@ fun PrayerDetailScreen(
                     containerColor = MaterialTheme.colorScheme.surfaceContainer
                 )
             )
+        },
+        floatingActionButton = {
+            if (prayer != null) {
+                ExtendedFloatingActionButton(
+                    onClick = { toggleAudioPlayback() },
+                    containerColor = if (isSpeaking) MaterialTheme.colorScheme.errorContainer else MaterialTheme.colorScheme.primaryContainer,
+                    contentColor = if (isSpeaking) MaterialTheme.colorScheme.onErrorContainer else MaterialTheme.colorScheme.onPrimaryContainer
+                ) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            imageVector = if (isSpeaking) Icons.Default.Stop else Icons.AutoMirrored.Filled.VolumeUp,
+                            contentDescription = "Audio Narration"
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = if (isSpeaking) "Stop Narration" else "Listen Audio",
+                            style = MaterialTheme.typography.labelLarge
+                        )
+                    }
+                }
+            }
         }
     ) { innerPadding ->
         if (prayer == null) {
@@ -156,6 +262,10 @@ fun PrayerDetailScreen(
                             Tab(
                                 selected = selectedLanguageCode == lang.code,
                                 onClick = {
+                                    if (isSpeaking) {
+                                        tts?.stop()
+                                        isSpeaking = false
+                                    }
                                     selectedLanguageCode = lang.code
                                     repository.setUserLanguage(lang.code)
                                 },
@@ -266,6 +376,8 @@ fun PrayerDetailScreen(
                             )
                         }
                     }
+
+                    Spacer(modifier = Modifier.height(80.dp)) // Padding for FAB
                 }
             }
         }

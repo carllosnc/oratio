@@ -209,17 +209,24 @@ fun PrayerDetailScreen(
                     // Prayer Content View
                     Card(
                         modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(16.dp),
+                        shape = RoundedCornerShape(20.dp),
                         colors = CardDefaults.cardColors(
                             containerColor = MaterialTheme.colorScheme.surfaceContainerLow
                         )
                     ) {
-                        Text(
-                            text = primaryTranslation?.content ?: "",
-                            style = MaterialTheme.typography.bodyLarge,
-                            lineHeight = 26.sp,
-                            modifier = Modifier.padding(18.dp)
-                        )
+                        Column(
+                            modifier = Modifier.padding(22.dp)
+                        ) {
+                            Text(
+                                text = primaryTranslation?.content ?: "",
+                                style = MaterialTheme.typography.bodyLarge.copy(
+                                    fontSize = 18.sp,
+                                    lineHeight = 30.sp,
+                                    letterSpacing = 0.3.sp
+                                ),
+                                color = MaterialTheme.colorScheme.onSurface
+                            )
+                        }
                     }
 
                     // Historical / Liturgical Notes Section

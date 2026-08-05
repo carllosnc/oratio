@@ -56,6 +56,8 @@ import cnc.oratio.data.local.model.PrayerWithTranslations
 import cnc.oratio.data.repository.PrayerRepository
 import kotlinx.coroutines.launch
 
+import cnc.oratio.ui.theme.BokorFontFamily
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
@@ -93,7 +95,8 @@ fun HomeScreen(
                     Column {
                         Text(
                             text = "Oratio 🕊️",
-                            style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold)
+                            style = MaterialTheme.typography.titleLarge,
+                            fontFamily = BokorFontFamily
                         )
                         Text(
                             text = "Prayers & Devotions Collection",
@@ -262,7 +265,7 @@ fun PrayerListItemCard(
                 Text(
                     text = preferredTranslation?.title ?: prayerItem.prayer.defaultTitle,
                     style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
+                    fontFamily = BokorFontFamily,
                     color = MaterialTheme.colorScheme.onSurface
                 )
 

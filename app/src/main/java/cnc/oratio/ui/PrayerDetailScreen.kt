@@ -54,6 +54,8 @@ import cnc.oratio.data.local.entity.LanguageEntity
 import cnc.oratio.data.repository.PrayerRepository
 import kotlinx.coroutines.launch
 
+import cnc.oratio.ui.theme.BokorFontFamily
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PrayerDetailScreen(
@@ -78,7 +80,8 @@ fun PrayerDetailScreen(
                     Text(
                         text = prayer?.prayer?.defaultTitle ?: "Prayer Details",
                         maxLines = 1,
-                        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
+                        style = MaterialTheme.typography.titleMedium,
+                        fontFamily = BokorFontFamily
                     )
                 },
                 navigationIcon = {
@@ -181,7 +184,7 @@ fun PrayerDetailScreen(
                             Text(
                                 text = primaryTranslation?.title ?: prayer.prayer.defaultTitle,
                                 style = MaterialTheme.typography.headlineSmall,
-                                fontWeight = FontWeight.Bold,
+                                fontFamily = BokorFontFamily,
                                 color = MaterialTheme.colorScheme.onSurface
                             )
                             primaryTranslation?.subtitle?.let { sub ->

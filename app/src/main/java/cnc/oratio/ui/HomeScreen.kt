@@ -230,7 +230,7 @@ fun HomeScreen(
                     Text(
                         text = "Oratio",
                         style = MaterialTheme.typography.titleLarge,
-                        fontSize = 18.sp,
+                        fontSize = 26.sp,
                         fontFamily = GermaniaOneFontFamily
                     )
                 },

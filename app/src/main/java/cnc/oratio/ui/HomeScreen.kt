@@ -230,6 +230,7 @@ fun HomeScreen(
                     Text(
                         text = "Oratio",
                         style = MaterialTheme.typography.titleLarge,
+                        fontSize = 18.sp,
                         fontFamily = GermaniaOneFontFamily
                     )
                 },
@@ -553,6 +554,7 @@ fun PrayerListItemCard(
                 Text(
                     text = preferredTranslation?.title ?: prayerItem.prayer.defaultTitle,
                     style = MaterialTheme.typography.titleLarge,
+                    fontSize = 20.sp,
                     fontFamily = GermaniaOneFontFamily,
                     color = MaterialTheme.colorScheme.onSurface
                 )

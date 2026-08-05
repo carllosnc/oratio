@@ -92,18 +92,11 @@ fun HomeScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Column {
-                        Text(
-                            text = "Oratio 🕊️",
-                            style = MaterialTheme.typography.titleLarge,
-                            fontFamily = BokorFontFamily
-                        )
-                        Text(
-                            text = "Prayers & Devotions Collection",
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
+                    Text(
+                        text = "Oratio 🕊️",
+                        style = MaterialTheme.typography.titleLarge,
+                        fontFamily = BokorFontFamily
+                    )
                 },
                 actions = {
                     Box {

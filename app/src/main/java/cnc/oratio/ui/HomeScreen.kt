@@ -435,6 +435,7 @@ fun HomeScreen(
                 PrayerCalendarFloatCard(
                     prayerTitle = activeCalendarPrayerTranslation?.title ?: activeCalendarPrayer?.prayer?.defaultTitle ?: "Prayer Calendar",
                     markedDates = activeCalendarPrayerLogs,
+                    languageCode = userLanguageCode,
                     onToggleDate = { dateStr, isMarked ->
                         scope.launch {
                             activeCalendarPrayerId?.let { pId ->

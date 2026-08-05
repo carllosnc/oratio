@@ -13,8 +13,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -25,8 +23,6 @@ import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -40,20 +36,20 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import cnc.oratio.ui.theme.GermaniaOneFontFamily
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 @Composable
 fun PrayerCalendarFloatCard(
     prayerTitle: String,
     markedDates: List<String>,
+    languageCode: String = "en",
     onToggleDate: (dateString: String, currentlyMarked: Boolean) -> Unit,
     onClose: () -> Unit
 ) {
@@ -63,8 +59,45 @@ fun PrayerCalendarFloatCard(
     val daysInMonth = currentYearMonth.lengthOfMonth()
     val firstDayOfWeek = currentYearMonth.atDay(1).dayOfWeek.value % 7 // 0 = Sunday, 1 = Mon ...
 
-    val monthFormatter = remember { DateTimeFormatter.ofPattern("MMMM yyyy") }
+    val locale = remember(languageCode) {
+        when (languageCode) {
+            "pt" -> Locale.forLanguageTag("pt-BR")
+            "es" -> Locale.forLanguageTag("es-ES")
+            "la" -> Locale.forLanguageTag("it-IT")
+            else -> Locale.forLanguageTag("en-US")
+        }
+    }
+
+    val monthFormatter = remember(locale) { DateTimeFormatter.ofPattern("MMMM yyyy", locale) }
     val todayString = remember { today.format(DateTimeFormatter.ISO_LOCAL_DATE) }
+
+    val subtitleText = when (languageCode) {
+        "pt" -> "Acompanhamento Diário de Oração"
+        "es" -> "Seguimiento Diario de Oración"
+        "la" -> "Calendarium Precationis Diurnum"
+        else -> "Daily Prayer Calendar Tracking"
+    }
+
+    val weekDays = when (languageCode) {
+        "pt" -> listOf("Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb")
+        "es" -> listOf("Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb")
+        "la" -> listOf("Sol", "Lun", "Mar", "Mer", "Iov", "Ven", "Sat")
+        else -> listOf("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
+    }
+
+    val todayMarkedText = when (languageCode) {
+        "pt" -> "Oração Concluída Hoje ✓"
+        "es" -> "Oración Completada Hoy ✓"
+        "la" -> "Precatio Hodie Completa ✓"
+        else -> "Prayer Completed Today ✓"
+    }
+
+    val markTodayText = when (languageCode) {
+        "pt" -> "Marcar Hoje como Concluída"
+        "es" -> "Marcar Hoy como Completada"
+        "la" -> "Marca Hodie ut Completa"
+        else -> "Mark Today as Completed"
+    }
 
     Surface(
         modifier = Modifier
@@ -95,7 +128,7 @@ fun PrayerCalendarFloatCard(
                         maxLines = 1
                     )
                     Text(
-                        text = "Prayer Calendar Tracking",
+                        text = subtitleText,
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.primary
                     )
@@ -144,7 +177,6 @@ fun PrayerCalendarFloatCard(
 
             // Day of Week Header
             Row(modifier = Modifier.fillMaxWidth()) {
-                val weekDays = listOf("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
                 weekDays.forEach { day ->
                     Text(
                         text = day,
@@ -243,7 +275,7 @@ fun PrayerCalendarFloatCard(
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = if (isTodayMarked) "Prayer Completed Today ✓" else "Mark Today as Completed",
+                    text = if (isTodayMarked) todayMarkedText else markTodayText,
                     style = MaterialTheme.typography.labelLarge,
                     color = if (isTodayMarked) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onPrimary
                 )

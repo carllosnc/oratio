@@ -11,6 +11,7 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -274,215 +275,239 @@ fun HomeScreen(
                     containerColor = MaterialTheme.colorScheme.surfaceContainer
                 )
             )
-        },
-        bottomBar = {
-            // Floating Audio Mini Player or Floating Prayer Calendar Card
-            Box {
-                AnimatedVisibility(
-                    visible = activeCalendarPrayerId != null,
-                    enter = slideInVertically(initialOffsetY = { it }) + fadeIn(),
-                    exit = slideOutVertically(targetOffsetY = { it }) + fadeOut()
+        }
+    ) { innerPadding ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.background)
+            ) {
+                Spacer(modifier = Modifier.height(8.dp))
+
+                // Category Filter Chips
+                LazyRow(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentPadding = PaddingValues(horizontal = 16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    PrayerCalendarFloatCard(
-                        prayerTitle = activeCalendarPrayerTranslation?.title ?: activeCalendarPrayer?.prayer?.defaultTitle ?: "Prayer Calendar",
-                        markedDates = activeCalendarPrayerLogs,
-                        onToggleDate = { dateStr, isMarked ->
-                            scope.launch {
-                                activeCalendarPrayerId?.let { pId ->
-                                    repository.togglePrayerDate(pId, dateStr, isMarked)
-                                }
-                            }
-                        },
-                        onClose = { activeCalendarPrayerId = null }
-                    )
+                    item {
+                        FilterChip(
+                            selected = selectedCategoryId == null && !showOnlyFavorites,
+                            onClick = {
+                                selectedCategoryId = null
+                                showOnlyFavorites = false
+                            },
+                            label = { Text("All Prayers") },
+                            colors = FilterChipDefaults.filterChipColors(
+                                containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+                                labelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                                selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                                selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer
+                            )
+                        )
+                    }
+
+                    item {
+                        FilterChip(
+                            selected = showOnlyFavorites,
+                            onClick = { showOnlyFavorites = !showOnlyFavorites },
+                            label = { Text("Favorites ⭐") },
+                            colors = FilterChipDefaults.filterChipColors(
+                                containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+                                labelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                                selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                                selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer
+                            )
+                        )
+                    }
+
+                    items(categories) { category ->
+                        FilterChip(
+                            selected = selectedCategoryId == category.id && !showOnlyFavorites,
+                            onClick = {
+                                selectedCategoryId = if (selectedCategoryId == category.id) null else category.id
+                                showOnlyFavorites = false
+                            },
+                            label = { Text(category.name) },
+                            colors = FilterChipDefaults.filterChipColors(
+                                containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+                                labelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                                selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                                selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer
+                            )
+                        )
+                    }
                 }
 
-                AnimatedVisibility(
-                    visible = playingPrayerId != null && activeCalendarPrayerId == null,
-                    enter = slideInVertically(initialOffsetY = { it }) + fadeIn(),
-                    exit = slideOutVertically(targetOffsetY = { it }) + fadeOut()
-                ) {
-                    Surface(
+                Spacer(modifier = Modifier.height(10.dp))
+
+                HorizontalDivider(
+                    color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.7f),
+                    thickness = 1.dp,
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                // Prayer List
+                if (filteredPrayers.isEmpty()) {
+                    Box(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
-                        shape = RoundedCornerShape(16.dp),
-                        color = MaterialTheme.colorScheme.surfaceContainerHigh,
-                        tonalElevation = 6.dp,
-                        shadowElevation = 6.dp
+                            .fillMaxSize()
+                            .padding(32.dp),
+                        contentAlignment = Alignment.Center
                     ) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp, vertical = 12.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                modifier = Modifier.weight(1f)
-                            ) {
-                                Icon(
-                                    imageVector = Icons.AutoMirrored.Filled.VolumeUp,
-                                    contentDescription = "Playing Audio",
-                                    tint = MaterialTheme.colorScheme.primary
-                                )
-
-                                Spacer(modifier = Modifier.width(12.dp))
-
-                                Column {
-                                    Text(
-                                        text = activePlayingTranslation?.title ?: activePlayingPrayer?.prayer?.defaultTitle ?: "Playing Prayer",
-                                        style = MaterialTheme.typography.titleSmall,
-                                        color = MaterialTheme.colorScheme.onSurface,
-                                        maxLines = 1
-                                    )
-                                    Text(
-                                        text = "Audio Narration • Playing",
-                                        style = MaterialTheme.typography.labelSmall,
-                                        color = MaterialTheme.colorScheme.primary
-                                    )
+                        Text(
+                            text = "No prayers found.",
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                } else {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize(),
+                        contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 12.dp, bottom = 80.dp),
+                        verticalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        items(filteredPrayers, key = { it.prayer.id }) { prayerItem ->
+                            PrayerListItemCard(
+                                prayerItem = prayerItem,
+                                preferredLanguageCode = userLanguageCode,
+                                isPlayingThisPrayer = playingPrayerId == prayerItem.prayer.id,
+                                isCalendarActiveThisPrayer = activeCalendarPrayerId == prayerItem.prayer.id,
+                                onPrayerClick = {
+                                    if (playingPrayerId != null) {
+                                        mediaPlayer?.stop()
+                                        mediaPlayer?.release()
+                                        mediaPlayer = null
+                                        tts?.stop()
+                                        playingPrayerId = null
+                                    }
+                                    onPrayerClick(prayerItem.prayer.id)
+                                },
+                                onFavoriteToggle = {
+                                    scope.launch {
+                                        repository.toggleFavorite(prayerItem.prayer.id, !prayerItem.prayer.isFavorite)
+                                    }
+                                },
+                                onAudioToggle = {
+                                    toggleAudioForPrayer(prayerItem)
+                                },
+                                onCalendarToggle = {
+                                    activeCalendarPrayerId = if (activeCalendarPrayerId == prayerItem.prayer.id) null else prayerItem.prayer.id
                                 }
-                            }
-
-                            IconButton(onClick = {
-                                mediaPlayer?.stop()
-                                mediaPlayer?.release()
-                                mediaPlayer = null
-                                tts?.stop()
-                                playingPrayerId = null
-                            }) {
-                                Icon(
-                                    imageVector = Icons.Default.Stop,
-                                    contentDescription = "Stop Playback",
-                                    tint = Color.Red
-                                )
-                            }
+                            )
                         }
                     }
                 }
             }
-        }
-    ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .background(MaterialTheme.colorScheme.background)
-        ) {
-            Spacer(modifier = Modifier.height(8.dp))
 
-            // Category Filter Chips
-            LazyRow(
-                modifier = Modifier.fillMaxWidth(),
-                contentPadding = PaddingValues(horizontal = 16.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            // Clickable Backdrop Scrim overlay (Dismisses calendar on tap outside)
+            AnimatedVisibility(
+                visible = activeCalendarPrayerId != null,
+                enter = fadeIn(),
+                exit = fadeOut()
             ) {
-                item {
-                    FilterChip(
-                        selected = selectedCategoryId == null && !showOnlyFavorites,
-                        onClick = {
-                            selectedCategoryId = null
-                            showOnlyFavorites = false
-                        },
-                        label = { Text("All Prayers") },
-                        colors = FilterChipDefaults.filterChipColors(
-                            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-                            labelColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                            selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
-                            selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer
-                        )
-                    )
-                }
-
-                item {
-                    FilterChip(
-                        selected = showOnlyFavorites,
-                        onClick = { showOnlyFavorites = !showOnlyFavorites },
-                        label = { Text("Favorites ⭐") },
-                        colors = FilterChipDefaults.filterChipColors(
-                            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-                            labelColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                            selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
-                            selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer
-                        )
-                    )
-                }
-
-                items(categories) { category ->
-                    FilterChip(
-                        selected = selectedCategoryId == category.id && !showOnlyFavorites,
-                        onClick = {
-                            selectedCategoryId = if (selectedCategoryId == category.id) null else category.id
-                            showOnlyFavorites = false
-                        },
-                        label = { Text(category.name) },
-                        colors = FilterChipDefaults.filterChipColors(
-                            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-                            labelColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                            selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
-                            selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer
-                        )
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.height(10.dp))
-
-            HorizontalDivider(
-                color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.7f),
-                thickness = 1.dp,
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            // Prayer List
-            if (filteredPrayers.isEmpty()) {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(32.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "No prayers found.",
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-            } else {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 12.dp, bottom = 16.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    items(filteredPrayers, key = { it.prayer.id }) { prayerItem ->
-                        PrayerListItemCard(
-                            prayerItem = prayerItem,
-                            preferredLanguageCode = userLanguageCode,
-                            isPlayingThisPrayer = playingPrayerId == prayerItem.prayer.id,
-                            isCalendarActiveThisPrayer = activeCalendarPrayerId == prayerItem.prayer.id,
-                            onPrayerClick = {
-                                if (playingPrayerId != null) {
-                                    mediaPlayer?.stop()
-                                    mediaPlayer?.release()
-                                    mediaPlayer = null
-                                    tts?.stop()
-                                    playingPrayerId = null
-                                }
-                                onPrayerClick(prayerItem.prayer.id)
-                            },
-                            onFavoriteToggle = {
-                                scope.launch {
-                                    repository.toggleFavorite(prayerItem.prayer.id, !prayerItem.prayer.isFavorite)
-                                }
-                            },
-                            onAudioToggle = {
-                                toggleAudioForPrayer(prayerItem)
-                            },
-                            onCalendarToggle = {
-                                activeCalendarPrayerId = if (activeCalendarPrayerId == prayerItem.prayer.id) null else prayerItem.prayer.id
+                        .background(Color.Black.copy(alpha = 0.35f))
+                        .clickable(
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null
+                        ) {
+                            activeCalendarPrayerId = null
+                        }
+                )
+            }
+
+            // Floating Prayer Calendar Card
+            AnimatedVisibility(
+                visible = activeCalendarPrayerId != null,
+                modifier = Modifier.align(Alignment.BottomCenter),
+                enter = slideInVertically(initialOffsetY = { it }) + fadeIn(),
+                exit = slideOutVertically(targetOffsetY = { it }) + fadeOut()
+            ) {
+                PrayerCalendarFloatCard(
+                    prayerTitle = activeCalendarPrayerTranslation?.title ?: activeCalendarPrayer?.prayer?.defaultTitle ?: "Prayer Calendar",
+                    markedDates = activeCalendarPrayerLogs,
+                    onToggleDate = { dateStr, isMarked ->
+                        scope.launch {
+                            activeCalendarPrayerId?.let { pId ->
+                                repository.togglePrayerDate(pId, dateStr, isMarked)
                             }
-                        )
+                        }
+                    },
+                    onClose = { activeCalendarPrayerId = null }
+                )
+            }
+
+            // Floating Audio Mini Player
+            AnimatedVisibility(
+                visible = playingPrayerId != null && activeCalendarPrayerId == null,
+                modifier = Modifier.align(Alignment.BottomCenter),
+                enter = slideInVertically(initialOffsetY = { it }) + fadeIn(),
+                exit = slideOutVertically(targetOffsetY = { it }) + fadeOut()
+            ) {
+                Surface(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    shape = RoundedCornerShape(16.dp),
+                    color = MaterialTheme.colorScheme.surfaceContainerHigh,
+                    tonalElevation = 6.dp,
+                    shadowElevation = 6.dp
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 12.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.VolumeUp,
+                                contentDescription = "Playing Audio",
+                                tint = MaterialTheme.colorScheme.primary
+                            )
+
+                            Spacer(modifier = Modifier.width(12.dp))
+
+                            Column {
+                                Text(
+                                    text = activePlayingTranslation?.title ?: activePlayingPrayer?.prayer?.defaultTitle ?: "Playing Prayer",
+                                    style = MaterialTheme.typography.titleSmall,
+                                    color = MaterialTheme.colorScheme.onSurface,
+                                    maxLines = 1
+                                )
+                                Text(
+                                    text = "Audio Narration • Playing",
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                            }
+                        }
+
+                        IconButton(onClick = {
+                            mediaPlayer?.stop()
+                            mediaPlayer?.release()
+                            mediaPlayer = null
+                            tts?.stop()
+                            playingPrayerId = null
+                        }) {
+                            Icon(
+                                imageVector = Icons.Default.Stop,
+                                contentDescription = "Stop Playback",
+                                tint = Color.Red
+                            )
+                        }
                     }
                 }
             }

@@ -73,15 +73,18 @@ fun PrayerDetailScreen(
     var selectedLanguageCode by remember(userLanguageCode) { mutableStateOf(userLanguageCode) }
 
     val prayer = prayerWithTranslations
+    val primaryTranslation = prayer?.translations?.find { it.languageCode == selectedLanguageCode }
+        ?: prayer?.translations?.find { it.languageCode == "en" }
+        ?: prayer?.translations?.firstOrNull()
 
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
                     Text(
-                        text = prayer?.prayer?.defaultTitle ?: "Prayer Details",
+                        text = primaryTranslation?.title ?: prayer?.prayer?.defaultTitle ?: "Prayer Details",
                         maxLines = 1,
-                        style = MaterialTheme.typography.titleMedium,
+                        style = MaterialTheme.typography.titleSmall.copy(fontSize = 18.sp),
                         fontFamily = GermaniaOneFontFamily
                     )
                 },
@@ -137,10 +140,6 @@ fun PrayerDetailScreen(
                 CircularProgressIndicator()
             }
         } else {
-            val primaryTranslation = prayer.translations.find { it.languageCode == selectedLanguageCode }
-                ?: prayer.translations.find { it.languageCode == "en" }
-                ?: prayer.translations.firstOrNull()
-
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -189,7 +188,7 @@ fun PrayerDetailScreen(
                         Column(modifier = Modifier.padding(16.dp)) {
                             Text(
                                 text = primaryTranslation?.title ?: prayer.prayer.defaultTitle,
-                                style = MaterialTheme.typography.headlineSmall,
+                                style = MaterialTheme.typography.titleLarge.copy(fontSize = 22.sp),
                                 fontFamily = GermaniaOneFontFamily,
                                 color = MaterialTheme.colorScheme.onSurface
                             )

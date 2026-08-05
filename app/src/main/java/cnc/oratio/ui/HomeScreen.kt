@@ -471,93 +471,94 @@ fun PrayerListItemCard(
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            // Title
-            Text(
-                text = preferredTranslation?.title ?: prayerItem.prayer.defaultTitle,
-                style = MaterialTheme.typography.titleLarge,
-                fontFamily = GermaniaOneFontFamily,
-                color = MaterialTheme.colorScheme.onSurface
-            )
-
-            Spacer(modifier = Modifier.height(4.dp))
-
-            // Subtitle / Original Latin Name
-            val subtitleText = preferredTranslation?.subtitle ?: latinTranslation?.title
-            subtitleText?.let { sub ->
-                Text(
-                    text = sub,
-                    style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.primary
-                )
-            }
-
-            Spacer(modifier = Modifier.height(6.dp))
-
-            // Preview snippet
-            preferredTranslation?.content?.let { content ->
-                val cleanSnippet = content.replace("\n", " ").replace(Regex("\\s+"), " ")
-                Text(
-                    text = cleanSnippet.take(90) + if (cleanSnippet.length > 90) "..." else "",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    lineHeight = 16.sp
-                )
-            }
-
-            Spacer(modifier = Modifier.height(10.dp))
-
-            // Available Language Badges
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(6.dp),
-                verticalAlignment = Alignment.CenterVertically
+        Column(modifier = Modifier.fillMaxWidth()) {
+            // Main Content Container
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 12.dp)
             ) {
-                prayerItem.translations.forEach { tr ->
-                    val flag = when (tr.languageCode) {
-                        "la" -> "🌐 Latin"
-                        "pt" -> "🇧🇷 PT"
-                        "en" -> "🇺🇸 EN"
-                        "es" -> "🇪🇸 ES"
-                        else -> tr.languageCode.uppercase()
-                    }
-                    val isSelected = tr.languageCode == preferredLanguageCode
-                    Box(
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(6.dp))
-                            .background(
-                                if (isSelected) MaterialTheme.colorScheme.primaryContainer
-                                else MaterialTheme.colorScheme.surfaceContainerHigh
+                // Title
+                Text(
+                    text = preferredTranslation?.title ?: prayerItem.prayer.defaultTitle,
+                    style = MaterialTheme.typography.titleLarge,
+                    fontFamily = GermaniaOneFontFamily,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+
+                Spacer(modifier = Modifier.height(4.dp))
+
+                // Subtitle / Original Latin Name
+                val subtitleText = preferredTranslation?.subtitle ?: latinTranslation?.title
+                subtitleText?.let { sub ->
+                    Text(
+                        text = sub,
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(6.dp))
+
+                // Preview snippet
+                preferredTranslation?.content?.let { content ->
+                    val cleanSnippet = content.replace("\n", " ").replace(Regex("\\s+"), " ")
+                    Text(
+                        text = cleanSnippet.take(90) + if (cleanSnippet.length > 90) "..." else "",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        lineHeight = 16.sp
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                // Available Language Badges
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    prayerItem.translations.forEach { tr ->
+                        val flag = when (tr.languageCode) {
+                            "la" -> "🌐 Latin"
+                            "pt" -> "🇧🇷 PT"
+                            "en" -> "🇺🇸 EN"
+                            "es" -> "🇪🇸 ES"
+                            else -> tr.languageCode.uppercase()
+                        }
+                        val isSelected = tr.languageCode == preferredLanguageCode
+                        Box(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(6.dp))
+                                .background(
+                                    if (isSelected) MaterialTheme.colorScheme.primaryContainer
+                                    else MaterialTheme.colorScheme.surfaceContainerHigh
+                                )
+                                .padding(horizontal = 6.dp, vertical = 2.dp)
+                        ) {
+                            Text(
+                                text = flag,
+                                style = MaterialTheme.typography.labelSmall,
+                                fontSize = 10.sp,
+                                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
+                                color = if (isSelected) MaterialTheme.colorScheme.onPrimaryContainer
+                                else MaterialTheme.colorScheme.onSurface
                             )
-                            .padding(horizontal = 6.dp, vertical = 2.dp)
-                    ) {
-                        Text(
-                            text = flag,
-                            style = MaterialTheme.typography.labelSmall,
-                            fontSize = 10.sp,
-                            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-                            color = if (isSelected) MaterialTheme.colorScheme.onPrimaryContainer
-                            else MaterialTheme.colorScheme.onSurface
-                        )
+                        }
                     }
                 }
             }
-
-            Spacer(modifier = Modifier.height(12.dp))
 
             HorizontalDivider(
                 color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.7f),
                 thickness = 1.dp
             )
 
-            Spacer(modifier = Modifier.height(4.dp))
-
-            // Bottom action bar with Favorite and Audio at left, Arrow at right
+            // Bottom Action Bar with Tight Padding
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 4.dp, vertical = 2.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {

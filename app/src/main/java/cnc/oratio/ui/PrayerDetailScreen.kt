@@ -3,6 +3,7 @@ package cnc.oratio.ui
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
@@ -28,7 +29,6 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Stop
-import androidx.compose.material.icons.filled.VolumeUp
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -87,7 +87,8 @@ fun PrayerDetailScreen(
         ?: prayer?.translations?.find { it.languageCode == "en" }
         ?: prayer?.translations?.firstOrNull()
 
-    // TextToSpeech Engine Setup for Solemn Deep Male Voice
+    // Audio Narration setup with MediaPlayer & TextToSpeech fallback
+    var mediaPlayer by remember { mutableStateOf<MediaPlayer?>(null) }
     var tts by remember { mutableStateOf<TextToSpeech?>(null) }
     var isSpeaking by remember { mutableStateOf(false) }
 
@@ -99,6 +100,9 @@ fun PrayerDetailScreen(
             }
         }
         onDispose {
+            mediaPlayer?.stop()
+            mediaPlayer?.release()
+            mediaPlayer = null
             textToSpeech?.stop()
             textToSpeech?.shutdown()
         }
@@ -106,47 +110,69 @@ fun PrayerDetailScreen(
 
     val toggleAudioPlayback = {
         if (isSpeaking) {
+            mediaPlayer?.stop()
+            mediaPlayer?.release()
+            mediaPlayer = null
             tts?.stop()
             isSpeaking = false
         } else {
-            primaryTranslation?.content?.let { textToRead ->
-                val locale = when (selectedLanguageCode) {
-                    "la" -> Locale.forLanguageTag("it-IT") // Italian locale for authentic Latin pronunciation
-                    "pt" -> Locale.forLanguageTag("pt-BR")
-                    "en" -> Locale.forLanguageTag("en-US")
-                    "es" -> Locale.forLanguageTag("es-ES")
-                    else -> Locale.getDefault()
-                }
+            val resName = "${prayerId}_${selectedLanguageCode}".lowercase()
+            val resId = context.resources.getIdentifier(resName, "raw", context.packageName)
 
-                tts?.language = locale
-                tts?.setPitch(0.65f) // Deep male pitch
-                tts?.setSpeechRate(0.82f) // Solemn, reverent pace
-
-                // Attempt to pick a male voice if available on device
-                tts?.voices?.find { voice ->
-                    voice.locale.language == locale.language &&
-                    voice.name.contains("male", ignoreCase = true)
-                }?.let { maleVoice ->
-                    tts?.voice = maleVoice
-                }
-
-                tts?.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
-                    override fun onStart(utteranceId: String?) {
-                        isSpeaking = true
-                    }
-                    override fun onDone(utteranceId: String?) {
+            if (resId != 0) {
+                try {
+                    mediaPlayer?.release()
+                    val player = MediaPlayer.create(context, resId)
+                    mediaPlayer = player
+                    player?.setOnCompletionListener {
                         isSpeaking = false
+                        player.release()
+                        mediaPlayer = null
                     }
-                    override fun onError(utteranceId: String?) {
-                        isSpeaking = false
-                    }
-                })
-
-                val params = Bundle().apply {
-                    putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "PRAYER_AUDIO_ID")
+                    player?.start()
+                    isSpeaking = true
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
-                tts?.speak(textToRead, TextToSpeech.QUEUE_FLUSH, params, "PRAYER_AUDIO_ID")
-                isSpeaking = true
+            } else {
+                primaryTranslation?.content?.let { textToRead ->
+                    val locale = when (selectedLanguageCode) {
+                        "la" -> Locale.forLanguageTag("it-IT")
+                        "pt" -> Locale.forLanguageTag("pt-BR")
+                        "en" -> Locale.forLanguageTag("en-US")
+                        "es" -> Locale.forLanguageTag("es-ES")
+                        else -> Locale.getDefault()
+                    }
+
+                    tts?.language = locale
+                    tts?.setPitch(0.65f)
+                    tts?.setSpeechRate(0.82f)
+
+                    tts?.voices?.find { voice ->
+                        voice.locale.language == locale.language &&
+                        voice.name.contains("male", ignoreCase = true)
+                    }?.let { maleVoice ->
+                        tts?.voice = maleVoice
+                    }
+
+                    tts?.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
+                        override fun onStart(utteranceId: String?) {
+                            isSpeaking = true
+                        }
+                        override fun onDone(utteranceId: String?) {
+                            isSpeaking = false
+                        }
+                        override fun onError(utteranceId: String?) {
+                            isSpeaking = false
+                        }
+                    })
+
+                    val params = Bundle().apply {
+                        putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "PRAYER_AUDIO_ID")
+                    }
+                    tts?.speak(textToRead, TextToSpeech.QUEUE_FLUSH, params, "PRAYER_AUDIO_ID")
+                    isSpeaking = true
+                }
             }
         }
     }
@@ -164,6 +190,9 @@ fun PrayerDetailScreen(
                 },
                 navigationIcon = {
                     IconButton(onClick = {
+                        mediaPlayer?.stop()
+                        mediaPlayer?.release()
+                        mediaPlayer = null
                         tts?.stop()
                         onBackClick()
                     }) {
@@ -263,6 +292,9 @@ fun PrayerDetailScreen(
                                 selected = selectedLanguageCode == lang.code,
                                 onClick = {
                                     if (isSpeaking) {
+                                        mediaPlayer?.stop()
+                                        mediaPlayer?.release()
+                                        mediaPlayer = null
                                         tts?.stop()
                                         isSpeaking = false
                                     }

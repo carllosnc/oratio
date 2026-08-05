@@ -26,6 +26,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -47,16 +48,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cnc.oratio.data.local.entity.LanguageEntity
 import cnc.oratio.data.repository.PrayerRepository
-import kotlinx.coroutines.launch
-
 import cnc.oratio.ui.theme.BokorFontFamily
-
-import androidx.compose.ui.text.font.FontFamily
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -206,7 +205,7 @@ fun PrayerDetailScreen(
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    // Prayer Content View
+                    // Prayer Content View with Paragraph Dividers
                     Card(
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(20.dp),
@@ -217,15 +216,30 @@ fun PrayerDetailScreen(
                         Column(
                             modifier = Modifier.padding(22.dp)
                         ) {
-                            Text(
-                                text = primaryTranslation?.content ?: "",
-                                style = MaterialTheme.typography.bodyLarge.copy(
-                                    fontSize = 18.sp,
-                                    lineHeight = 30.sp,
-                                    letterSpacing = 0.3.sp
-                                ),
-                                color = MaterialTheme.colorScheme.onSurface
-                            )
+                            val paragraphs = (primaryTranslation?.content ?: "")
+                                .split("\n")
+                                .filter { it.isNotBlank() }
+
+                            paragraphs.forEachIndexed { index, paragraph ->
+                                Text(
+                                    text = paragraph.trim(),
+                                    style = MaterialTheme.typography.bodyLarge.copy(
+                                        fontSize = 18.sp,
+                                        lineHeight = 28.sp,
+                                        letterSpacing = 0.3.sp
+                                    ),
+                                    color = MaterialTheme.colorScheme.onSurface
+                                )
+
+                                if (index < paragraphs.lastIndex) {
+                                    Spacer(modifier = Modifier.height(14.dp))
+                                    HorizontalDivider(
+                                        color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.4f),
+                                        thickness = 1.dp
+                                    )
+                                    Spacer(modifier = Modifier.height(14.dp))
+                                }
+                            }
                         }
                     }
 

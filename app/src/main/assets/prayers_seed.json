@@ -21,28 +21,28 @@
           "languageCode": "la",
           "title": "Pater Noster",
           "subtitle": "Oratio Dominica",
-          "content": "Pater noster, qui es in caelis, sanctificetur nomen tuum.\n\nAdveniat regnum tuum. Fiat voluntas tua, sicut in caelo et in terra.\n\nPanem nostrum quotidianum da nobis hodie, et dimitte nobis debita nostra sicut et nos dimittimus debitoribus nostris.\n\nEt ne nos inducas in tentationem, sed libera nos a malo.\n\nAmen.",
+          "content": "Pater noster, qui es in caelis, sanctificetur nomen tuum.\nAdveniat regnum tuum. Fiat voluntas tua, sicut in caelo et in terra.\nPanem nostrum quotidianum da nobis hodie, et dimitte nobis debita nostra sicut et nos dimittimus debitoribus nostris.\nEt ne nos inducas in tentationem, sed libera nos a malo.\nAmen.",
           "notes": "Traditional Latin text."
         },
         {
           "languageCode": "pt",
           "title": "Pai Nosso",
           "subtitle": "Oração do Senhor",
-          "content": "Pai nosso, que estais nos céus, santificado seja o vosso nome.\n\nVenha a nós o vosso reino. Seja feita a vossa vontade, assim na terra como no céu.\n\nO pão nosso de cada dia nos dai hoje. Perdoai-nos as nossas ofensas, assim como nós perdoamos a quem nos tem ofendido.\n\nE não nos deixeis cair em tentação, mas livrai-nos do mal.\n\nAmém.",
+          "content": "Pai nosso, que estais nos céus, santificado seja o vosso nome.\nVenha a nós o vosso reino. Seja feita a vossa vontade, assim na terra como no céu.\nO pão nosso de cada dia nos dai hoje. Perdoai-nos as nossas ofensas, assim como nós perdoamos a quem nos tem ofendido.\nE não nos deixeis cair em tentação, mas livrai-nos do mal.\nAmém.",
           "notes": "Traditional Portuguese text."
         },
         {
           "languageCode": "en",
           "title": "Our Father",
           "subtitle": "The Lord's Prayer",
-          "content": "Our Father, who art in heaven, hallowed be thy name.\n\nThy kingdom come. Thy will be done, on earth as it is in heaven.\n\nGive us this day our daily bread. And forgive us our trespasses, as we forgive those who trespass against us.\n\nAnd lead us not into temptation, but deliver us from evil.\n\nAmen.",
+          "content": "Our Father, who art in heaven, hallowed be thy name.\nThy kingdom come. Thy will be done, on earth as it is in heaven.\nGive us this day our daily bread. And forgive us our trespasses, as we forgive those who trespass against us.\nAnd lead us not into temptation, but deliver us from evil.\nAmen.",
           "notes": "Traditional English text."
         },
         {
           "languageCode": "es",
           "title": "Padre Nuestro",
           "subtitle": "Oración del Señor",
-          "content": "Padre nuestro, que estás en el cielo, santificado sea tu Nombre.\n\nVenga a nosotros tu reino; hágase tu voluntad en la tierra como en el cielo.\n\nDanos hoy nuestro pan de cada día; perdona nuestras ofensas, como también nosotros perdonamos a los que nos ofenden.\n\nNo nos dejes caer en la tentación, y líbranos del mal.\n\nAmén.",
+          "content": "Padre nuestro, que estás en el cielo, santificado sea tu Nombre.\nVenga a nosotros tu reino; hágase tu voluntad en la tierra como en el cielo.\nDanos hoy nuestro pan de cada día; perdona nuestras ofensas, como también nosotros perdonamos a los que nos ofenden.\nNo nos dejes caer en la tentación, y líbranos del mal.\nAmén.",
           "notes": "Traditional Spanish text."
         }
       ]
@@ -56,28 +56,28 @@
           "languageCode": "la",
           "title": "Ave Maria",
           "subtitle": "Salutatio Angelica",
-          "content": "Ave Maria, gratia plena, Dominus tecum.\n\nBenedicta tu in mulieribus, et benedictus fructus ventris tui, Iesus.\n\nSancta Maria, Mater Dei, ora pro nobis peccatoribus, nunc et in hora mortis nostrae.\n\nAmen.",
+          "content": "Ave Maria, gratia plena, Dominus tecum.\nBenedicta tu in mulieribus, et benedictus fructus ventris tui, Iesus.\nSancta Maria, Mater Dei, ora pro nobis peccatoribus, nunc et in hora mortis nostrae.\nAmen.",
           "notes": "Angelic Salutation in Latin."
         },
         {
           "languageCode": "pt",
           "title": "Ave Maria",
           "subtitle": "Saudação Angélica",
-          "content": "Ave Maria, cheia de graça, o Senhor é convosco.\n\nBendita sois vós entre as mulheres e bendito é o fruto do vosso ventre, Jesus.\n\nSanta Maria, Mãe de Deus, rogai por nós, pecadores, agora e na hora de nossa morte.\n\nAmém.",
+          "content": "Ave Maria, cheia de graça, o Senhor é convosco.\nBendita sois vós entre as mulheres e bendito é o fruto do vosso ventre, Jesus.\nSanta Maria, Mãe de Deus, rogai por nós, pecadores, agora e na hora de nossa morte.\nAmém.",
           "notes": "Traditional Portuguese text."
         },
         {
           "languageCode": "en",
           "title": "Hail Mary",
           "subtitle": "Angelic Salutation",
-          "content": "Hail Mary, full of grace, the Lord is with thee.\n\nBlessed art thou amongst women, and blessed is the fruit of thy womb, Jesus.\n\nHoly Mary, Mother of God, pray for us sinners, now and at the hour of our death.\n\nAmen.",
+          "content": "Hail Mary, full of grace, the Lord is with thee.\nBlessed art thou amongst women, and blessed is the fruit of thy womb, Jesus.\nHoly Mary, Mother of God, pray for us sinners, now and at the hour of our death.\nAmen.",
           "notes": "Traditional English text."
         },
         {
           "languageCode": "es",
           "title": "Dios te Salve María",
           "subtitle": "Salutación Angélica",
-          "content": "Dios te salve, María, llena eres de gracia, el Señor es contigo.\n\nBendita tú eres entre todas las mujeres, y bendito es el fruto de tu vientre, Jesús.\n\nSanta María, Madre de Dios, ruega por nosotros, pecadores, ahora y en la hora de nuestra muerte.\n\nAmén.",
+          "content": "Dios te salve, María, llena eres de gracia, el Señor es contigo.\nBendita tú eres entre todas las mujeres, y bendito es el fruto de tu vientre, Jesús.\nSanta María, Madre de Dios, ruega por nosotros, pecadores, ahora y en la hora de nuestra muerte.\nAmén.",
           "notes": "Traditional Spanish text."
         }
       ]
@@ -91,28 +91,28 @@
           "languageCode": "la",
           "title": "Gloria Patri",
           "subtitle": "Doxologia Minor",
-          "content": "Gloria Patri, et Filio, et Spiritui Sancto.\n\nSicut erat in principio, et nunc, et semper, et in saecula saeculorum.\n\nAmen.",
+          "content": "Gloria Patri, et Filio, et Spiritui Sancto.\nSicut erat in principio, et nunc, et semper, et in saecula saeculorum.\nAmen.",
           "notes": "Minor Doxology in Latin."
         },
         {
           "languageCode": "pt",
           "title": "Glória ao Pai",
           "subtitle": "Doxologia Menor",
-          "content": "Glória ao Pai e ao Filho e ao Espírito Santo.\n\nComo era no princípio, agora e sempre.\n\nAmém.",
+          "content": "Glória ao Pai e ao Filho e ao Espírito Santo.\nComo era no princípio, agora e sempre.\nAmém.",
           "notes": "Traditional Portuguese text."
         },
         {
           "languageCode": "en",
           "title": "Glory Be",
           "subtitle": "Minor Doxology",
-          "content": "Glory be to the Father, and to the Son, and to the Holy Spirit.\n\nAs it was in the beginning, is now, and ever shall be, world without end.\n\nAmen.",
+          "content": "Glory be to the Father, and to the Son, and to the Holy Spirit.\nAs it was in the beginning, is now, and ever shall be, world without end.\nAmen.",
           "notes": "Traditional English text."
         },
         {
           "languageCode": "es",
           "title": "Gloria al Padre",
           "subtitle": "Doxología Menor",
-          "content": "Gloria al Padre y al Hijo y al Espírito Santo.\n\nComo era en el principio, ahora y siempre, por los siglos de los siglos.\n\nAmén.",
+          "content": "Gloria al Padre y al Hijo y al Espírito Santo.\nComo era en el principio, ahora y siempre, por los siglos de los siglos.\nAmén.",
           "notes": "Traditional Spanish text."
         }
       ]
@@ -126,28 +126,28 @@
           "languageCode": "la",
           "title": "Psalmus 23 (22)",
           "subtitle": "Dominus pascit me",
-          "content": "Dominus pascit me, et nihil mihi deerit: in pascuis herbidis me collocavit.\n\nSuper aquas quietis deduxit me; animam meam refecit.\n\nDeduxit me super semitas iustitiae propter nomen suum.\n\nNam etsi ambulavero in valle umbrae mortis, non timebo mala, quoniam tu mecum es.\n\nVirga tua et baculus tuus, ipsa me consolata sunt.\n\nParasti in conspectu meo mensam adversus eos qui tribulant me; impinguasti in oleo caput meum, et calix meus redundans est.\n\nEtenim benignitas et misericordia subsequentur me omnibus diebus vitae meae; et habitabo in domo Domini in longitudinem dierum.\n\nAmen.",
+          "content": "Dominus pascit me, et nihil mihi deerit: in pascuis herbidis me collocavit.\nSuper aquas quietis deduxit me; animam meam refecit.\nDeduxit me super semitas iustitiae propter nomen suum.\nNam etsi ambulavero in valle umbrae mortis, non timebo mala, quoniam tu mecum es.\nVirga tua et baculus tuus, ipsa me consolata sunt.\nParasti in conspectu meo mensam adversus eos qui tribulant me; impinguasti in oleo caput meum, et calix meus redundans est.\nEtenim benignitas et misericordia subsequentur me omnibus diebus vitae meae; et habitabo in domo Domini in longitudinem dierum.\nAmen.",
           "notes": "Vulgata Clementina text."
         },
         {
           "languageCode": "pt",
           "title": "Salmo 23 (22)",
           "subtitle": "O Senhor é o Meu Pastor",
-          "content": "O Senhor é o meu pastor; nada me faltará.\n\nEm verdes pastos me faz descansar, conduz-me suavemente a águas tranquilas.\n\nRefrigera a minha alma; guia-me pelas veredas da justiça por amor do seu nome.\n\nAinda que eu andasse pelo vale da sombra da morte, não temeria mal algum, porque tu estás comigo; a tua vara e o teu cajado me consolam.\n\nPreparas uma mesa perante mim na presença dos meus inimigos, unges a minha cabeça com óleo, o meu cálice transborda.\n\nCertamente que a bondade e a misericórdia me seguirão todos os dias da minha vida; e habitarei na casa do Senhor por longos dias.\n\nAmém.",
+          "content": "O Senhor é o meu pastor; nada me faltará.\nEm verdes pastos me faz descansar, conduz-me suavemente a águas tranquilas.\nRefrigera a minha alma; guia-me pelas veredas da justiça por amor do seu nome.\nAinda que eu andasse pelo vale da sombra da morte, não temeria mal algum, porque tu estás comigo; a tua vara e o teu cajado me consolam.\nPreparas uma mesa perante mim na presença dos meus inimigos, unges a minha cabeça com óleo, o meu cálice transborda.\nCertamente que a bondade e a misericórdia me seguirão todos os dias da minha vida; e habitarei na casa do Senhor por longos dias.\nAmém.",
           "notes": "Texto Bíblico Tradicional."
         },
         {
           "languageCode": "en",
           "title": "Psalm 23",
           "subtitle": "The Lord is My Shepherd",
-          "content": "The Lord is my shepherd; I shall not want.\n\nHe maketh me to lie down in green pastures: he leadeth me beside the still waters.\n\nHe restoreth my soul: he leadeth me in the paths of righteousness for his name's sake.\n\nYea, though I walk through the valley of the shadow of death, I will fear no evil: for thou art with me; thy rod and thy staff they comfort me.\n\nThou preparest a table before me in the presence of mine enemies: thou anointest my head with oil; my cup runneth over.\n\nSurely goodness and mercy shall follow me all the days of my life: and I will dwell in the house of the Lord for ever.\n\nAmen.",
+          "content": "The Lord is my shepherd; I shall not want.\nHe maketh me to lie down in green pastures: he leadeth me beside the still waters.\nHe restoreth my soul: he leadeth me in the paths of righteousness for his name's sake.\nYea, though I walk through the valley of the shadow of death, I will fear no evil: for thou art with me; thy rod and thy staff they comfort me.\nThou preparest a table before me in the presence of mine enemies: thou anointest my head with oil; my cup runneth over.\nSurely goodness and mercy shall follow me all the days of my life: and I will dwell in the house of the Lord for ever.\nAmen.",
           "notes": "Traditional English text."
         },
         {
           "languageCode": "es",
           "title": "Salmo 23 (22)",
           "subtitle": "El Señor es mi Pastor",
-          "content": "El Señor es mi pastor, nada me falta; en verdes prados me hace recostar, me conduce hacia fuentes tranquilas y repara mis fuerzas.\n\nMe guía por el sendero justo, por el honor de su nombre.\n\nAunque camine por cañadas oscuras, nada temo, porque tú vas conmigo: tu vara y tu cayado me sosiegan.\n\nPreparas una mesa ante mí, enfrente de mis enemigos; me unges la cabeza con perfume, y mi copa rebosa.\n\nTu bondad y tu misericordia me acompañan todos los días de mi vida, y habitaré en la casa del Señor por años sin término.\n\nAmén.",
+          "content": "El Señor es mi pastor, nada me falta; en verdes prados me hace recostar, me conduce hacia fuentes tranquilas y repara mis fuerzas.\nMe guía por el sendero justo, por el honor de su nombre.\nAunque camine por cañadas oscuras, nada temo, porque tú vas conmigo: tu vara y tu cayado me sosiegan.\nPreparas una mesa ante mí, enfrente de mis enemigos; me unges la cabeza con perfume, y mi copa rebosa.\nTu bondad y tu misericordia me acompañan todos los días de mi vida, y habitaré en la casa del Señor por años sin término.\nAmén.",
           "notes": "Texto Bíblico Tradicional."
         }
       ]

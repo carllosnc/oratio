@@ -291,8 +291,9 @@ fun PrayerListItemCard(
 
                 // Preview snippet
                 preferredTranslation?.content?.let { content ->
+                    val cleanSnippet = content.replace("\n", " ").replace(Regex("\\s+"), " ")
                     Text(
-                        text = content.take(90) + if (content.length > 90) "..." else "",
+                        text = cleanSnippet.take(90) + if (cleanSnippet.length > 90) "..." else "",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         lineHeight = 16.sp

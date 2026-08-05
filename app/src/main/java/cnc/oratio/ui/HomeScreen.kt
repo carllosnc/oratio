@@ -209,7 +209,7 @@ fun HomeScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text = "Oratio 🕊️",
+                        text = "Oratio",
                         style = MaterialTheme.typography.titleLarge,
                         fontFamily = GermaniaOneFontFamily
                     )

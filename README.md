@@ -1,30 +1,47 @@
 # Oratio 🕊️
 
-**Oratio** is an Android application built with **Kotlin** and **Jetpack Compose**, designed to organize and present prayers and devotions in multiple languages (such as Latin, Portuguese, English, and Spanish) with **100% offline-first capability**.
+**Oratio** is an Android application built with **Kotlin** and **Jetpack Compose**, designed to organize and present prayers and devotions in multiple languages (Latin, Portuguese, English, and Spanish) with **100% offline-first capability**, audio narration, prayer reminders, and habit tracking.
+
+---
+
+## 📱 Screenshots
+
+<div align="center">
+  <img src="docs/screenshots/home_screen.png" width="220" alt="Home Screen" />
+  <img src="docs/screenshots/prayer_detail_screen.png" width="220" alt="Prayer Detail Screen" />
+  <img src="docs/screenshots/reminders_screen.png" width="220" alt="Reminders Screen" />
+  <img src="docs/screenshots/calendar_screen.png" width="220" alt="Prayer Calendar Tracking" />
+</div>
 
 ---
 
 ## ✨ Main Features
 
-- 🌐 **Multilingual Support:** Prayers available in **Latin** (`la`), **Portuguese** (`pt`), **English** (`en`), and **Spanish** (`es`).
-- 📖 **Parallel Bilingual Mode:** View the original text (e.g., Latin) alongside its translation (e.g., English or Portuguese) side by side in real time.
-- 💾 **Offline-First Storage:** Local SQLite database managed via **Room Database**, automatically pre-populated on first launch using a JSON seed file.
-- 🔍 **Fast Search:** Instant full-text search across titles, categories, or keywords within prayer contents.
-- ⭐ **Favorites:** Bookmark favorite prayers for quick access.
-- 🎨 **Modern Design:** Built with **Jetpack Compose** following **Material Design 3** guidelines.
+- 🌐 **Multilingual Support:** Traditional prayers in **Latin** (`la`), **Portuguese** (`pt`), **English** (`en`), and **Spanish** (`es`).
+- 📖 **Parallel Bilingual Mode:** View original Latin texts alongside translations side-by-side in real time.
+- 🔊 **Audio Narration Engine:** Embedded studio audio assets with automatic fallback to male-pitched Text-To-Speech (TTS).
+- ⏰ **Prayer Alarms & Reminders:** Set exact local alarm notifications with custom day frequencies via `AlarmManager`.
+- 📅 **Prayer Habit Calendar:** Track daily prayer completion with an interactive calendar overlay.
+- 💾 **Offline-First DataStore & Room DB:** SQLite database managed via **Room Database** and **Jetpack DataStore** for user preferences.
+- ⭐ **Favorites & Search:** Instant full-text search across prayer titles, categories, and bookmarks.
+- 🎨 **Modern Material Design 3:** Custom warm color palette, adaptive launcher icons, and light/dark splash screen API support.
 
 ---
 
-## 🛠️ Tech Stack
+## 🛠️ Architecture & Tech Stack
+
+Following **Modern Android Development (MAD)** and **MVVM Architecture**:
 
 | Technology | Description |
 | :--- | :--- |
-| **Kotlin** | Primary programming language (v`2.2.10`) |
+| **Kotlin** | Primary programming language (`v2.2.10`) |
 | **Jetpack Compose** | Modern declarative UI toolkit |
-| **Material 3** | Latest design system components and themes |
-| **Room Database** | Official Android library for SQLite persistence (v`2.7.2`) |
-| **KSP** | Kotlin Symbol Processing for Room code generation (v`2.2.10-2.0.2`) |
-| **KotlinX Serialization** | JSON parsing and data serialization (v`1.8.0`) |
+| **Material Design 3** | Latest components, themes, and dynamic color system |
+| **Room Database** | Offline SQLite persistence (`v2.7.2`) |
+| **Jetpack DataStore** | Async preference storage (`v1.1.1`) |
+| **AndroidX SplashScreen** | Native theme splash screen integration (`v1.0.1`) |
+| **AlarmManager & Receivers** | Exact alarm scheduling and `BOOT_COMPLETED` restart handling |
+| **KSP & Serialization** | Code generation (`v2.2.10-2.0.2`) and JSON seed parsing |
 
 ---
 
@@ -34,15 +51,20 @@
 app/src/main/java/cnc/oratio/
 ├── data/
 │   ├── local/
-│   │   ├── dao/                 # Data Access Objects (PrayerDao)
+│   │   ├── dao/                 # PrayerDao and ReminderDao
 │   │   ├── database/            # OratioDatabase and DatabaseInitializer
-│   │   ├── entity/              # Room Entities (Prayer, Translation, Category, Language)
-│   │   └── model/               # Relational models and JSON serialization DTOs
-│   └── repository/              # PrayerRepository abstraction layer
+│   │   ├── entity/              # Room Entities (Prayer, Translation, Category, Reminder, PrayerLog)
+│   │   └── model/               # Relational models and DTOs
+│   └── repository/              # PrayerRepository and UserPreferencesRepository
+├── notification/                # AlarmScheduler, ReminderReceiver, BootReceiver, NotificationHelper
 └── ui/
-    ├── theme/                   # Material Design 3 theme, colors, and typography
-    ├── PrayerScreen.kt          # Main screen with language navigation and bilingual view
-    └── MainActivity.kt          # Main entry Activity and repository initialization
+    ├── components/              # Modular UI cards, AudioPlayerBar, AddReminderBottomSheet
+    ├── theme/                   # Material 3 typography, colors, and themes
+    ├── viewmodel/               # HomeViewModel, RemindersViewModel, ViewModelFactory
+    ├── HomeScreen.kt            # Main prayer dashboard
+    ├── RemindersScreen.kt       # Alarm and reminder manager
+    ├── PrayerDetailScreen.kt    # Full prayer reader & audio player
+    └── MainActivity.kt          # Main activity & AndroidX Splash Screen hook
 ```
 
 ---
@@ -72,14 +94,17 @@ app/src/main/java/cnc/oratio/
      .\gradlew.bat assembleDebug
      ```
 
-3. **Run on Emulator or Physical Device:**
-   Open the project folder in Android Studio and click **Run (Shift + F10)**.
+3. **Install and Run on Device/Emulator:**
+   ```cmd
+   .\gradlew.bat installDebug
+   adb shell am start -n cnc.oratio/.MainActivity
+   ```
 
 ---
 
 ## 📝 Adding New Prayers
 
-The application uses a seed file located at `app/src/main/assets/prayers_seed.json`. To add new prayers or translations, add a new JSON object following this structure:
+The application seeds its database on first launch using `app/src/main/assets/prayers_seed.json`. To add new prayers or translations, expand the JSON array:
 
 ```json
 {

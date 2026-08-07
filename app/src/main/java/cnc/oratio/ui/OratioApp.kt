@@ -6,12 +6,17 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import cnc.oratio.data.repository.PrayerRepository
+import cnc.oratio.ui.viewmodel.HomeViewModel
+import cnc.oratio.ui.viewmodel.RemindersViewModel
+import cnc.oratio.ui.viewmodel.ViewModelFactory
 
 sealed class Screen(val route: String) {
     object Home : Screen("home")
@@ -21,7 +26,7 @@ sealed class Screen(val route: String) {
     }
 }
 
-// iOS-style cubic bezier easing curve (ease-in-out curve matching iOS UINavigationController)
+// iOS-style cubic bezier easing curve matching iOS UINavigationController
 private val IosTransitionEasing = CubicBezierEasing(0.25f, 0.1f, 0.25f, 1.0f)
 private const val IosTransitionDuration = 400
 
@@ -31,6 +36,7 @@ fun OratioApp(
     targetPrayerId: String? = null
 ) {
     val navController = rememberNavController()
+    val viewModelFactory = remember(repository) { ViewModelFactory(repository) }
 
     LaunchedEffect(targetPrayerId) {
         if (!targetPrayerId.isNullOrEmpty()) {
@@ -67,8 +73,9 @@ fun OratioApp(
         }
     ) {
         composable(Screen.Home.route) {
+            val homeViewModel: HomeViewModel = viewModel(factory = viewModelFactory)
             HomeScreen(
-                repository = repository,
+                viewModel = homeViewModel,
                 onPrayerClick = { prayerId ->
                     navController.navigate(Screen.PrayerDetail.createRoute(prayerId))
                 },
@@ -79,8 +86,9 @@ fun OratioApp(
         }
 
         composable(Screen.Reminders.route) {
+            val remindersViewModel: RemindersViewModel = viewModel(factory = viewModelFactory)
             RemindersScreen(
-                repository = repository,
+                viewModel = remindersViewModel,
                 onBackClick = { navController.popBackStack() }
             )
         }

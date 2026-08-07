@@ -3,17 +3,13 @@ package cnc.oratio.ui
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
-import android.widget.TimePicker
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -21,7 +17,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -31,7 +26,6 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Alarm
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.NotificationsActive
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -39,17 +33,11 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilterChip
-import androidx.compose.material3.FilterChipDefaults
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -65,9 +53,9 @@ import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -81,25 +69,21 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import cnc.oratio.data.local.entity.ReminderEntity
 import cnc.oratio.data.local.model.PrayerWithTranslations
-import cnc.oratio.data.repository.PrayerRepository
 import cnc.oratio.notification.AlarmScheduler
+import cnc.oratio.ui.components.AddReminderBottomSheet
 import cnc.oratio.ui.theme.GermaniaOneFontFamily
 import cnc.oratio.ui.util.UiStrings
-import kotlinx.coroutines.launch
+import cnc.oratio.ui.viewmodel.RemindersViewModel
 import java.util.Locale
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RemindersScreen(
-    repository: PrayerRepository,
+    viewModel: RemindersViewModel,
     onBackClick: () -> Unit
 ) {
     val context = LocalContext.current
-    val scope = rememberCoroutineScope()
-    val userLanguageCode by repository.userLanguageCode.collectAsState()
-    val remindersState by repository.getAllReminders().collectAsState(initial = null)
-    val prayers by repository.getAllPrayers().collectAsState(initial = emptyList())
-    val reminders = remindersState ?: emptyList()
+    val uiState by viewModel.uiState.collectAsState()
 
     var hasNotificationPermission by remember {
         mutableStateOf(
@@ -120,20 +104,47 @@ fun RemindersScreen(
     var showAddBottomSheet by remember { mutableStateOf(false) }
 
     // Form state
-    var selectedPrayerId by remember { mutableStateOf<String?>(null) } // null = random daily
+    var selectedHour by remember { mutableIntStateOf(8) }
+    var selectedMinute by remember { mutableIntStateOf(0) }
+    var selectedPrayerId by remember { mutableStateOf<String?>(null) }
     var isDaily by remember { mutableStateOf(true) }
-    var selectedDays by remember { mutableStateOf(setOf(1, 2, 3, 4, 5, 6, 7)) } // 1..7
-    var selectedHour by remember { mutableStateOf(8) }
-    var selectedMinute by remember { mutableStateOf(0) }
+    var selectedDays by remember { mutableStateOf(setOf<Int>()) }
+    var editingReminder by remember { mutableStateOf<ReminderEntity?>(null) }
+
+    // TimePicker Dialog state
     var showTimePickerDialog by remember { mutableStateOf(false) }
+
+    val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+
+    val openAddForm = {
+        editingReminder = null
+        selectedHour = 8
+        selectedMinute = 0
+        selectedPrayerId = null
+        isDaily = true
+        selectedDays = emptySet()
+        showAddBottomSheet = true
+    }
+
+    val openEditForm = { reminder: ReminderEntity ->
+        editingReminder = reminder
+        selectedHour = reminder.hour
+        selectedMinute = reminder.minute
+        selectedPrayerId = reminder.prayerId
+        isDaily = reminder.isDaily
+        selectedDays = if (reminder.daysOfWeek.isBlank()) emptySet()
+        else reminder.daysOfWeek.split(",").mapNotNull { it.trim().toIntOrNull() }.toSet()
+        showAddBottomSheet = true
+    }
 
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
                     Text(
-                        text = UiStrings.remindersTitle(userLanguageCode),
-                        style = MaterialTheme.typography.titleSmall.copy(fontSize = 19.sp),
+                        text = UiStrings.remindersTitle(uiState.userLanguageCode),
+                        style = MaterialTheme.typography.titleLarge,
+                        fontSize = 24.sp,
                         fontFamily = GermaniaOneFontFamily
                     )
                 },
@@ -141,22 +152,16 @@ fun RemindersScreen(
                     IconButton(onClick = onBackClick) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back"
+                            contentDescription = "Back",
+                            tint = MaterialTheme.colorScheme.primary
                         )
                     }
                 },
                 actions = {
-                    IconButton(
-                        onClick = {
-                            if (!hasNotificationPermission && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                                permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                            }
-                            showAddBottomSheet = true
-                        }
-                    ) {
+                    IconButton(onClick = { openAddForm() }) {
                         Icon(
                             imageVector = Icons.Default.Add,
-                            contentDescription = UiStrings.addReminder(userLanguageCode),
+                            contentDescription = "Add Reminder",
                             tint = MaterialTheme.colorScheme.primary
                         )
                     }
@@ -167,188 +172,211 @@ fun RemindersScreen(
             )
         }
     ) { innerPadding ->
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
                 .background(MaterialTheme.colorScheme.background)
         ) {
-            // Permission Banner (if not granted)
-            if (!hasNotificationPermission && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer
-                    ),
-                    shape = RoundedCornerShape(16.dp)
-                ) {
-                    Row(
+            Column(modifier = Modifier.fillMaxSize()) {
+                // Permission Banner if notification permission is missing on Android 13+
+                if (!hasNotificationPermission && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    Surface(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(16.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
+                        shape = RoundedCornerShape(12.dp),
+                        color = MaterialTheme.colorScheme.primaryContainer
                     ) {
-                        Column(modifier = Modifier.weight(1f)) {
-                            Text(
-                                text = UiStrings.permissionTitle(userLanguageCode),
-                                style = MaterialTheme.typography.titleMedium,
-                                fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.onPrimaryContainer
-                            )
-                            Spacer(modifier = Modifier.height(4.dp))
-                            Text(
-                                text = UiStrings.permissionText(userLanguageCode),
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onPrimaryContainer
-                            )
-                        }
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Button(
-                            onClick = { permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS) },
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = MaterialTheme.colorScheme.primary
-                            )
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(14.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            Text(UiStrings.allow(userLanguageCode))
+                            Row(
+                                modifier = Modifier.weight(1f),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.NotificationsActive,
+                                    contentDescription = "Enable Notifications",
+                                    tint = MaterialTheme.colorScheme.onPrimaryContainer
+                                )
+                                Spacer(modifier = Modifier.width(12.dp))
+                                Text(
+                                    text = UiStrings.enableNotificationsBanner(uiState.userLanguageCode),
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                                )
+                            }
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Button(
+                                onClick = { permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS) },
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = MaterialTheme.colorScheme.primary
+                                )
+                            ) {
+                                Text(UiStrings.allow(uiState.userLanguageCode))
+                            }
                         }
                     }
                 }
-            }
 
-            // Reminders List
-            if (remindersState == null) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(32.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator(
-                        color = MaterialTheme.colorScheme.primary,
-                        strokeWidth = 3.dp
-                    )
-                }
-            } else if (reminders.isEmpty()) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(32.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Icon(
-                            imageVector = Icons.Default.Alarm,
-                            contentDescription = "No reminders",
-                            modifier = Modifier.padding(bottom = 12.dp),
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
-                        )
-                        Text(
-                            text = UiStrings.noReminders(userLanguageCode),
-                            style = MaterialTheme.typography.bodyLarge,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                // Reminders List / Loading State
+                if (uiState.remindersState == null) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(32.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator(
+                            color = MaterialTheme.colorScheme.primary,
+                            strokeWidth = 3.dp
                         )
                     }
-                }
-            } else {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    items(reminders, key = { it.id }) { reminder ->
-                        val prayer = prayers.find { it.prayer.id == reminder.prayerId }
-                        val translation = prayer?.translations?.find { it.languageCode == userLanguageCode }
-                            ?: prayer?.translations?.firstOrNull()
-
-                        val titleText = when {
-                            reminder.label.isNotBlank() -> reminder.label
-                            translation != null -> translation.title
-                            else -> UiStrings.dailyFeaturedPrayer(userLanguageCode)
+                } else if (uiState.remindersState!!.isEmpty()) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(32.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            Icon(
+                                imageVector = Icons.Default.Alarm,
+                                contentDescription = "No reminders",
+                                modifier = Modifier.padding(bottom = 12.dp),
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
+                            )
+                            Text(
+                                text = UiStrings.noReminders(uiState.userLanguageCode),
+                                style = MaterialTheme.typography.bodyLarge,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
                         }
-
-                        val formattedTime = String.format(Locale.getDefault(), "%02d:%02d", reminder.hour, reminder.minute)
-
-                        ReminderCard(
-                            reminder = reminder,
-                            titleText = titleText,
-                            formattedTime = formattedTime,
-                            userLanguageCode = userLanguageCode,
-                            onToggleEnabled = { enabled ->
-                                scope.launch {
-                                    val updated = reminder.copy(isEnabled = enabled)
-                                    repository.updateReminder(updated)
-                                    if (enabled) {
-                                        AlarmScheduler.schedule(context, updated)
-                                    } else {
+                    }
+                } else {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize(),
+                        contentPadding = PaddingValues(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        items(uiState.remindersState!!, key = { it.id }) { reminder ->
+                            val prayer = uiState.prayers.find { it.prayer.id == reminder.prayerId }
+                            ReminderCard(
+                                reminder = reminder,
+                                prayer = prayer,
+                                userLanguageCode = uiState.userLanguageCode,
+                                onEditClick = { openEditForm(reminder) },
+                                onToggleEnabled = { isChecked ->
+                                    viewModel.setReminderEnabled(reminder.id, isChecked) {
+                                        val updated = reminder.copy(isEnabled = isChecked)
+                                        if (isChecked) {
+                                            AlarmScheduler.schedule(context, updated)
+                                        } else {
+                                            AlarmScheduler.cancel(context, updated.id)
+                                        }
+                                    }
+                                },
+                                onDeleteClick = {
+                                    viewModel.deleteReminder(reminder) {
                                         AlarmScheduler.cancel(context, reminder.id)
                                     }
                                 }
-                            },
-                            onDelete = {
-                                scope.launch {
-                                    AlarmScheduler.cancel(context, reminder.id)
-                                    repository.deleteReminder(reminder)
-                                }
-                            }
-                        )
+                            )
+                        }
                     }
                 }
             }
-        }
 
-        // Time Picker Dialog
-        if (showTimePickerDialog) {
-            TimePickerDialog(
-                initialHour = selectedHour,
-                initialMinute = selectedMinute,
-                userLanguageCode = userLanguageCode,
-                onTimeSelected = { h, m ->
-                    selectedHour = h
-                    selectedMinute = m
-                    showTimePickerDialog = false
-                },
-                onDismiss = { showTimePickerDialog = false }
-            )
-        }
+            // Material 3 TimePicker Dialog
+            if (showTimePickerDialog) {
+                val timePickerState = rememberTimePickerState(
+                    initialHour = selectedHour,
+                    initialMinute = selectedMinute,
+                    is24Hour = true
+                )
 
-        // Add Reminder Bottom Sheet
-        if (showAddBottomSheet) {
-            ModalBottomSheet(
-                onDismissRequest = { showAddBottomSheet = false },
-                sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-            ) {
-                AddEditReminderBottomSheetContent(
-                    prayers = prayers,
-                    userLanguageCode = userLanguageCode,
+                AlertDialog(
+                    onDismissRequest = { showTimePickerDialog = false },
+                    confirmButton = {
+                        TextButton(onClick = {
+                            selectedHour = timePickerState.hour
+                            selectedMinute = timePickerState.minute
+                            showTimePickerDialog = false
+                        }) {
+                            Text(UiStrings.ok(uiState.userLanguageCode), fontFamily = FontFamily.Default)
+                        }
+                    },
+                    dismissButton = {
+                        TextButton(onClick = { showTimePickerDialog = false }) {
+                            Text(UiStrings.cancel(uiState.userLanguageCode), fontFamily = FontFamily.Default)
+                        }
+                    },
+                    text = {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            TimePicker(state = timePickerState)
+                        }
+                    }
+                )
+            }
+
+            // Add/Edit Bottom Sheet Modal
+            if (showAddBottomSheet) {
+                AddReminderBottomSheet(
+                    sheetState = bottomSheetState,
+                    selectedHour = selectedHour,
+                    selectedMinute = selectedMinute,
                     selectedPrayerId = selectedPrayerId,
                     isDaily = isDaily,
                     selectedDays = selectedDays,
-                    selectedHour = selectedHour,
-                    selectedMinute = selectedMinute,
-                    onPrayerSelect = { selectedPrayerId = it },
-                    onFrequencyChange = { isDaily = it },
-                    onDaysChange = { selectedDays = it },
+                    prayers = uiState.prayers,
+                    userLanguageCode = uiState.userLanguageCode,
+                    onDismiss = { showAddBottomSheet = false },
                     onOpenTimePicker = { showTimePickerDialog = true },
-                    onSave = {
-                        scope.launch {
-                            val daysCsv = selectedDays.sorted().joinToString(",")
-                            val newReminder = ReminderEntity(
-                                prayerId = selectedPrayerId,
-                                hour = selectedHour,
-                                minute = selectedMinute,
-                                isDaily = isDaily,
-                                daysOfWeek = daysCsv,
-                                isEnabled = true
-                            )
-                            val insertedId = repository.insertReminder(newReminder)
-                            AlarmScheduler.schedule(context, newReminder.copy(id = insertedId.toInt()))
-                            showAddBottomSheet = false
+                    onPrayerSelect = { selectedPrayerId = it },
+                    onFrequencyChange = { daily ->
+                        isDaily = daily
+                        if (daily) selectedDays = emptySet()
+                    },
+                    onDayToggle = { dayInt ->
+                        selectedDays = if (selectedDays.contains(dayInt)) {
+                            selectedDays - dayInt
+                        } else {
+                            selectedDays + dayInt
                         }
                     },
-                    onDismiss = { showAddBottomSheet = false }
+                    onSave = {
+                        val daysString = if (isDaily) "" else selectedDays.sorted().joinToString(",")
+                        val entity = ReminderEntity(
+                            id = editingReminder?.id ?: 0,
+                            prayerId = selectedPrayerId,
+                            hour = selectedHour,
+                            minute = selectedMinute,
+                            isDaily = isDaily,
+                            daysOfWeek = daysString,
+                            isEnabled = true
+                        )
+
+                        if (editingReminder == null) {
+                            viewModel.insertReminder(entity) { newId ->
+                                val savedEntity = entity.copy(id = newId.toInt())
+                                AlarmScheduler.schedule(context, savedEntity)
+                                showAddBottomSheet = false
+                            }
+                        } else {
+                            viewModel.updateReminder(entity) {
+                                AlarmScheduler.schedule(context, entity)
+                                showAddBottomSheet = false
+                            }
+                        }
+                    }
                 )
             }
         }
@@ -358,30 +386,43 @@ fun RemindersScreen(
 @Composable
 fun ReminderCard(
     reminder: ReminderEntity,
-    titleText: String,
-    formattedTime: String,
+    prayer: PrayerWithTranslations?,
     userLanguageCode: String,
+    onEditClick: () -> Unit,
     onToggleEnabled: (Boolean) -> Unit,
-    onDelete: () -> Unit
+    onDeleteClick: () -> Unit
 ) {
-    val weekDaysMap = when (userLanguageCode) {
-        "pt" -> mapOf(1 to "Seg", 2 to "Ter", 3 to "Qua", 4 to "Qui", 5 to "Sex", 6 to "Sáb", 7 to "Dom")
-        "es" -> mapOf(1 to "Lun", 2 to "Mar", 3 to "Mié", 4 to "Jue", 5 to "Vie", 6 to "Sáb", 7 to "Dom")
-        "la" -> mapOf(1 to "Lun", 2 to "Mar", 3 to "Mer", 4 to "Iov", 5 to "Ven", 6 to "Sat", 7 to "Sol")
-        else -> mapOf(1 to "Mon", 2 to "Tue", 3 to "Wed", 4 to "Thu", 5 to "Fri", 6 to "Sat", 7 to "Sun")
+    val titleText = if (reminder.prayerId == null) {
+        UiStrings.randomDailyPrayer(userLanguageCode)
+    } else {
+        prayer?.translations?.find { it.languageCode == userLanguageCode }?.title
+            ?: prayer?.prayer?.defaultTitle
+            ?: UiStrings.prayerNotFound(userLanguageCode)
     }
 
-    val daysText = if (reminder.isDaily) {
+    val formattedTime = String.format(Locale.getDefault(), "%02d:%02d", reminder.hour, reminder.minute)
+
+    val frequencyText = if (reminder.isDaily) {
         UiStrings.daily(userLanguageCode)
+    } else if (reminder.daysOfWeek.isNotBlank()) {
+        val daysMap = mapOf(
+            "1" to UiStrings.sun(userLanguageCode),
+            "2" to UiStrings.mon(userLanguageCode),
+            "3" to UiStrings.tue(userLanguageCode),
+            "4" to UiStrings.wed(userLanguageCode),
+            "5" to UiStrings.thu(userLanguageCode),
+            "6" to UiStrings.fri(userLanguageCode),
+            "7" to UiStrings.sat(userLanguageCode)
+        )
+        reminder.daysOfWeek.split(",").mapNotNull { daysMap[it.trim()] }.joinToString(", ")
     } else {
-        reminder.daysOfWeek.split(",")
-            .mapNotNull { it.trim().toIntOrNull() }
-            .mapNotNull { weekDaysMap[it] }
-            .joinToString(", ")
+        UiStrings.specificDays(userLanguageCode)
     }
 
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onEditClick() },
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerLow
@@ -389,22 +430,23 @@ fun ReminderCard(
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
-            // Top Section with padding
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 16.dp, end = 16.dp, top = 14.dp, bottom = 12.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Column(modifier = Modifier.weight(1f)) {
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.Center
+                ) {
                     Text(
                         text = formattedTime,
-                        style = MaterialTheme.typography.titleLarge,
+                        style = MaterialTheme.typography.headlineMedium,
                         fontFamily = FontFamily.Default,
                         fontWeight = FontWeight.Bold,
-                        fontSize = 22.sp,
-                        color = if (reminder.isEnabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+                        color = MaterialTheme.colorScheme.primary
                     )
 
                     Spacer(modifier = Modifier.height(1.dp))
@@ -414,12 +456,26 @@ fun ReminderCard(
                         style = MaterialTheme.typography.bodyMedium,
                         fontFamily = FontFamily.Default,
                         fontWeight = FontWeight.SemiBold,
-                        fontSize = 15.sp,
                         color = MaterialTheme.colorScheme.onSurface
                     )
-                }
 
-                Spacer(modifier = Modifier.width(8.dp))
+                    Spacer(modifier = Modifier.height(6.dp))
+
+                    Box(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(6.dp))
+                            .background(MaterialTheme.colorScheme.surfaceContainerHighest)
+                            .padding(horizontal = 8.dp, vertical = 3.dp)
+                    ) {
+                        Text(
+                            text = frequencyText,
+                            style = MaterialTheme.typography.labelSmall,
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
+                    }
+                }
 
                 Switch(
                     checked = reminder.isEnabled,
@@ -431,388 +487,27 @@ fun ReminderCard(
                 )
             }
 
-            // Full-width Edge-to-Edge Divider
             HorizontalDivider(
-                modifier = Modifier.fillMaxWidth(),
-                color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.6f),
-                thickness = 1.dp
+                color = MaterialTheme.colorScheme.outline.copy(alpha = 0.6f),
+                thickness = 1.dp,
+                modifier = Modifier.fillMaxWidth()
             )
 
-            // Bottom Row with padding
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 16.dp, end = 12.dp, top = 10.dp, bottom = 10.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
+                    .padding(horizontal = 8.dp, vertical = 2.dp),
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Surface(
-                    shape = RoundedCornerShape(8.dp),
-                    color = MaterialTheme.colorScheme.surfaceContainerHighest
-                ) {
-                    Text(
-                        text = daysText,
-                        modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
-                        style = MaterialTheme.typography.labelSmall,
-                        fontFamily = FontFamily.Default,
-                        fontWeight = FontWeight.SemiBold,
-                        color = MaterialTheme.colorScheme.onSurface
-                    )
-                }
-
-                IconButton(
-                    onClick = onDelete,
-                    modifier = Modifier.size(32.dp)
-                ) {
+                IconButton(onClick = onDeleteClick) {
                     Icon(
                         imageVector = Icons.Default.Delete,
-                        contentDescription = UiStrings.delete(userLanguageCode),
-                        tint = MaterialTheme.colorScheme.error,
-                        modifier = Modifier.size(20.dp)
+                        contentDescription = "Delete Reminder",
+                        tint = MaterialTheme.colorScheme.error
                     )
                 }
             }
         }
     }
-}
-
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
-@Composable
-fun AddEditReminderBottomSheetContent(
-    prayers: List<PrayerWithTranslations>,
-    userLanguageCode: String,
-    selectedPrayerId: String?,
-    isDaily: Boolean,
-    selectedDays: Set<Int>,
-    selectedHour: Int,
-    selectedMinute: Int,
-    onPrayerSelect: (String?) -> Unit,
-    onFrequencyChange: (Boolean) -> Unit,
-    onDaysChange: (Set<Int>) -> Unit,
-    onOpenTimePicker: () -> Unit,
-    onSave: () -> Unit,
-    onDismiss: () -> Unit
-) {
-    var expandedDropdown by remember { mutableStateOf(false) }
-
-    val daysLabels = mapOf(
-        1 to "Seg", 2 to "Ter", 3 to "Qua", 4 to "Qui", 5 to "Sex", 6 to "Sáb", 7 to "Dom"
-    )
-
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 20.dp, vertical = 16.dp)
-    ) {
-        Text(
-            text = UiStrings.addReminder(userLanguageCode),
-            style = MaterialTheme.typography.titleLarge,
-            fontFamily = FontFamily.Default,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.onSurface
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Time Selection Button
-        Text(
-            text = UiStrings.timeLabel(userLanguageCode),
-            style = MaterialTheme.typography.labelMedium,
-            fontFamily = FontFamily.Default,
-            color = MaterialTheme.colorScheme.primary
-        )
-
-        Spacer(modifier = Modifier.height(6.dp))
-
-        Surface(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable { onOpenTimePicker() },
-            shape = RoundedCornerShape(14.dp),
-            color = MaterialTheme.colorScheme.surfaceContainerHigh
-        ) {
-            Row(
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 14.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = String.format(Locale.getDefault(), "%02d:%02d", selectedHour, selectedMinute),
-                    style = MaterialTheme.typography.headlineLarge,
-                    fontFamily = FontFamily.Default,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary
-                )
-
-                Icon(
-                    imageVector = Icons.Default.Alarm,
-                    contentDescription = "Set Time",
-                    tint = MaterialTheme.colorScheme.primary
-                )
-            }
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Prayer Selection Dropdown
-        Text(
-            text = UiStrings.prayerSelection(userLanguageCode),
-            style = MaterialTheme.typography.labelMedium,
-            fontFamily = FontFamily.Default,
-            color = MaterialTheme.colorScheme.primary
-        )
-
-        Spacer(modifier = Modifier.height(6.dp))
-
-        Box {
-            val selectedPrayer = prayers.find { it.prayer.id == selectedPrayerId }
-            val selectedPrayerTitle = selectedPrayer?.translations?.find { it.languageCode == userLanguageCode }?.title
-                ?: selectedPrayer?.prayer?.defaultTitle
-                ?: UiStrings.dailyFeaturedPrayer(userLanguageCode)
-
-            Surface(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { expandedDropdown = true },
-                shape = RoundedCornerShape(14.dp),
-                color = MaterialTheme.colorScheme.surfaceContainerHigh
-            ) {
-                Text(
-                    text = selectedPrayerTitle,
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 14.dp),
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontFamily = FontFamily.Default,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
-            }
-
-            DropdownMenu(
-                expanded = expandedDropdown,
-                onDismissRequest = { expandedDropdown = false }
-            ) {
-                DropdownMenuItem(
-                    text = { Text(UiStrings.dailyFeaturedPrayer(userLanguageCode), fontFamily = FontFamily.Default, fontWeight = FontWeight.Bold) },
-                    onClick = {
-                        onPrayerSelect(null)
-                        expandedDropdown = false
-                    }
-                )
-
-                prayers.forEach { item ->
-                    val title = item.translations.find { it.languageCode == userLanguageCode }?.title
-                        ?: item.prayer.defaultTitle
-                    DropdownMenuItem(
-                        text = { Text(title, fontFamily = FontFamily.Default) },
-                        onClick = {
-                            onPrayerSelect(item.prayer.id)
-                            expandedDropdown = false
-                        }
-                    )
-                }
-            }
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Frequency Selection Segmented Row
-        Text(
-            text = UiStrings.frequency(userLanguageCode),
-            style = MaterialTheme.typography.labelMedium,
-            fontFamily = FontFamily.Default,
-            color = MaterialTheme.colorScheme.primary
-        )
-
-        Spacer(modifier = Modifier.height(6.dp))
-
-        Surface(
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(14.dp),
-            color = MaterialTheme.colorScheme.surfaceContainerHigh
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(4.dp)
-            ) {
-                // Daily Button
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .clip(RoundedCornerShape(10.dp))
-                        .background(
-                            if (isDaily) MaterialTheme.colorScheme.primaryContainer
-                            else Color.Transparent
-                        )
-                        .clickable { onFrequencyChange(true) }
-                        .padding(vertical = 10.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = UiStrings.daily(userLanguageCode),
-                        style = MaterialTheme.typography.labelLarge,
-                        fontFamily = FontFamily.Default,
-                        fontWeight = if (isDaily) FontWeight.Bold else FontWeight.Normal,
-                        color = if (isDaily) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-
-                // Weekly Button
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .clip(RoundedCornerShape(10.dp))
-                        .background(
-                            if (!isDaily) MaterialTheme.colorScheme.primaryContainer
-                            else Color.Transparent
-                        )
-                        .clickable { onFrequencyChange(false) }
-                        .padding(vertical = 10.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = UiStrings.weekly(userLanguageCode),
-                        style = MaterialTheme.typography.labelLarge,
-                        fontFamily = FontFamily.Default,
-                        fontWeight = if (!isDaily) FontWeight.Bold else FontWeight.Normal,
-                        color = if (!isDaily) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-            }
-        }
-
-        // Days of week selector (if weekly)
-        AnimatedVisibility(visible = !isDaily) {
-            Column(modifier = Modifier.padding(top = 14.dp)) {
-                Text(
-                    text = UiStrings.selectDays(userLanguageCode),
-                    style = MaterialTheme.typography.labelMedium,
-                    fontFamily = FontFamily.Default,
-                    color = MaterialTheme.colorScheme.primary
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
-                    (1..7).forEach { day ->
-                        val isSelected = selectedDays.contains(day)
-                        Box(
-                            modifier = Modifier
-                                .weight(1f)
-                                .clip(RoundedCornerShape(10.dp))
-                                .background(
-                                    if (isSelected) MaterialTheme.colorScheme.primary
-                                    else MaterialTheme.colorScheme.surfaceContainerHigh
-                                )
-                                .clickable {
-                                    val updated = if (isSelected) selectedDays - day else selectedDays + day
-                                    if (updated.isNotEmpty()) {
-                                        onDaysChange(updated)
-                                    }
-                                }
-                                .padding(vertical = 8.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                text = daysLabels[day] ?: "$day",
-                                style = MaterialTheme.typography.labelSmall,
-                                fontFamily = FontFamily.Default,
-                                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-                                color = if (isSelected) MaterialTheme.colorScheme.onPrimary
-                                else MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                        }
-                    }
-                }
-            }
-        }
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        // Actions
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.End
-        ) {
-            OutlinedButton(
-                onClick = onDismiss,
-                shape = RoundedCornerShape(12.dp)
-            ) {
-                Text(
-                    text = UiStrings.cancel(userLanguageCode),
-                    fontFamily = FontFamily.Default
-                )
-            }
-
-            Spacer(modifier = Modifier.width(12.dp))
-
-            Button(
-                onClick = onSave,
-                shape = RoundedCornerShape(12.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
-            ) {
-                Text(
-                    text = UiStrings.save(userLanguageCode),
-                    fontFamily = FontFamily.Default
-                )
-            }
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun TimePickerDialog(
-    initialHour: Int,
-    initialMinute: Int,
-    userLanguageCode: String,
-    onTimeSelected: (hour: Int, minute: Int) -> Unit,
-    onDismiss: () -> Unit
-) {
-    val timePickerState = rememberTimePickerState(
-        initialHour = initialHour,
-        initialMinute = initialMinute,
-        is24Hour = true
-    )
-
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        confirmButton = {
-            TextButton(
-                onClick = {
-                    onTimeSelected(timePickerState.hour, timePickerState.minute)
-                }
-            ) {
-                Text(
-                    text = UiStrings.save(userLanguageCode),
-                    fontFamily = FontFamily.Default,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-        },
-        dismissButton = {
-            TextButton(onClick = onDismiss) {
-                Text(
-                    text = UiStrings.cancel(userLanguageCode),
-                    fontFamily = FontFamily.Default
-                )
-            }
-        },
-        text = {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                TimePicker(state = timePickerState)
-            }
-        },
-        shape = RoundedCornerShape(28.dp),
-        containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
-    )
 }

@@ -107,6 +107,8 @@ object UiStrings {
         else -> "New Reminder"
     }
 
+    fun newReminder(lang: String): String = addReminder(lang)
+
     fun noReminders(lang: String): String = when (lang) {
         "pt" -> "Nenhum lembrete agendado."
         "es" -> "No hay recordatorios programados."
@@ -128,6 +130,15 @@ object UiStrings {
         else -> "Daily Featured Prayer (Random)"
     }
 
+    fun randomDailyPrayer(lang: String): String = dailyFeaturedPrayer(lang)
+
+    fun prayerNotFound(lang: String): String = when (lang) {
+        "pt" -> "Oração Não Encontrada"
+        "es" -> "Oración No Encontrada"
+        "la" -> "Precatio Non Inventa"
+        else -> "Prayer Not Found"
+    }
+
     fun frequency(lang: String): String = when (lang) {
         "pt" -> "Frequência"
         "es" -> "Frecuencia"
@@ -142,11 +153,67 @@ object UiStrings {
         else -> "Daily"
     }
 
+    fun specificDays(lang: String): String = when (lang) {
+        "pt" -> "Selecionar Dias"
+        "es" -> "Seleccionar Días"
+        "la" -> "Eligere Dies"
+        else -> "Select Days"
+    }
+
     fun weekly(lang: String): String = when (lang) {
         "pt" -> "Semanal"
         "es" -> "Semanal"
         "la" -> "Hebdomadalis"
         else -> "Weekly"
+    }
+
+    fun sun(lang: String): String = when (lang) {
+        "pt" -> "Dom"
+        "es" -> "Dom"
+        "la" -> "Dom"
+        else -> "Sun"
+    }
+
+    fun mon(lang: String): String = when (lang) {
+        "pt" -> "Seg"
+        "es" -> "Lun"
+        "la" -> "Sec"
+        else -> "Mon"
+    }
+
+    fun tue(lang: String): String = when (lang) {
+        "pt" -> "Ter"
+        "es" -> "Mar"
+        "la" -> "Ter"
+        else -> "Tue"
+    }
+
+    fun wed(lang: String): String = when (lang) {
+        "pt" -> "Qua"
+        "es" -> "Mié"
+        "la" -> "Mer"
+        else -> "Wed"
+    }
+
+    fun thu(lang: String): String = when (lang) {
+        "pt" -> "Qui"
+        "es" -> "Jue"
+        "la" -> "Iov"
+        else -> "Thu"
+    }
+
+    fun fri(lang: String): String = when (lang) {
+        "pt" -> "Sex"
+        "es" -> "Vie"
+        "la" -> "Ven"
+        else -> "Fri"
+    }
+
+    fun sat(lang: String): String = when (lang) {
+        "pt" -> "Sáb"
+        "es" -> "Sáb"
+        "la" -> "Sat"
+        else -> "Sat"
     }
 
     fun dailyHint(lang: String): String = when (lang) {
@@ -184,11 +251,25 @@ object UiStrings {
         else -> "Save Reminder"
     }
 
+    fun ok(lang: String): String = when (lang) {
+        "pt" -> "OK"
+        "es" -> "OK"
+        "la" -> "OK"
+        else -> "OK"
+    }
+
     fun delete(lang: String): String = when (lang) {
         "pt" -> "Excluir"
         "es" -> "Eliminar"
         "la" -> "Delere"
         else -> "Delete"
+    }
+
+    fun enableNotificationsBanner(lang: String): String = when (lang) {
+        "pt" -> "Ative as notificações para receber os lembretes de oração."
+        "es" -> "Active las notificaciones para recibir recordatorios de oración."
+        "la" -> "Activa monitiones para accipere precationes."
+        else -> "Enable notifications to receive prayer reminders."
     }
 
     fun permissionTitle(lang: String): String = when (lang) {

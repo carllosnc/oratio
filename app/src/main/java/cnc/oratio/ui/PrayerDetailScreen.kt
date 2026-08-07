@@ -85,7 +85,7 @@ fun PrayerDetailScreen(
     val scope = rememberCoroutineScope()
     val prayerWithTranslations by repository.getPrayerById(prayerId).collectAsState(initial = null)
     val languages by repository.getAllLanguages().collectAsState(initial = emptyList())
-    val userLanguageCode by repository.userLanguageCode.collectAsState()
+    val userLanguageCode by repository.userLanguageCode.collectAsState(initial = "en")
 
     var selectedLanguageCode by remember(userLanguageCode) { mutableStateOf(userLanguageCode) }
 
@@ -345,7 +345,9 @@ fun PrayerDetailScreen(
                                         isSpeaking = false
                                     }
                                     selectedLanguageCode = lang.code
-                                    repository.setUserLanguage(lang.code)
+                                    scope.launch {
+                                        repository.setUserLanguage(lang.code)
+                                    }
                                 },
                                 text = {
                                     Text(

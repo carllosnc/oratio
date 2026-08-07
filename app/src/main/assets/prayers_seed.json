@@ -22,14 +22,14 @@
           "title": "Pater Noster",
           "subtitle": "Oratio Dominica",
           "content": "Pater noster, qui es in caelis, sanctificetur nomen tuum.\nAdveniat regnum tuum. Fiat voluntas tua, sicut in caelo et in terra.\nPanem nostrum quotidianum da nobis hodie, et dimitte nobis debita nostra sicut et nos dimittimus debitoribus nostris.\nEt ne nos inducas in tentationem, sed libera nos a malo.\nAmen.",
-          "notes": "Traditional Latin text."
+          "notes": "Textus traditivus latinus."
         },
         {
           "languageCode": "pt",
           "title": "Pai Nosso",
           "subtitle": "Oração do Senhor",
           "content": "Pai nosso, que estais nos céus, santificado seja o vosso nome.\nVenha a nós o vosso reino. Seja feita a vossa vontade, assim na terra como no céu.\nO pão nosso de cada dia nos dai hoje. Perdoai-nos as nossas ofensas, assim como nós perdoamos a quem nos tem ofendido.\nE não nos deixeis cair em tentação, mas livrai-nos do mal.\nAmém.",
-          "notes": "Traditional Portuguese text."
+          "notes": "Oração tradicional do Senhor em português."
         },
         {
           "languageCode": "en",
@@ -43,7 +43,7 @@
           "title": "Padre Nuestro",
           "subtitle": "Oración del Señor",
           "content": "Padre nuestro, que estás en el cielo, santificado sea tu Nombre.\nVenga a nosotros tu reino; hágase tu voluntad en la tierra como en el cielo.\nDanos hoy nuestro pan de cada día; perdona nuestras ofensas, como también nosotros perdonamos a los que nos ofenden.\nNo nos dejes caer en la tentación, y líbranos del mal.\nAmén.",
-          "notes": "Traditional Spanish text."
+          "notes": "Texto tradicional en español."
         }
       ]
     },
@@ -57,14 +57,14 @@
           "title": "Ave Maria",
           "subtitle": "Salutatio Angelica",
           "content": "Ave Maria, gratia plena, Dominus tecum.\nBenedicta tu in mulieribus, et benedictus fructus ventris tui, Iesus.\nSancta Maria, Mater Dei, ora pro nobis peccatoribus, nunc et in hora mortis nostrae.\nAmen.",
-          "notes": "Angelic Salutation in Latin."
+          "notes": "Salutatio Angelica latine."
         },
         {
           "languageCode": "pt",
           "title": "Ave Maria",
           "subtitle": "Saudação Angélica",
           "content": "Ave Maria, cheia de graça, o Senhor é convosco.\nBendita sois vós entre as mulheres e bendito é o fruto do vosso ventre, Jesus.\nSanta Maria, Mãe de Deus, rogai por nós, pecadores, agora e na hora de nossa morte.\nAmém.",
-          "notes": "Traditional Portuguese text."
+          "notes": "Oração mariana tradicional em português."
         },
         {
           "languageCode": "en",
@@ -78,7 +78,7 @@
           "title": "Dios te Salve María",
           "subtitle": "Salutación Angélica",
           "content": "Dios te salve, María, llena eres de gracia, el Señor es contigo.\nBendita tú eres entre todas las mujeres, y bendito es el fruto de tu vientre, Jesús.\nSanta María, Madre de Dios, ruega por nosotros, pecadores, ahora y en la hora de nuestra muerte.\nAmén.",
-          "notes": "Traditional Spanish text."
+          "notes": "Texto tradicional en español."
         }
       ]
     },
@@ -92,14 +92,14 @@
           "title": "Gloria Patri",
           "subtitle": "Doxologia Minor",
           "content": "Gloria Patri, et Filio, et Spiritui Sancto.\nSicut erat in principio, et nunc, et semper, et in saecula saeculorum.\nAmen.",
-          "notes": "Minor Doxology in Latin."
+          "notes": "Doxologia Minor latine."
         },
         {
           "languageCode": "pt",
           "title": "Glória ao Pai",
           "subtitle": "Doxologia Menor",
-          "content": "Glória ao Pai e ao Filho e ao Espírito Santo.\nComo era no princípio, agora e sempre.\nAmém.",
-          "notes": "Traditional Portuguese text."
+          "content": "Glória ao Pai e ao Filho e ao Espírito Santo.\nComo era no princípio, agora e sempre, pelos séculos dos séculos.\nAmém.",
+          "notes": "Doxologia menor tradicional em português."
         },
         {
           "languageCode": "en",
@@ -112,8 +112,8 @@
           "languageCode": "es",
           "title": "Gloria al Padre",
           "subtitle": "Doxología Menor",
-          "content": "Gloria al Padre y al Hijo y al Espírito Santo.\nComo era en el principio, ahora y siempre, por los siglos de los siglos.\nAmén.",
-          "notes": "Traditional Spanish text."
+          "content": "Gloria al Padre y al Hijo y al Espíritu Santo.\nComo era en el principio, ahora y siempre, por los siglos de los siglos.\nAmén.",
+          "notes": "Texto tradicional en español."
         }
       ]
     },
@@ -127,14 +127,14 @@
           "title": "Psalmus 23 (22)",
           "subtitle": "Dominus pascit me",
           "content": "Dominus pascit me, et nihil mihi deerit: in pascuis herbidis me collocavit.\nSuper aquas quietis deduxit me; animam meam refecit.\nDeduxit me super semitas iustitiae propter nomen suum.\nNam etsi ambulavero in valle umbrae mortis, non timebo mala, quoniam tu mecum es.\nVirga tua et baculus tuus, ipsa me consolata sunt.\nParasti in conspectu meo mensam adversus eos qui tribulant me; impinguasti in oleo caput meum, et calix meus redundans est.\nEtenim benignitas et misericordia subsequentur me omnibus diebus vitae meae; et habitabo in domo Domini in longitudinem dierum.\nAmen.",
-          "notes": "Vulgata Clementina text."
+          "notes": "Textus Vulgatae Clementinae."
         },
         {
           "languageCode": "pt",
           "title": "Salmo 23 (22)",
           "subtitle": "O Senhor é o Meu Pastor",
-          "content": "O Senhor é o meu pastor; nada me faltará.\nEm verdes pastos me faz descansar, conduz-me suavemente a águas tranquilas.\nRefrigera a minha alma; guia-me pelas veredas da justiça por amor do seu nome.\nAinda que eu structures pelo vale da sombra da morte, não temeria mal algum, porque tu estás comigo; a tua vara e o teu cajado me consolam.\nPreparas uma mesa perante mim na presença dos meus inimigos, unges a minha cabeça com óleo, o meu cálice transborda.\nCertamente que a bondade e a misericórdia me seguirão todos os dias da minha vida; e habitarei na casa do Senhor por longos dias.\nAmém.",
-          "notes": "Texto Bíblico Tradicional."
+          "content": "O Senhor é o meu pastor; nada me faltará.\nEm verdes pastos me faz descansar, conduz-me suavemente a águas tranquilas.\nRefrigera a minha alma; guia-me pelas veredas da justiça por amor do seu nome.\nAinda que eu ande pelo vale da sombra da morte, não temerei mal algum, porque tu estás comigo; a tua vara e o teu cajado me consolam.\nPreparas uma mesa perante mim na presença dos meus inimigos, unges a minha cabeça com óleo, o meu cálice transborda.\nCertamente que a bondade e a misericórdia me seguirão todos os dias da minha vida; e habitarei na casa do Senhor por longos dias.\nAmém.",
+          "notes": "Texto bíblico tradicional em português."
         },
         {
           "languageCode": "en",
@@ -148,7 +148,7 @@
           "title": "Salmo 23 (22)",
           "subtitle": "El Señor es mi Pastor",
           "content": "El Señor es mi pastor, nada me falta; en verdes prados me hace recostar, me conduce hacia fuentes tranquilas y repara mis fuerzas.\nMe guía por el sendero justo, por el honor de su nombre.\nAunque camine por cañadas oscuras, nada temo, porque tú vas conmigo: tu vara y tu cayado me sosiegan.\nPreparas una mesa ante mí, enfrente de mis enemigos; me unges la cabeza con perfume, y mi copa rebosa.\nTu bondad y tu misericordia me acompañan todos los días de mi vida, y habitaré en la casa del Señor por años sin término.\nAmén.",
-          "notes": "Texto Bíblico Tradicional."
+          "notes": "Texto bíblico tradicional en español."
         }
       ]
     },
@@ -162,14 +162,14 @@
           "title": "Symbolum Apostolorum",
           "subtitle": "Credo in Deum",
           "content": "Credo in Deum Patrem omnipotentem, Creatorem caeli et terrae.\nEt in Iesum Christum, Filium eius unicum, Dominum nostrum: qui conceptus est de Spiritu Sancto, natus ex Maria Virgine, passus sub Pontio Pilato, crucifixus, mortuus, et sepultus: descendit ad inferos; tertia die resurrexit a mortuis; ascendit ad caelos; sedet ad dexteram Dei Patris omnipotentis: inde venturus est iudicare vivos et mortuos.\nCredo in Spiritum Sanctum, sanctam Ecclesiam catholicam, sanctorum communionem, remissionem peccatorum, carnis resurrectionem, vitam aeternam.\nAmen.",
-          "notes": "Traditional Latin Creed."
+          "notes": "Symbolum Apostolorum latine."
         },
         {
           "languageCode": "pt",
           "title": "Creio em Deus Pai",
           "subtitle": "Símbolo dos Apóstolos",
           "content": "Creio em Deus Pai todo-poderoso, Criador do céu e da terra.\nE em Jesus Cristo, seu único Filho, nosso Senhor, que foi concebido pelo poder do Espírito Santo, nasceu da Virgem Maria, padeceu sob Pôncio Pilatos, foi crucificado, morto e sepultado; desceu à mansão dos mortos; ressuscitou ao terceiro dia, subiu aos céus, está sentado à direita de Deus Pai todo-poderoso, de onde há de vir a julgar os vivos e os mortos.\nCreio no Espírito Santo, na santa Igreja Católica, na comunhão dos santos, na remissão dos pecados, na ressurreição da carne, na vida eterna.\nAmém.",
-          "notes": "Texto Tradicional dos Apóstolos."
+          "notes": "Texto tradicional dos Apóstolos em português."
         },
         {
           "languageCode": "en",
@@ -183,7 +183,7 @@
           "title": "Creo en Dios Padre",
           "subtitle": "Símbolo de los Apóstoles",
           "content": "Creo en Dios, Padre Todopoderoso, Creador del cielo y de la tierra.\nCreo en Jesucristo, su único Hijo, nuestro Señor, que fue concebido por obra y gracia del Espíritu Santo, nació de Santa María Virgen, padeció bajo el poder de Poncio Pilato, fue crucificado, muerto y sepultado, descendió a los infiernos, al tercer día resucitó de entre los muertos, subió a los cielos y está sentado a la derecha de Dios, Padre todopoderoso. Desde allí ha de venir a juzgar a vivos y muertos.\nCreo en el Espíritu Santo, la santa Iglesia católica, la comunión de los santos, el perdón de los pecados, la resurrección de la carne y la vida eterna.\nAmén.",
-          "notes": "Credo de los Apóstoles."
+          "notes": "Credo de los Apóstoles en español."
         }
       ]
     },
@@ -197,14 +197,14 @@
           "title": "Salve Regina",
           "subtitle": "Mater Misericordiae",
           "content": "Salve, Regina, Mater misericordiae;\nvita, dulcedo, et spes nostra, salve.\nAd te clamamus exsules filii Hevae;\nad te suspiramus gementes et flentes in hac lacrimarum valle.\nEia ergo, advocata nostra, illos tuos misericordes oculos ad nos converte;\net Iesum, benedictum fructum ventris tui, nobis post hoc exsilium ostende.\nO clemens, o pia, o dulcis Virgo Maria.\nAmen.",
-          "notes": "Marian Antiphon in Latin."
+          "notes": "Antiphona Mariana latine."
         },
         {
           "languageCode": "pt",
           "title": "Salve Rainha",
           "subtitle": "Mãe de Misericórdia",
           "content": "Salve, Rainha, Mãe de misericórdia,\nvida, doçura e esperança nossa, salve!\nA vós bradamos os degredados filhos de Eva.\nA vós suspiramos, gemendo e chorando neste vale de lágrimas.\nEia, pois, advogada nossa, esses vossos olhos misericordiosos a nós voltai,\ne depois deste desterro, mostrai-nos Jesus, bendito fruto do vosso ventre.\nÓ clemente, ó piedosa, ó doce sempre Virgem Maria.\nAmém.",
-          "notes": "Oração Mariana Tradicional."
+          "notes": "Oração mariana tradicional em português."
         },
         {
           "languageCode": "en",
@@ -218,7 +218,7 @@
           "title": "Dios te Salve, Reina y Madre",
           "subtitle": "Madre de Misericordia",
           "content": "Dios te salve, Reina y Madre de misericordia,\nvida, dulzura y esperanza nuestra; Dios te salve.\nA ti llamamos los desterrados hijos de Eva;\na ti suspiramos, gimiendo y llorando en este valle de lágrimas.\nEa, pues, Señora, abogada nuestra, vuelve a nosotros esos tus ojos misericordiosos;\ny después de este destierro, muéstranos a Jesús, fruto bendito de tu vientre.\n¡Oh clemente, oh piadosa, oh dulce Virgen María!\nAmén.",
-          "notes": "Oración Mariana Tradicional."
+          "notes": "Oración mariana tradicional en español."
         }
       ]
     },
@@ -232,14 +232,14 @@
           "title": "Angele Dei",
           "subtitle": "Oratio ad Angelum Custodem",
           "content": "Angele Dei,\nqui custos es mei,\nme, tibi commissum pietate superna,\nillumina, custodi,\nrege et guberna.\nAmen.",
-          "notes": "Traditional Latin Prayer."
+          "notes": "Oratio ad Angelum Custodem latine."
         },
         {
           "languageCode": "pt",
           "title": "Santo Anjo do Senhor",
           "subtitle": "Oração ao Anjo da Guarda",
           "content": "Santo Anjo do Senhor,\nmeu zeloso guardador,\nse a ti me confiou a piedade divina,\nsempre me rege, me guarda,\nme governa e ilumina.\nAmém.",
-          "notes": "Oração Tradicional ao Anjo da Guarda."
+          "notes": "Oração tradicional ao Anjo da Guarda em português."
         },
         {
           "languageCode": "en",
@@ -253,7 +253,7 @@
           "title": "Ángel de mi Guarda",
           "subtitle": "Oración al Ángel Custodio",
           "content": "Ángel de mi guarda,\ndulce compañía,\nno me desampares ni de noche ni de día.\nNo me dejes solo que me perdería,\nhasta que me pongas en paz y alegría con todos los santos, Jesús, José y María.\nAmén.",
-          "notes": "Oración Tradicional."
+          "notes": "Oración tradicional al Ángel Custodio en español."
         }
       ]
     },
@@ -267,14 +267,14 @@
           "title": "Sancte Michael Archangele",
           "subtitle": "Oratio ad S. Michael",
           "content": "Sancte Michael Archangele, defende nos in proelio;\ncontra nequitiam et insidias diaboli esto praesidium.\nImperet illi Deus, supplices deprecamur:\ntuque, Princeps militiae caelestis, Satanam aliosque spiritus malignos,\nqui ad perditionem animarum pervagantur in mundo,\ndivina virtute in infernum detrude.\nAmen.",
-          "notes": "Prayer of Pope Leo XIII."
+          "notes": "Oratio Sancti Michaelis Archangele."
         },
         {
           "languageCode": "pt",
           "title": "São Miguel Arcanjo",
           "subtitle": "Oração de Proteção",
           "content": "São Miguel Arcanjo, defendei-nos no combate,\nsede o nosso refúgio contra as maldades e ciladas do demônio.\nOrdene-lhe Deus, instantemente o pedimos,\ne vós, príncipe da milícia celeste, pela virtude divina,\nprecipitai no inferno a Satanás e aos outros espíritos malignos,\nque vagam pelo mundo para perder as almas.\nAmém.",
-          "notes": "Oração do Papa Leão XIII."
+          "notes": "Oração do Papa Leão XIII em português."
         },
         {
           "languageCode": "en",
@@ -287,8 +287,8 @@
           "languageCode": "es",
           "title": "San Miguel Arcángel",
           "subtitle": "Oración de Protección",
-          "content": "San Miguel Arcángel, defiéndenos en la pelea.\nSé nuestro amparo contra la maldad y las asechanzas del demonio.\n¡Que Dios manifieste sobre él su poder!, es nuestra humilde súplica;\ny tú, oh Príncipe de la Milicia Celestial, con la fuerza que Dios te ha conferido,\nadentre en el infierno a Satanás y a los demás espíritus malignos,\nque vagan por el mundo para la perdición de las almas.\nAmén.",
-          "notes": "Oración del Papa León XIII."
+          "content": "San Miguel Arcángel, defiéndenos en la pelea.\nSé nuestro amparo contra la maldad y las asechanzas del demonio.\n¡Que Dios manifieste sobre él su poder!, es nuestra humilde súplica;\ny tú, oh Príncipe de la Milicia Celestial, con la fuerza que Dios te ha conferido,\nlanza al infierno a Satanás y a los demás espíritus malignos,\nque vagan por el mundo para la perdición de las almas.\nAmén.",
+          "notes": "Oración del Papa León XIII en español."
         }
       ]
     },
@@ -302,14 +302,14 @@
           "title": "Anima Christi",
           "subtitle": "Sanctifica me",
           "content": "Anima Christi, sanctifica me.\nCorpus Christi, salva me.\nSanguis Christi, inebria me.\nAqua lateris Christi, lava me.\nPassio Christi, conforta me.\nO bone Iesu, exaudi me.\nIntra tua vulnera absconde me.\nNe permittas me separari a te.\nAb hoste maligno defende me.\nIn hora mortis meae voca me.\nEt iube me venire ad te,\nut cum Sanctis tuis laudem te in saecula saeculorum.\nAmen.",
-          "notes": "14th Century Prayer."
+          "notes": "Oratio saeculi XIV latine."
         },
         {
           "languageCode": "pt",
           "title": "Alma de Cristo",
           "subtitle": "Oração Pós-Comunhão",
-          "content": "Alma de Cristo, santificai-me.\nCorpo de Cristo, salvai-me.\nSangue de Cristo, inebriai-me.\nÁgua do lado de Cristo, lavai-me.\nPaixão de Cristo, confortai-me.\nÓ bom Jesus, ouvi-me.\nDentro das vossas chagas, escondei-me.\nNão me me permitais separar de Vós.\nDo inimigo maligno, defendei-me.\nNa hora da minha morte, chamai-me.\nE mandai-me ir para Vós,\npara que Vos louve com os vossos Santos pelos séculos dos séculos.\nAmém.",
-          "notes": "Oração do Século XIV."
+          "content": "Alma de Cristo, santificai-me.\nCorpo de Cristo, salvai-me.\nSangue de Cristo, inebriai-me.\nÁgua do lado de Cristo, lavai-me.\nPaixão de Cristo, confortai-me.\nÓ bom Jesus, ouvi-me.\nDentro das vossas chagas, escondei-me.\nNão me permitais separar de Vós.\nDo inimigo maligno, defendei-me.\nNa hora da minha morte, chamai-me.\nE mandai-me ir para Vós,\npara que Vos louve com os vossos Santos pelos séculos dos séculos.\nAmém.",
+          "notes": "Oração tradicional do século XIV em português."
         },
         {
           "languageCode": "en",
@@ -323,7 +323,287 @@
           "title": "Alma de Cristo",
           "subtitle": "Oración Post-Comunión",
           "content": "Alma de Cristo, santifícame.\nCuerpo de Cristo, sálvame.\nSangre de Cristo, embriágame.\nAgua del costado de Cristo, lávame.\nPasión de Cristo, confórtame.\n¡Oh, buen Jesús!, óyeme.\nDentro de tus llagas, escóndeme.\nNo permitas que me aparte de Ti.\nDel enemigo malo, defiéndeme.\nEn la hora de mi muerte, llámame.\nY mándame ir a Ti,\npara que con tus santos te alabe por los siglos de los siglos.\nAmén.",
-          "notes": "Oración Tradicional del Siglo XIV."
+          "notes": "Oración tradicional del siglo XIV en español."
+        }
+      ]
+    },
+    {
+      "id": "veni_creator",
+      "categoryId": "basic",
+      "defaultTitle": "Come Holy Spirit / Veni Creator Spiritus",
+      "translations": [
+        {
+          "languageCode": "la",
+          "title": "Veni Creator Spiritus",
+          "subtitle": "Hymnus ad Spiritum Sanctum",
+          "content": "Veni, Creator Spiritus, mentes tuorum visita, imple superna gratia, quae tu creasti pectora.\nQui diceris Paraclitus, altissimi donum Dei, fons vivus, ignis, caritas, et spiritalis unctio.\nTu septiformis munere, digitus paternae dexterae, tu rite promissum Patris, sermone ditans guttura.\nAccende lumen sensibus, infunde amorem cordibus, infirma nostri corporis virtute firmans perpeti.\nHostem repellas longius, pacemque dones protinus; ductore sic te praevio vitemus omne noxium.\nPer te sciamus da Patrem noscamus atque Filium, teque utriusque Spiritum credamus omni tempore.\nDeo Patri sit gloria, et Filio, qui a mortuis surrexit, ac Paraclito, in saeculorum saecula.\nAmen.",
+          "notes": "Hymnus latinus ad Spiritum Sanctum."
+        },
+        {
+          "languageCode": "pt",
+          "title": "Vinde Espírito Santo",
+          "subtitle": "Invocação ao Espírito Santo",
+          "content": "Vinde Espírito Santo, enchei os corações dos vossos fiéis e acendei neles o fogo do vosso amor.\nEnviai o vosso Espírito e tudo será criado. E renovareis a face da terra.\nÓ Deus, que instruístes os corações dos vossos fiéis com a luz do Espírito Santo, fazei que apreciemos retamente todas as coisas segundo o mesmo Espírito e gozemos sempre da sua consolação.\nPor Cristo, Senhor Nosso.\nAmém.",
+          "notes": "Invocação tradicional ao Espírito Santo em português."
+        },
+        {
+          "languageCode": "en",
+          "title": "Come, Holy Spirit",
+          "subtitle": "Invocation of the Holy Spirit",
+          "content": "Come, Holy Spirit, fill the hearts of thy faithful and enkindle in them the fire of thy love.\nSend forth thy Spirit and they shall be created. And thou shalt renew the face of the earth.\nO God, who by the light of the Holy Spirit, didst instruct the hearts of the faithful, grant that in the same Spirit we may be truly wise and ever rejoice in his consolation.\nThrough Christ our Lord.\nAmen.",
+          "notes": "Traditional English prayer."
+        },
+        {
+          "languageCode": "es",
+          "title": "Ven, Espíritu Santo",
+          "subtitle": "Invocación al Espíritu Santo",
+          "content": "Ven, Espíritu Santo, llena los corazones de tus fieles y enciende en ellos el fuego de tu amor.\nEnvía tu Espíritu y serán creados. Y renovarás la faz de la tierra.\nOh Dios, que has iluminado los corazones de tus fieles con la luz del Espíritu Santo, haz que guiados por este mismo Espíritu, saboreemos la dulzura del bien y gocemos siempre de sus divinos consuelos.\nPor Jesucristo nuestro Señor.\nAmén.",
+          "notes": "Oración tradicional al Espíritu Santo en español."
+        }
+      ]
+    },
+    {
+      "id": "psalm_91",
+      "categoryId": "psalms",
+      "defaultTitle": "Psalm 91 / Psalmus 91",
+      "translations": [
+        {
+          "languageCode": "la",
+          "title": "Psalmus 91 (90)",
+          "subtitle": "Qui habitat in adiutorio Altissimi",
+          "content": "Qui habitat in adiutorio Altissimi, in protectione Dei caeli commorabitur.\nDicet Domino: Susceptor meus es tu, et refugium meum: Deus meus, sperabo in eum.\nQuoniam ipse liberavit me de laqueo venantium, et a verbo aspero.\nScapulis suis obumbrabit tibi, et sub pennis eius sperabis.\nScutum circumdabit te veritas eius: non timebis a timore nocturno,\na sagitta volante in die, a negotio perambulante in tenebris, ab incursu, et daemonio meridiano.\nCadent a latere tuo mille, et decem millia a dextris tuis; ad te autem non appropinquabit.\nQuoniam angelis suis mandavit de te, ut custodiant te in omnibus viis tuis.\nIn manibus portabunt te, ne forte offendas ad lapidem pedem tuum.\nAmen.",
+          "notes": "Psalmus protectionis latine."
+        },
+        {
+          "languageCode": "pt",
+          "title": "Salmo 91 (90)",
+          "subtitle": "A Proteção do Altíssimo",
+          "content": "Aquele que habita no esconderijo do Altíssimo, à sombra do Onipotente descansará.\nDirei do Senhor: Ele é o meu Deus, o meu refúgio, a minha fortaleza, e nele confiarei.\nPorque ele te livrará do laço do passarinheiro, e da peste perniciosa.\nEle te cobrirá com as suas penas, e debaixo das suas asas te confiarás; a sua verdade será o teu escudo e broquel.\nNão terás medo do terror de noite nem da seta que voa de dia.\nMil cairão ao teu lado, e dez mil à tua direita, mas não chegará a ti.\nPorque aos seus anjos dará ordem a teu respeito, para te guardarem em todos os teus caminhos.\nEles te sustentarão nas suas mãos, para que não tropeces com o teu pé em pedra.\nAmém.",
+          "notes": "Salmo de proteção em português."
+        },
+        {
+          "languageCode": "en",
+          "title": "Psalm 91",
+          "subtitle": "Safety in the Presence of God",
+          "content": "He that dwelleth in the secret place of the most High shall abide under the shadow of the Almighty.\nI will say of the Lord, He is my refuge and my fortress: my God; in him will I trust.\nSurely he shall deliver thee from the snare of the fowler, and from the noisome pestilence.\nHe shall cover thee with his feathers, and under his wings shalt thou trust: his truth shall be thy shield and buckler.\nThou shalt not be afraid for the terror by night; nor for the arrow that flieth by day.\nA thousand shall fall at thy side, and ten thousand at thy right hand; but it shall not come nigh thee.\nFor he shall give his angels charge over thee, to keep thee in all thy ways.\nThey shall bear thee up in their hands, lest thou dash thy foot against a stone.\nAmen.",
+          "notes": "Psalm of protection in English."
+        },
+        {
+          "languageCode": "es",
+          "title": "Salmo 91 (90)",
+          "subtitle": "Bajo la Protección del Altísimo",
+          "content": "Tú que habitas al amparo del Altísimo, que te cobijas a la sombra del Todopoderoso,\ndi al Señor: Refugio mío, alcázar mío, Dios mío, en quien confío.\nÉl te librará de la red del cazador, de la peste funesta.\nTe cubrirá con sus plumas, bajo sus alas te refugiarás: su brazo es escudo y embozo.\nNo temerás el espanto nocturno, ni la flecha que vuela de día.\nCaerán a tu lado mil, diez mil a tu derecha; a ti no llegará.\nPorque a sus ángeles ha dado órdenes para que te guarden en tus caminos.\nTe llevarán en sus palmas, para que tu pie no tropiece en la piedra.\nAmén.",
+          "notes": "Salmo de protección en español."
+        }
+      ]
+    },
+    {
+      "id": "magnificat",
+      "categoryId": "marian",
+      "defaultTitle": "Magnificat / Canticle of Mary",
+      "translations": [
+        {
+          "languageCode": "la",
+          "title": "Magnificat",
+          "subtitle": "Canticum Beatae Mariae Virginis",
+          "content": "Magnificat anima mea Dominum,\net exsultavit spiritus meus in Deo salvatore meo,\nquia respexit humilitatem ancillae suae.\nEcce enim ex hoc beatam me dicent omnes generationes,\nquia fecit mihi magna, qui potens est, et sanctum nomen eius,\net misericordia eius in progenies et progenies timentibus eum.\nFecit potentiam in brachio suo, dispersit superbos mente cordis sui;\ndeposuit potentes de sede et exaltavit humiles;\nesurientes implevit bonis et divites dimisit inanes.\nSuscepit Israel puerum suum, recordatus misericordiae suae,\nsicut locutus est ad patres nostros, Abraham et semini eius in saecula.\nAmen.",
+          "notes": "Canticum Beatae Mariae Virginis latine."
+        },
+        {
+          "languageCode": "pt",
+          "title": "Magnificat",
+          "subtitle": "Cântico de Nossa Senhora",
+          "content": "A minha alma engrandece ao Senhor, e o meu espírito se alegrou em Deus, meu Salvador.\nPorque olhou para a humilde condição da sua serva. Desde agora todas as gerações me chamarão bem-aventurada,\nporque o Poderoso fez em mim grandes coisas; e santo é o seu nome.\nA sua misericórdia se estende de geração em geração sobre aqueles que o temem.\nCom o seu braço agiu valentemente, dissipou os orgulhosos no íntimo do seu coração;\ndepôs dos tronos os poderosos e exaltou os humildes;\nencheu de bens os famintos e despediu os ricos de mãos vazias.\nAcolheu a Israel, seu servo, lembrado da sua misericórdia,\ncomo tinha prometido aos nossos pais, a Abraão e à sua descendência para sempre.\nAmém.",
+          "notes": "Cântico de Nossa Senhora em português (Lc 1, 46-55)."
+        },
+        {
+          "languageCode": "en",
+          "title": "Magnificat",
+          "subtitle": "The Canticle of Mary",
+          "content": "My soul doth magnify the Lord, and my spirit hath rejoiced in God my Saviour.\nFor he hath regarded the low estate of his handmaiden: for, behold, from henceforth all generations shall call me blessed.\nFor he that is mighty hath done to me great things; and holy is his name.\nAnd his mercy is on them that fear him from generation to generation.\nHe hath shewed strength with his arm; he hath scattered the proud in the imagination of their hearts.\nHe hath put down the mighty from their seats, and exalted them of low degree.\nHe hath filled the hungry with good things; and the rich he hath sent empty away.\nHe hath holpen his servant Israel, in remembrance of his mercy;\nAs he spake to our fathers, to Abraham, and to his seed for ever.\nAmen.",
+          "notes": "Canticle of Mary in English."
+        },
+        {
+          "languageCode": "es",
+          "title": "Magníficat",
+          "subtitle": "Cántico de la Virgen María",
+          "content": "Proclama mi alma la grandeza del Señor, se alegra mi espíritu en Dios, mi salvador;\nporque ha mirado la humillación de su esclava. Desde ahora me felicitarán todas las generaciones,\nporque el Poderoso ha hecho obras grandes por mí: su nombre es santo,\ny su misericordia llega a sus fieles de generación en generación.\nÉl hace proezas con su brazo: dispersa a los soberbios de corazón,\nderriba del trono a los poderosos y enaltece a los humildes,\na los hambrientos los colma de bienes y a los ricos los despide vacíos.\nAuxilia a Israel, su siervo, acordándose de la misericordia\n–como lo había prometido a nuestros padres– en favor de Abrahán y su descendencia por siempre.\nAmén.",
+          "notes": "Cántico de María en español."
+        }
+      ]
+    },
+    {
+      "id": "prayer_st_francis",
+      "categoryId": "basic",
+      "defaultTitle": "Prayer of St. Francis / Oratio S. Francisci",
+      "translations": [
+        {
+          "languageCode": "la",
+          "title": "Oratio Sancti Francisci",
+          "subtitle": "Instrumentum Pacis",
+          "content": "Domine, fac me instrumentum pacis tuae.\nUbi est odium, fac ut seram amorem.\nUbi est iniuria, veniam.\nUbi est dubium, fidem.\nUbi est desperatio, spem.\nUbi sunt tenebrae, lucem.\nUbi est tristitia, laetitiam.\nO Divine Magister, fac ut non tam quaeram consolari quam consolari;\nintellegi quam intellegere;\namari quam amare.\nQuoniam dando recipimus;\npardonando veniam consequimur;\net moriendo ad vitam aeternam resurgimus.\nAmen.",
+          "notes": "Oratio Sancti Francisci Assisiensis."
+        },
+        {
+          "languageCode": "pt",
+          "title": "Oração de São Francisco",
+          "subtitle": "Instrumento de Paz",
+          "content": "Senhor, fazei-me instrumento de vossa paz.\nOnde houver ódio, que eu leve o amor;\nOnde houver ofensa, que eu leve o perdão;\nOnde houver discórdia, que eu leve a união;\nOnde houver dúvida, que eu leve a fé;\nOnde houver erro, que eu leve a verdade;\nOnde houver desespero, que eu leve a esperança;\nOnde houver tristeza, que eu leve a alegria;\nOnde houver trevas, que eu leve a luz.\nÓ Mestre, fazei que eu procure mais consolar que ser consolado;\ncompreender que ser compreendido;\namar que ser amado.\nPois é dando que se recebe,\né perdoando que se é perdoado,\ne é morrendo que se vive para a vida eterna.\nAmém.",
+          "notes": "Oração tradicional de São Francisco em português."
+        },
+        {
+          "languageCode": "en",
+          "title": "Prayer of St. Francis",
+          "subtitle": "Instrument of Peace",
+          "content": "Lord, make me an instrument of your peace.\nWhere there is hatred, let me sow love;\nWhere there is injury, pardon;\nWhere there is doubt, faith;\nWhere there is despair, hope;\nWhere there is darkness, light;\nWhere there is sadness, joy.\nO Divine Master, grant that I may not so much seek to be consoled as to console;\nto be understood as to understand;\nto be loved as to love.\nFor it is in giving that we receive;\nit is in pardoning that we are pardoned;\nand it is in dying that we are born to eternal life.\nAmen.",
+          "notes": "Prayer of Peace by St. Francis."
+        },
+        {
+          "languageCode": "es",
+          "title": "Oración de San Francisco",
+          "subtitle": "Instrumento de Paz",
+          "content": "Señor, hazme un instrumento de tu paz.\nDonde haya odio, siembre yo amor;\ndonde haya ofensa, perdón;\ndonde haya discordia, unión;\ndonde haya duda, fe;\ndonde haya error, verdad;\ndonde haya desesperación, esperanza;\ndonde haya tinieblas, luz;\ndonde haya tristeza, alegría.\nOh Maestro, haz que ya no busque tanto ser consolado como consolar;\nser comprendido como comprender;\nser amado como amar.\nPorque dando es como se recibe;\nperdonando es como se es perdonado;\ny muriendo es como se resucita a la vida eterna.\nAmén.",
+          "notes": "Oración de Paz de San Francisco en español."
+        }
+      ]
+    },
+    {
+      "id": "memorare",
+      "categoryId": "marian",
+      "defaultTitle": "Memorare / Lembrai-vos",
+      "translations": [
+        {
+          "languageCode": "la",
+          "title": "Memorare",
+          "subtitle": "Oratio ad Beatam Virginem Mariam",
+          "content": "Memorare, o piissima Virgo Maria, a saeculo non esse auditum quemquam ad tua currentem praesidia, tua implorantem auxilia, tua petentem suffragia, esse derelictum.\nEgo tali animatus confidentia, ad te, Virgo Virginum, Mater, curro, ad te venio, coram te gemens peccator adsisto.\nNoli, Mater Verbi, verba mea despicere; sed audi propitia et exaudi.\nAmen.",
+          "notes": "Oratio S. Bernardi ad B.V. Mariam."
+        },
+        {
+          "languageCode": "pt",
+          "title": "Lembrai-vos (Memorare)",
+          "subtitle": "Oração à Virgem Maria",
+          "content": "Lembrai-vos, ó piíssima Virgem Maria, que nunca se ouviu dizer que algum daqueles que têm recorrido à vossa proteção, implorado a vossa assistência e reclamado o vosso socorro, fosse por vós desamparado.\nAnimado eu, pois, com igual confiança, a vós, Virgem entre todas singular, como a Mãe me acolho; de vós me valho e, gemendo sob o peso dos meus pecados, me prostro aos vossos pés.\nNão desprezeis as minhas súplicas, ó Mãe do Filho de Deus humanado, mas dignai-vos ouvi-las propícia e deferi-las.\nAmém.",
+          "notes": "Oração de São Bernardo em português."
+        },
+        {
+          "languageCode": "en",
+          "title": "Memorare",
+          "subtitle": "Prayer to the Blessed Virgin Mary",
+          "content": "Remember, O most gracious Virgin Mary, that never was it known that anyone who fled to thy protection, implored thy help, or sought thine intercession was left unaided.\nInspired by this confidence, I fly unto thee, O Virgin of virgins, my mother; to thee do I come, before thee I stand, sinful and sorrowful.\nO Mother of the Word Incarnate, despise not my petitions, but in thy mercy hear and answer me.\nAmen.",
+          "notes": "Traditional prayer of St. Bernard."
+        },
+        {
+          "languageCode": "es",
+          "title": "Acordaos (Memorare)",
+          "subtitle": "Oración a la Santísima Virgen",
+          "content": "Acordaos, ¡oh piadosísima Virgen María!, que jamás se ha oído decir que ninguno de los que han acudido a vuestra protección, implorado vuestro auxilio y reclamado vuestro socorro, haya sido desamparado por vos.\nAnimado con esta confianza, a vos acudo, oh Virgen Madre de las vírgenes; y gimiendo bajo el peso de mis pecados, me me presento ante vos.\nNo desechéis, oh Madre del Verbo, mis súplicas, antes bien, escuchadlas y acogedlas benignamente.\nAmén.",
+          "notes": "Oración de San Bernardo en español."
+        }
+      ]
+    },
+    {
+      "id": "angelus",
+      "categoryId": "marian",
+      "defaultTitle": "Angelus / The Angelus",
+      "translations": [
+        {
+          "languageCode": "la",
+          "title": "Angelus",
+          "subtitle": "Oratio Incarnationis",
+          "content": "V. Angelus Domini nuntiavit Mariae,\nR. Et concepit de Spiritu Sancto.\nAve Maria...\nV. Ecce ancilla Domini,\nR. Fiat mihi secundum verbum tuum.\nAve Maria...\nV. Et Verbum caro factum est,\nR. Et habitavit in nobis.\nAve Maria...\nV. Ora pro nobis, sancta Dei Genetrix,\nR. Ut digni efficiamur promissionibus Christi.\n\nOremus: Gratiam tuam, quaesumus, Domine, mentibus nostris infunde; ut qui, Angelo nuntiante, Christi Filii tui incarnationem cognovimus, per passionem eius et crucem ad resurrectionis gloriam perducamur. Per eundem Christum Dominum nostrum. Amen.",
+          "notes": "Oratio traditiva meridiana latine."
+        },
+        {
+          "languageCode": "pt",
+          "title": "O Angelus",
+          "subtitle": "A Encarnação do Senhor",
+          "content": "V. O Anjo do Senhor anunciou a Maria,\nR. E ela concebeu do Espírito Santo.\nAve Maria...\nV. Eis aqui a serva do Senhor,\nR. Faça-se em mim segundo a vossa palavra.\nAve Maria...\nV. E o Verbo se fez carne,\nR. E habitou entre nós.\nAve Maria...\nV. Rogai por nós, Santa Mãe de Deus,\nR. Para que sejamos dignos das promessas de Cristo.\n\nOremos: Infundi, Senhor, a vossa graça em nossas almas, para que nós, que conhecemos pela anunciação do Anjo a encarnação de Jesus Cristo, vosso Filho, cheguemos, pela sua paixão e cruz, à glória da ressurreição. Pelo mesmo Cristo, Senhor Nosso. Amém.",
+          "notes": "Oração tradicional do meio-dia e das 18h."
+        },
+        {
+          "languageCode": "en",
+          "title": "The Angelus",
+          "subtitle": "Prayer of the Incarnation",
+          "content": "V. The Angel of the Lord declared unto Mary,\nR. And she conceived of the Holy Spirit.\nHail Mary...\nV. Behold the handmaid of the Lord,\nR. Be it done unto me according to thy word.\nHail Mary...\nV. And the Word was made flesh,\nR. And dwelt among us.\nHail Mary...\nV. Pray for us, O Holy Mother of God,\nR. That we may be made worthy of the promises of Christ.\n\nLet us pray: Pour forth, we beseech thee, O Lord, thy grace into our hearts; that we, to whom the Incarnation of Christ, thy Son, was made known by the message of an Angel, may by his passion and cross be brought to the glory of his resurrection. Through the same Christ our Lord. Amen.",
+          "notes": "Traditional Angelus Prayer."
+        },
+        {
+          "languageCode": "es",
+          "title": "El Ángelus",
+          "subtitle": "La Encarnación del Señor",
+          "content": "V. El Ángel del Señor anunció a María,\nR. Y concibió por obra del Espíritu Santo.\nDios te salve, María...\nV. He aquí la esclava del Señor,\nR. Hágase en mí según tu palabra.\nDios te salve, María...\nV. Y el Verbo se hizo carne,\nR. Y habitó entre nosotros.\nDios te salve, María...\nV. Ruega por nosotros, Santa Madre de Dios,\nR. Para que seamos dignos de alcanzar las promesas de Nuestro Señor Jesucristo.\n\nOremos: Infunde, Señor, tu gracia en nuestros corazones para que quienes hemos conocido, por el anuncio del Ángel, la Encarnación de tu Hijo Jesucristo, lleguemos, por su pasión y su cruz, a la gloria de la resurrección. Por Jesucristo nuestro Señor. Amén.",
+          "notes": "Oración tradicional del Ángelus."
+        }
+      ]
+    },
+    {
+      "id": "psalm_51",
+      "categoryId": "psalms",
+      "defaultTitle": "Psalm 51 / Psalmus 51 - Miserere",
+      "translations": [
+        {
+          "languageCode": "la",
+          "title": "Psalmus 51 (50)",
+          "subtitle": "Miserere mei, Deus",
+          "content": "Miserere mei, Deus, secundum magnam misericordiam tuam;\net secundum multitudinem miserationum tuarum, dele iniquitatem meam.\nAmplius lava me ab iniquitate mea, et a peccato meo munda me.\nQuoniam iniquitatem meam ego cognosco, et peccatum meum contra me est semper.\nTibi soli peccavi, et malum coram te feci.\nAuditui meo dabis gaudium et laetitiam, et exsultabunt ossa humiliata.\nAverta faciem tuam a peccatis meis, et omnes iniquitates meas dele.\nCor mundum crea in me, Deus, et spiritum rectum innova in visceribus meis.\nNe proicias me a facie tua, et spiritum sanctum tuum ne auferas a me.\nRedde mihi laetitiam salutaris tui, et spiritu principi me confirma.\nAmen.",
+          "notes": "Psalmus paenitentialis Davidis."
+        },
+        {
+          "languageCode": "pt",
+          "title": "Salmo 51 (50)",
+          "subtitle": "Miserere (Tende Piedade de Mim)",
+          "content": "Tende piedade de mim, ó Deus, segundo a vossa misericórdia;\ne segundo a multidão das vossas compaixões, apagai a minha iniquidade.\nLavai-me completamente da minha iniquidade, e purificai-me do meu pecado.\nPois eu reconheço a minha iniquidade, e o meu pecado está sempre diante de mim.\nContra vós, contra vós sós pequei, e fiz o que é mau diante dos vossos olhos.\nFazei-me ouvir júbilo e alegria, para que se exultem os ossos que esmagastes.\nDesviai o vosso rosto dos meus pecados, e apagai todas as minhas iniquidades.\nCria em mim, ó Deus, um coração puro, e renova em mim um espírito reto.\nNão me lanceis fora da vossa presença, e não tireis de mim o vosso Santo Espírito.\nRestitui-me a alegria da tua salvação, e sustenta-me com um espírito voluntário.\nAmém.",
+          "notes": "Salmo penitencial de Davi em português."
+        },
+        {
+          "languageCode": "en",
+          "title": "Psalm 51",
+          "subtitle": "Miserere (Have Mercy Upon Me)",
+          "content": "Have mercy upon me, O God, according to thy lovingkindness: according unto the multitude of thy tender mercies blot out my transgressions.\nWash me thoroughly from mine iniquity, and cleanse me from my sin.\nFor I acknowledge my transgressions: and my sin is ever before me.\nAgainst thee, thee only, have I sinned, and done this evil in thy sight.\nMake me to hear joy and gladness; that the bones which thou hast broken may rejoice.\nHide thy face from my sins, and blot out all mine iniquities.\nCreate in me a clean heart, O God; and renew a right spirit within me.\nCast me not away from thy presence; and take not thy holy spirit from me.\nRestore unto me the joy of thy salvation; and uphold me with thy free spirit.\nAmen.",
+          "notes": "Penitential Psalm of David in English."
+        },
+        {
+          "languageCode": "es",
+          "title": "Salmo 51 (50)",
+          "subtitle": "Misericordia, Dios Mío (Miserere)",
+          "content": "Misericordia, Dios mío, por tu bondad, por tu inmensa compasión borra mi culpa.\nLava del todo mi delito, limpia mi pecado.\nPues yo reconozco mi culpa, tengo siempre presente mi pecado.\nContra ti, contra ti solo pequé, cometí la maldad en tu presencia.\nHazme oír el gozo y la alegría, que se alegren los huesos quebrantados.\nAparta de mi pecado tu vista, borra en mí toda culpa.\nOh Dios, crea en mí un corazón puro, renueva por dentro mi espíritu firme.\nNo me arrojes lejos de tu rostro, no me quites tu santo espíritu.\nDevuélveme el sonreír de tu salvación, afiánzame con espíritu generoso.\nAmén.",
+          "notes": "Salmo penitencial de David en español."
+        }
+      ]
+    },
+    {
+      "id": "actus_contritionis",
+      "categoryId": "basic",
+      "defaultTitle": "Act of Contrition / Actus Contritionis",
+      "translations": [
+        {
+          "languageCode": "la",
+          "title": "Actus Contritionis",
+          "subtitle": "Oratio Paenitentiae",
+          "content": "Deus meus, ex toto corde me poenitet omnium meorum peccatorum, eaque detestor, quia peccando non solum poenas a te iuste statutas promeritus sum, sed praesertim quia offendi te, summum bonum, ac dignum qui super omnia ameris.\nIdeo firmiter propono, adiuvante gratia tua, de cetero me non peccaturum peccandique occasiones proximas fugiturus.\nAmen.",
+          "notes": "Oratio Paenitentiae latine."
+        },
+        {
+          "languageCode": "pt",
+          "title": "Ato de Contrição",
+          "subtitle": "Oração de Arrependimento",
+          "content": "Meu Deus, eu me arrependo de todo o coração de vos ter ofendido, porque sois infinitamente bom e digno de ser amado sobre todas as coisas.\nPrometo firmemente, com a ajuda da vossa graça, não mais vos ofender e fugir de todas as ocasiões de pecado.\nSenhor, tende piedade de mim, pecador.\nAmém.",
+          "notes": "Oração de arrependimento em português."
+        },
+        {
+          "languageCode": "en",
+          "title": "Act of Contrition",
+          "subtitle": "Prayer of Repentance",
+          "content": "O my God, I am heartily sorry for having offended Thee, and I detest all my sins because of thy just punishments, but most of all because they offend Thee, my God, who art all good and deserving of all my love.\nI firmly resolve with the help of thy grace to sin no more and to avoid the near occasion of sin.\nAmen.",
+          "notes": "Traditional Prayer of Repentance."
+        },
+        {
+          "languageCode": "es",
+          "title": "Acto de Contrición",
+          "subtitle": "Oración de Arrepentimiento",
+          "content": "Señor mío Jesucristo, Dios y Hombre verdadero, me pesa de todo corazón haber pecado, porque merecí el infierno y perdí el cielo, pero sobre todo porque te ofendí a Ti, que eres tan bueno y que tanto me amas.\nPropongo firmemente, con tu gracia, enmendarme y alejarme de las ocasiones de pecar.\nAmén.",
+          "notes": "Oración de arrepentimiento en español."
         }
       ]
     }

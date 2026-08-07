@@ -52,6 +52,7 @@ import androidx.compose.ui.unit.sp
 import cnc.oratio.data.local.entity.LanguageEntity
 import cnc.oratio.data.local.model.PrayerWithTranslations
 import cnc.oratio.data.repository.PrayerRepository
+import cnc.oratio.ui.util.UiStrings
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -99,7 +100,7 @@ fun MainPrayerScreen(
                             style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold)
                         )
                         Text(
-                            text = "Multilingual Prayers & Devotions",
+                            text = UiStrings.appSubtitle(selectedLanguageCode),
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -133,7 +134,7 @@ fun MainPrayerScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 8.dp),
-                    placeholder = { Text("Search prayer or passage...") },
+                    placeholder = { Text(UiStrings.searchPlaceholder(selectedLanguageCode)) },
                     leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Search") },
                     singleLine = true,
                     shape = RoundedCornerShape(12.dp),
@@ -146,7 +147,7 @@ fun MainPrayerScreen(
                 // Language Selector
                 if (languages.isNotEmpty()) {
                     Text(
-                        text = "Primary Language:",
+                        text = UiStrings.primaryLanguageLabel(selectedLanguageCode),
                         style = MaterialTheme.typography.labelMedium,
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
                         color = MaterialTheme.colorScheme.primary

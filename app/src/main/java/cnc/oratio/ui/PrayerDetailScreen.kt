@@ -70,6 +70,7 @@ import androidx.compose.ui.unit.sp
 import cnc.oratio.data.local.entity.LanguageEntity
 import cnc.oratio.data.repository.PrayerRepository
 import cnc.oratio.ui.theme.GermaniaOneFontFamily
+import cnc.oratio.ui.util.UiStrings
 import kotlinx.coroutines.launch
 import java.util.Locale
 
@@ -188,7 +189,7 @@ fun PrayerDetailScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text = primaryTranslation?.title ?: prayer?.prayer?.defaultTitle ?: "Prayer Details",
+                        text = primaryTranslation?.title ?: prayer?.prayer?.defaultTitle ?: UiStrings.prayerDetailsTitle(userLanguageCode),
                         maxLines = 1,
                         style = MaterialTheme.typography.titleSmall.copy(fontSize = 18.sp),
                         fontFamily = GermaniaOneFontFamily
@@ -234,7 +235,7 @@ fun PrayerDetailScreen(
                             val activeTranslation = item.translations.find { it.languageCode == selectedLanguageCode }
                                 ?: item.translations.firstOrNull()
                             activeTranslation?.let { tr ->
-                                copyToClipboard(context, tr.title, tr.content)
+                                copyToClipboard(context, tr.title, tr.content, userLanguageCode)
                             }
                         }) {
                             Icon(
@@ -291,7 +292,7 @@ fun PrayerDetailScreen(
                                     maxLines = 1
                                 )
                                 Text(
-                                    text = "Audio Narration • Playing",
+                                    text = UiStrings.audioNarrationPlaying(userLanguageCode),
                                     style = MaterialTheme.typography.labelSmall,
                                     color = MaterialTheme.colorScheme.primary
                                 )
@@ -459,11 +460,11 @@ fun PrayerDetailScreen(
     }
 }
 
-private fun copyToClipboard(context: Context, title: String, content: String) {
+private fun copyToClipboard(context: Context, title: String, content: String, userLanguageCode: String = "en") {
     val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
     val clip = ClipData.newPlainText("Prayer Text", "$title\n\n$content")
     clipboard.setPrimaryClip(clip)
-    Toast.makeText(context, "Prayer text copied to clipboard!", Toast.LENGTH_SHORT).show()
+    Toast.makeText(context, UiStrings.copiedToClipboard(userLanguageCode), Toast.LENGTH_SHORT).show()
 }
 
 private fun getLanguageName(code: String, languages: List<LanguageEntity>): String {

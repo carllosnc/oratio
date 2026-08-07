@@ -31,9 +31,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.automirrored.filled.VolumeUp
 import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.EventAvailable
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Language
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Stop
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -72,6 +74,7 @@ import cnc.oratio.data.local.model.PrayerWithTranslations
 import cnc.oratio.data.repository.PrayerRepository
 import cnc.oratio.ui.components.PrayerCalendarFloatCard
 import cnc.oratio.ui.theme.GermaniaOneFontFamily
+import cnc.oratio.ui.util.UiStrings
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import java.util.Locale
@@ -80,7 +83,8 @@ import java.util.Locale
 @Composable
 fun HomeScreen(
     repository: PrayerRepository,
-    onPrayerClick: (prayerId: String) -> Unit
+    onPrayerClick: (prayerId: String) -> Unit,
+    onRemindersClick: () -> Unit
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -93,6 +97,8 @@ fun HomeScreen(
     val categories by repository.getAllCategories().collectAsState(initial = emptyList())
     val languages by repository.getAllLanguages().collectAsState(initial = emptyList())
     val userLanguageCode by repository.userLanguageCode.collectAsState()
+    val allPrayerLogs by repository.getAllPrayerLogs().collectAsState(initial = emptyList())
+    val todayString = remember { java.time.LocalDate.now().format(java.time.format.DateTimeFormatter.ISO_LOCAL_DATE) }
 
     var selectedCategoryId by remember { mutableStateOf<String?>(null) }
     var showOnlyFavorites by remember { mutableStateOf(false) }
@@ -223,8 +229,9 @@ fun HomeScreen(
     val activeCalendarPrayerTranslation = activeCalendarPrayer?.translations?.find { it.languageCode == userLanguageCode }
         ?: activeCalendarPrayer?.translations?.firstOrNull()
 
-    Scaffold(
-        topBar = {
+    Box(modifier = Modifier.fillMaxSize()) {
+        Scaffold(
+            topBar = {
             TopAppBar(
                 title = {
                     Text(
@@ -235,6 +242,14 @@ fun HomeScreen(
                     )
                 },
                 actions = {
+                    IconButton(onClick = onRemindersClick) {
+                        Icon(
+                            imageVector = Icons.Default.Notifications,
+                            contentDescription = "Prayer Reminders",
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    }
+
                     Box {
                         IconButton(onClick = { showLanguageMenu = true }) {
                             Icon(
@@ -303,7 +318,7 @@ fun HomeScreen(
                                 selectedCategoryId = null
                                 showOnlyFavorites = false
                             },
-                            label = { Text("All Prayers") },
+                            label = { Text(UiStrings.allPrayers(userLanguageCode)) },
                             colors = FilterChipDefaults.filterChipColors(
                                 containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
                                 labelColor = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -317,7 +332,7 @@ fun HomeScreen(
                         FilterChip(
                             selected = showOnlyFavorites,
                             onClick = { showOnlyFavorites = !showOnlyFavorites },
-                            label = { Text("Favorites ⭐") },
+                            label = { Text(UiStrings.favorites(userLanguageCode)) },
                             colors = FilterChipDefaults.filterChipColors(
                                 containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
                                 labelColor = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -334,7 +349,7 @@ fun HomeScreen(
                                 selectedCategoryId = if (selectedCategoryId == category.id) null else category.id
                                 showOnlyFavorites = false
                             },
-                            label = { Text(category.name) },
+                            label = { Text(UiStrings.categoryName(category.id, category.name, userLanguageCode)) },
                             colors = FilterChipDefaults.filterChipColors(
                                 containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
                                 labelColor = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -362,7 +377,7 @@ fun HomeScreen(
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = "No prayers found.",
+                            text = UiStrings.noPrayersFound(userLanguageCode),
                             style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -374,11 +389,13 @@ fun HomeScreen(
                         verticalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
                         items(filteredPrayers, key = { it.prayer.id }) { prayerItem ->
+                            val isTodayMarked = allPrayerLogs.any { it.prayerId == prayerItem.prayer.id && it.dateString == todayString }
                             PrayerListItemCard(
                                 prayerItem = prayerItem,
                                 preferredLanguageCode = userLanguageCode,
                                 isPlayingThisPrayer = playingPrayerId == prayerItem.prayer.id,
                                 isCalendarActiveThisPrayer = activeCalendarPrayerId == prayerItem.prayer.id,
+                                isTodayMarked = isTodayMarked,
                                 onPrayerClick = {
                                     if (playingPrayerId != null) {
                                         mediaPlayer?.stop()
@@ -406,45 +423,7 @@ fun HomeScreen(
                 }
             }
 
-            // Clickable Backdrop Scrim overlay (Dismisses calendar on tap outside)
-            AnimatedVisibility(
-                visible = activeCalendarPrayerId != null,
-                enter = fadeIn(),
-                exit = fadeOut()
-            ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(Color.Black.copy(alpha = 0.35f))
-                        .clickable(
-                            interactionSource = remember { MutableInteractionSource() },
-                            indication = null
-                        ) {
-                            activeCalendarPrayerId = null
-                        }
-                )
-            }
-
-            // Floating Prayer Calendar Card
-            AnimatedVisibility(
-                visible = activeCalendarPrayerId != null,
-                modifier = Modifier.align(Alignment.BottomCenter),
-                enter = slideInVertically(initialOffsetY = { it }) + fadeIn(),
-                exit = slideOutVertically(targetOffsetY = { it }) + fadeOut()
-            ) {
-                PrayerCalendarFloatCard(
-                    prayerTitle = activeCalendarPrayerTranslation?.title ?: activeCalendarPrayer?.prayer?.defaultTitle ?: "Prayer Calendar",
-                    markedDates = activeCalendarPrayerLogs,
-                    languageCode = userLanguageCode,
-                    onToggleDate = { dateStr, isMarked ->
-                        scope.launch {
-                            activeCalendarPrayerId?.let { pId ->
-                                repository.togglePrayerDate(pId, dateStr, isMarked)
-                            }
-                        }
-                    },
-                    onClose = { activeCalendarPrayerId = null }
-                )
+                }
             }
 
             // Floating Audio Mini Player
@@ -490,7 +469,7 @@ fun HomeScreen(
                                     maxLines = 1
                                 )
                                 Text(
-                                    text = "Audio Narration • Playing",
+                                    text = UiStrings.audioNarrationPlaying(userLanguageCode),
                                     style = MaterialTheme.typography.labelSmall,
                                     color = MaterialTheme.colorScheme.primary
                                 )
@@ -514,8 +493,52 @@ fun HomeScreen(
                 }
             }
         }
+
+        // Clickable Backdrop Scrim overlay (Covers ENTIRE SCREEN including TopAppBar & Status Bar)
+        AnimatedVisibility(
+            visible = activeCalendarPrayerId != null,
+            enter = fadeIn(),
+            exit = fadeOut()
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black.copy(alpha = 0.55f))
+                    .clickable(
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = null
+                    ) {
+                        activeCalendarPrayerId = null
+                    }
+            )
+        }
+
+        // Floating Prayer Calendar Card
+        AnimatedVisibility(
+            visible = activeCalendarPrayerId != null,
+            enter = slideInVertically(initialOffsetY = { it }) + fadeIn(),
+            exit = slideOutVertically(targetOffsetY = { it }) + fadeOut()
+        ) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.BottomCenter
+            ) {
+                PrayerCalendarFloatCard(
+                    prayerTitle = activeCalendarPrayerTranslation?.title ?: activeCalendarPrayer?.prayer?.defaultTitle ?: "Prayer Calendar",
+                    markedDates = activeCalendarPrayerLogs,
+                    languageCode = userLanguageCode,
+                    onToggleDate = { dateStr, isMarked ->
+                        scope.launch {
+                            activeCalendarPrayerId?.let { pId ->
+                                repository.togglePrayerDate(pId, dateStr, isMarked)
+                            }
+                        }
+                    },
+                    onClose = { activeCalendarPrayerId = null }
+                )
+            }
+        }
     }
-}
 
 @Composable
 fun PrayerListItemCard(
@@ -523,6 +546,7 @@ fun PrayerListItemCard(
     preferredLanguageCode: String,
     isPlayingThisPrayer: Boolean,
     isCalendarActiveThisPrayer: Boolean,
+    isTodayMarked: Boolean = false,
     onPrayerClick: () -> Unit,
     onFavoriteToggle: () -> Unit,
     onAudioToggle: () -> Unit,
@@ -655,9 +679,13 @@ fun PrayerListItemCard(
 
                     IconButton(onClick = onCalendarToggle) {
                         Icon(
-                            imageVector = Icons.Default.CalendarMonth,
+                            imageVector = if (isTodayMarked) Icons.Default.EventAvailable else Icons.Default.CalendarMonth,
                             contentDescription = "Prayer Calendar Tracking",
-                            tint = if (isCalendarActiveThisPrayer) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+                            tint = when {
+                                isTodayMarked -> Color(0xFF388E3C)
+                                isCalendarActiveThisPrayer -> MaterialTheme.colorScheme.primary
+                                else -> MaterialTheme.colorScheme.onSurfaceVariant
+                            }
                         )
                     }
                 }

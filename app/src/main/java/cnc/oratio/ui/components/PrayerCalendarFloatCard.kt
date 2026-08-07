@@ -7,11 +7,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -21,6 +24,8 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.EventAvailable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -217,13 +222,16 @@ fun PrayerCalendarFloatCard(
                                         .padding(2.dp)
                                         .clip(CircleShape)
                                         .background(
-                                            if (isMarked) MaterialTheme.colorScheme.primaryContainer
-                                            else MaterialTheme.colorScheme.surfaceContainerLow
+                                            when {
+                                                isToday && isMarked -> Color(0xFF388E3C)
+                                                isMarked -> MaterialTheme.colorScheme.primary
+                                                else -> MaterialTheme.colorScheme.surfaceContainerLow
+                                            }
                                         )
                                         .then(
-                                            if (isToday && !isMarked) Modifier.border(
-                                                1.dp,
-                                                MaterialTheme.colorScheme.primary,
+                                            if (isToday) Modifier.border(
+                                                2.dp,
+                                                if (isMarked) Color.White else MaterialTheme.colorScheme.primary,
                                                 CircleShape
                                             ) else Modifier
                                         )
@@ -232,22 +240,17 @@ fun PrayerCalendarFloatCard(
                                         },
                                     contentAlignment = Alignment.Center
                                 ) {
-                                    if (isMarked) {
-                                        Icon(
-                                            imageVector = Icons.Default.Check,
-                                            contentDescription = "Marked",
-                                            tint = MaterialTheme.colorScheme.onPrimaryContainer,
-                                            modifier = Modifier.padding(4.dp)
-                                        )
-                                    } else {
-                                        Text(
-                                            text = dayNumber.toString(),
-                                            style = MaterialTheme.typography.bodySmall,
-                                            fontWeight = if (isToday) FontWeight.Bold else FontWeight.Normal,
-                                            color = if (isToday) MaterialTheme.colorScheme.primary
-                                            else MaterialTheme.colorScheme.onSurface
-                                        )
-                                    }
+                                    Text(
+                                        text = dayNumber.toString(),
+                                        style = MaterialTheme.typography.bodySmall,
+                                        fontWeight = if (isMarked || isToday) FontWeight.Bold else FontWeight.Normal,
+                                        color = when {
+                                            isToday && isMarked -> Color.White
+                                            isMarked -> MaterialTheme.colorScheme.onPrimary
+                                            isToday -> MaterialTheme.colorScheme.primary
+                                            else -> MaterialTheme.colorScheme.onSurface
+                                        }
+                                    )
                                 }
                             }
                         }
@@ -264,20 +267,20 @@ fun PrayerCalendarFloatCard(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = if (isTodayMarked) MaterialTheme.colorScheme.secondaryContainer
+                    containerColor = if (isTodayMarked) Color(0xFF388E3C)
                     else MaterialTheme.colorScheme.primary
                 )
             ) {
                 Icon(
-                    imageVector = Icons.Default.CheckCircle,
+                    imageVector = if (isTodayMarked) Icons.Default.EventAvailable else Icons.Default.CheckCircle,
                     contentDescription = "Mark Today",
-                    tint = if (isTodayMarked) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onPrimary
+                    tint = if (isTodayMarked) Color.White else MaterialTheme.colorScheme.onPrimary
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = if (isTodayMarked) todayMarkedText else markTodayText,
                     style = MaterialTheme.typography.labelLarge,
-                    color = if (isTodayMarked) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onPrimary
+                    color = if (isTodayMarked) Color.White else MaterialTheme.colorScheme.onPrimary
                 )
             }
         }

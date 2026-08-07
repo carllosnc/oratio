@@ -18,12 +18,14 @@ class MainActivity : ComponentActivity() {
 
         val repository = PrayerRepository(applicationContext)
         val targetPrayerId = intent?.getStringExtra(NotificationHelper.EXTRA_PRAYER_ID)
+        val openReminders = intent?.getBooleanExtra("open_reminders", false) ?: false
 
         setContent {
             OratioTheme {
                 OratioApp(
                     repository = repository,
-                    targetPrayerId = targetPrayerId
+                    targetPrayerId = targetPrayerId,
+                    openReminders = openReminders
                 )
             }
         }

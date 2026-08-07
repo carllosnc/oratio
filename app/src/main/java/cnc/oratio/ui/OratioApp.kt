@@ -33,14 +33,17 @@ private const val IosTransitionDuration = 400
 @Composable
 fun OratioApp(
     repository: PrayerRepository,
-    targetPrayerId: String? = null
+    targetPrayerId: String? = null,
+    openReminders: Boolean = false
 ) {
     val navController = rememberNavController()
     val viewModelFactory = remember(repository) { ViewModelFactory(repository) }
 
-    LaunchedEffect(targetPrayerId) {
+    LaunchedEffect(targetPrayerId, openReminders) {
         if (!targetPrayerId.isNullOrEmpty()) {
             navController.navigate(Screen.PrayerDetail.createRoute(targetPrayerId))
+        } else if (openReminders) {
+            navController.navigate(Screen.Reminders.route)
         }
     }
 

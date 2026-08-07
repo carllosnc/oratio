@@ -5,11 +5,13 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import cnc.oratio.data.local.dao.PrayerDao
+import cnc.oratio.data.local.dao.ReminderDao
 import cnc.oratio.data.local.entity.CategoryEntity
 import cnc.oratio.data.local.entity.LanguageEntity
 import cnc.oratio.data.local.entity.PrayerEntity
 import cnc.oratio.data.local.entity.PrayerLogEntity
 import cnc.oratio.data.local.entity.PrayerTranslationEntity
+import cnc.oratio.data.local.entity.ReminderEntity
 
 @Database(
     entities = [
@@ -17,14 +19,16 @@ import cnc.oratio.data.local.entity.PrayerTranslationEntity
         CategoryEntity::class,
         PrayerEntity::class,
         PrayerTranslationEntity::class,
-        PrayerLogEntity::class
+        PrayerLogEntity::class,
+        ReminderEntity::class
     ],
-    version = 2,
+    version = 3,
     exportSchema = false
 )
 abstract class OratioDatabase : RoomDatabase() {
 
     abstract fun prayerDao(): PrayerDao
+    abstract fun reminderDao(): ReminderDao
 
     companion object {
         @Volatile

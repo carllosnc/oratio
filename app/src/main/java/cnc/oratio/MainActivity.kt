@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import cnc.oratio.data.repository.PrayerRepository
+import cnc.oratio.notification.NotificationHelper
 import cnc.oratio.ui.OratioApp
 import cnc.oratio.ui.theme.OratioTheme
 
@@ -14,10 +15,14 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         val repository = PrayerRepository(applicationContext)
+        val targetPrayerId = intent?.getStringExtra(NotificationHelper.EXTRA_PRAYER_ID)
 
         setContent {
             OratioTheme {
-                OratioApp(repository = repository)
+                OratioApp(
+                    repository = repository,
+                    targetPrayerId = targetPrayerId
+                )
             }
         }
     }

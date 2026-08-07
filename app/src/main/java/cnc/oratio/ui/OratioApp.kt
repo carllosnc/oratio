@@ -5,6 +5,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -14,6 +15,7 @@ import cnc.oratio.data.repository.PrayerRepository
 
 sealed class Screen(val route: String) {
     object Home : Screen("home")
+    object Reminders : Screen("reminders")
     object PrayerDetail : Screen("prayer_detail/{prayerId}") {
         fun createRoute(prayerId: String) = "prayer_detail/$prayerId"
     }
@@ -24,8 +26,17 @@ private val IosTransitionEasing = CubicBezierEasing(0.25f, 0.1f, 0.25f, 1.0f)
 private const val IosTransitionDuration = 400
 
 @Composable
-fun OratioApp(repository: PrayerRepository) {
+fun OratioApp(
+    repository: PrayerRepository,
+    targetPrayerId: String? = null
+) {
     val navController = rememberNavController()
+
+    LaunchedEffect(targetPrayerId) {
+        if (!targetPrayerId.isNullOrEmpty()) {
+            navController.navigate(Screen.PrayerDetail.createRoute(targetPrayerId))
+        }
+    }
 
     NavHost(
         navController = navController,
@@ -60,7 +71,17 @@ fun OratioApp(repository: PrayerRepository) {
                 repository = repository,
                 onPrayerClick = { prayerId ->
                     navController.navigate(Screen.PrayerDetail.createRoute(prayerId))
+                },
+                onRemindersClick = {
+                    navController.navigate(Screen.Reminders.route)
                 }
+            )
+        }
+
+        composable(Screen.Reminders.route) {
+            RemindersScreen(
+                repository = repository,
+                onBackClick = { navController.popBackStack() }
             )
         }
 

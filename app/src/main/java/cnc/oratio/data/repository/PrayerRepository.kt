@@ -2,11 +2,13 @@ package cnc.oratio.data.repository
 
 import android.content.Context
 import cnc.oratio.data.local.dao.PrayerDao
+import cnc.oratio.data.local.dao.ReminderDao
 import cnc.oratio.data.local.database.DatabaseInitializer
 import cnc.oratio.data.local.database.OratioDatabase
 import cnc.oratio.data.local.entity.CategoryEntity
 import cnc.oratio.data.local.entity.LanguageEntity
 import cnc.oratio.data.local.entity.PrayerLogEntity
+import cnc.oratio.data.local.entity.ReminderEntity
 import cnc.oratio.data.local.model.PrayerWithTranslations
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +17,8 @@ import kotlinx.coroutines.flow.asStateFlow
 
 class PrayerRepository(
     private val context: Context,
-    private val prayerDao: PrayerDao = OratioDatabase.getInstance(context).prayerDao()
+    private val prayerDao: PrayerDao = OratioDatabase.getInstance(context).prayerDao(),
+    private val reminderDao: ReminderDao = OratioDatabase.getInstance(context).reminderDao()
 ) {
 
     private val prefs = context.getSharedPreferences("oratio_preferences", Context.MODE_PRIVATE)
@@ -55,6 +58,8 @@ class PrayerRepository(
 
     fun getPrayerLogs(prayerId: String): Flow<List<String>> = prayerDao.getPrayerLogsForPrayer(prayerId)
 
+    fun getAllPrayerLogs(): Flow<List<PrayerLogEntity>> = prayerDao.getAllPrayerLogs()
+
     suspend fun togglePrayerDate(prayerId: String, dateString: String, isCurrentlyMarked: Boolean) {
         if (isCurrentlyMarked) {
             prayerDao.deletePrayerLog(prayerId, dateString)
@@ -62,4 +67,17 @@ class PrayerRepository(
             prayerDao.insertPrayerLog(PrayerLogEntity(prayerId, dateString))
         }
     }
+
+    // Reminder Methods
+    fun getAllReminders(): Flow<List<ReminderEntity>> = reminderDao.getAllReminders()
+
+    suspend fun getEnabledRemindersDirect(): List<ReminderEntity> = reminderDao.getEnabledRemindersDirect()
+
+    suspend fun insertReminder(reminder: ReminderEntity): Long = reminderDao.insertReminder(reminder)
+
+    suspend fun updateReminder(reminder: ReminderEntity) = reminderDao.updateReminder(reminder)
+
+    suspend fun deleteReminder(reminder: ReminderEntity) = reminderDao.deleteReminder(reminder)
+
+    suspend fun setReminderEnabled(id: Int, isEnabled: Boolean) = reminderDao.setReminderEnabled(id, isEnabled)
 }

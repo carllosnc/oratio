@@ -50,6 +50,10 @@ dependencies {
     // Splash Screen API
     implementation("androidx.core:core-splashscreen:1.0.1")
 
+    // Jetpack DataStore & ViewModel Compose
+    implementation("androidx.datastore:datastore-preferences:1.1.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
+
     // Room Database
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)

@@ -11,26 +11,18 @@ import cnc.oratio.data.local.entity.PrayerLogEntity
 import cnc.oratio.data.local.entity.ReminderEntity
 import cnc.oratio.data.local.model.PrayerWithTranslations
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 
 class PrayerRepository(
     private val context: Context,
     private val prayerDao: PrayerDao = OratioDatabase.getInstance(context).prayerDao(),
-    private val reminderDao: ReminderDao = OratioDatabase.getInstance(context).reminderDao()
+    private val reminderDao: ReminderDao = OratioDatabase.getInstance(context).reminderDao(),
+    private val userPreferencesRepository: UserPreferencesRepository = UserPreferencesRepository(context)
 ) {
 
-    private val prefs = context.getSharedPreferences("oratio_preferences", Context.MODE_PRIVATE)
+    val userLanguageCode: Flow<String> = userPreferencesRepository.userLanguageCode
 
-    private val _userLanguageCode = MutableStateFlow(
-        prefs.getString("user_language_code", "en") ?: "en"
-    )
-    val userLanguageCode: StateFlow<String> = _userLanguageCode.asStateFlow()
-
-    fun setUserLanguage(languageCode: String) {
-        prefs.edit().putString("user_language_code", languageCode).apply()
-        _userLanguageCode.value = languageCode
+    suspend fun setUserLanguage(languageCode: String) {
+        userPreferencesRepository.setUserLanguage(languageCode)
     }
 
     suspend fun initializeDatabaseIfNeeded() {

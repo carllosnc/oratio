@@ -38,6 +38,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -96,8 +97,9 @@ fun RemindersScreen(
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val userLanguageCode by repository.userLanguageCode.collectAsState()
-    val reminders by repository.getAllReminders().collectAsState(initial = emptyList())
+    val remindersState by repository.getAllReminders().collectAsState(initial = null)
     val prayers by repository.getAllPrayers().collectAsState(initial = emptyList())
+    val reminders = remindersState ?: emptyList()
 
     var hasNotificationPermission by remember {
         mutableStateOf(
@@ -217,7 +219,19 @@ fun RemindersScreen(
             }
 
             // Reminders List
-            if (reminders.isEmpty()) {
+            if (remindersState == null) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(32.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator(
+                        color = MaterialTheme.colorScheme.primary,
+                        strokeWidth = 3.dp
+                    )
+                }
+            } else if (reminders.isEmpty()) {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()

@@ -39,6 +39,7 @@ import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Stop
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -93,12 +94,16 @@ fun HomeScreen(
         repository.initializeDatabaseIfNeeded()
     }
 
-    val prayers by repository.getAllPrayers().collectAsState(initial = emptyList())
-    val categories by repository.getAllCategories().collectAsState(initial = emptyList())
-    val languages by repository.getAllLanguages().collectAsState(initial = emptyList())
+    val prayersState by repository.getAllPrayers().collectAsState(initial = null)
+    val categoriesState by repository.getAllCategories().collectAsState(initial = null)
+    val languagesState by repository.getAllLanguages().collectAsState(initial = null)
     val userLanguageCode by repository.userLanguageCode.collectAsState()
     val allPrayerLogs by repository.getAllPrayerLogs().collectAsState(initial = emptyList())
     val todayString = remember { java.time.LocalDate.now().format(java.time.format.DateTimeFormatter.ISO_LOCAL_DATE) }
+
+    val prayers = prayersState ?: emptyList()
+    val categories = categoriesState ?: emptyList()
+    val languages = languagesState ?: emptyList()
 
     var selectedCategoryId by remember { mutableStateOf<String?>(null) }
     var showOnlyFavorites by remember { mutableStateOf(false) }
@@ -369,7 +374,19 @@ fun HomeScreen(
                 )
 
                 // Prayer List
-                if (filteredPrayers.isEmpty()) {
+                if (prayersState == null) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(32.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator(
+                            color = MaterialTheme.colorScheme.primary,
+                            strokeWidth = 3.dp
+                        )
+                    }
+                } else if (filteredPrayers.isEmpty()) {
                     Box(
                         modifier = Modifier
                             .fillMaxSize()

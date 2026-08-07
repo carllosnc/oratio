@@ -9,7 +9,7 @@
 <p align="center">
   <img src="docs/screenshots/home_screen.png" width="22%" alt="Home Screen" />
   <img src="docs/screenshots/prayer_detail_screen.png" width="22%" alt="Prayer Detail Screen" />
-  <img src="docs/screenshots/reminders_screen.png" width="22%" alt="Reminders Screen" />
+  <img src="docs/screenshots/notifications_reminders_screen.png" width="22%" alt="Reminders Screen" />
   <img src="docs/screenshots/calendar_screen.png" width="22%" alt="Prayer Calendar Tracking" />
 </p>
 

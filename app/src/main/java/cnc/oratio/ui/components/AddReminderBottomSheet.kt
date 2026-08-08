@@ -1,5 +1,13 @@
 package cnc.oratio.ui.components
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -42,6 +50,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import cnc.oratio.data.local.model.PrayerWithTranslations
 import cnc.oratio.ui.util.UiStrings
 import java.util.Locale
@@ -74,14 +83,16 @@ fun AddReminderBottomSheet(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
+                .animateContentSize(animationSpec = tween(300))
                 .padding(horizontal = 24.dp, vertical = 16.dp)
         ) {
-            // Header
+            // Header with reduced title size
             Text(
                 text = UiStrings.newReminder(userLanguageCode),
-                style = MaterialTheme.typography.titleLarge,
+                style = MaterialTheme.typography.titleMedium,
+                fontSize = 19.sp,
                 fontFamily = FontFamily.Default,
-                fontWeight = FontWeight.Bold,
+                fontWeight = FontWeight.SemiBold,
                 color = MaterialTheme.colorScheme.onSurface
             )
 
@@ -187,7 +198,7 @@ fun AddReminderBottomSheet(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Frequency Selection Segmented Row
+            // Frequency Selection Block with Animated Transition
             Text(
                 text = UiStrings.frequency(userLanguageCode),
                 style = MaterialTheme.typography.labelMedium,
@@ -197,6 +208,7 @@ fun AddReminderBottomSheet(
 
             Spacer(modifier = Modifier.height(6.dp))
 
+            // Segmented frequency toggle with smooth animated colors
             Surface(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(14.dp),
@@ -207,15 +219,34 @@ fun AddReminderBottomSheet(
                         .fillMaxWidth()
                         .padding(4.dp)
                 ) {
+                    val dailyBgColor by animateColorAsState(
+                        targetValue = if (isDaily) MaterialTheme.colorScheme.primary else Color.Transparent,
+                        animationSpec = tween(durationMillis = 250),
+                        label = "dailyBg"
+                    )
+                    val dailyTextColor by animateColorAsState(
+                        targetValue = if (isDaily) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface,
+                        animationSpec = tween(durationMillis = 250),
+                        label = "dailyText"
+                    )
+
+                    val specificDaysBgColor by animateColorAsState(
+                        targetValue = if (!isDaily) MaterialTheme.colorScheme.primary else Color.Transparent,
+                        animationSpec = tween(durationMillis = 250),
+                        label = "specificDaysBg"
+                    )
+                    val specificDaysTextColor by animateColorAsState(
+                        targetValue = if (!isDaily) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface,
+                        animationSpec = tween(durationMillis = 250),
+                        label = "specificDaysText"
+                    )
+
                     // Daily Button
                     Box(
                         modifier = Modifier
                             .weight(1f)
                             .clip(RoundedCornerShape(10.dp))
-                            .background(
-                                if (isDaily) MaterialTheme.colorScheme.primary
-                                else Color.Transparent
-                            )
+                            .background(dailyBgColor)
                             .clickable { onFrequencyChange(true) }
                             .padding(vertical = 10.dp),
                         contentAlignment = Alignment.Center
@@ -225,8 +256,7 @@ fun AddReminderBottomSheet(
                             style = MaterialTheme.typography.bodyMedium,
                             fontFamily = FontFamily.Default,
                             fontWeight = if (isDaily) FontWeight.Bold else FontWeight.Normal,
-                            color = if (isDaily) MaterialTheme.colorScheme.onPrimary
-                            else MaterialTheme.colorScheme.onSurface
+                            color = dailyTextColor
                         )
                     }
 
@@ -235,10 +265,7 @@ fun AddReminderBottomSheet(
                         modifier = Modifier
                             .weight(1f)
                             .clip(RoundedCornerShape(10.dp))
-                            .background(
-                                if (!isDaily) MaterialTheme.colorScheme.primary
-                                else Color.Transparent
-                            )
+                            .background(specificDaysBgColor)
                             .clickable { onFrequencyChange(false) }
                             .padding(vertical = 10.dp),
                         contentAlignment = Alignment.Center
@@ -248,50 +275,55 @@ fun AddReminderBottomSheet(
                             style = MaterialTheme.typography.bodyMedium,
                             fontFamily = FontFamily.Default,
                             fontWeight = if (!isDaily) FontWeight.Bold else FontWeight.Normal,
-                            color = if (!isDaily) MaterialTheme.colorScheme.onPrimary
-                            else MaterialTheme.colorScheme.onSurface
+                            color = specificDaysTextColor
                         )
                     }
                 }
             }
 
-            // Days Selection Chips
-            if (!isDaily) {
-                Spacer(modifier = Modifier.height(12.dp))
+            // Days Selection Chips with Smooth AnimatedVisibility
+            AnimatedVisibility(
+                visible = !isDaily,
+                enter = fadeIn(animationSpec = tween(300)) + expandVertically(animationSpec = tween(300)),
+                exit = fadeOut(animationSpec = tween(250)) + shrinkVertically(animationSpec = tween(250))
+            ) {
+                Column {
+                    Spacer(modifier = Modifier.height(12.dp))
 
-                FlowRow(
-                    horizontalArrangement = Arrangement.spacedBy(6.dp),
-                    verticalArrangement = Arrangement.spacedBy(6.dp),
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    val daysMap = mapOf(
-                        1 to UiStrings.sun(userLanguageCode),
-                        2 to UiStrings.mon(userLanguageCode),
-                        3 to UiStrings.tue(userLanguageCode),
-                        4 to UiStrings.wed(userLanguageCode),
-                        5 to UiStrings.thu(userLanguageCode),
-                        6 to UiStrings.fri(userLanguageCode),
-                        7 to UiStrings.sat(userLanguageCode)
-                    )
-
-                    daysMap.forEach { (dayInt, dayLabel) ->
-                        val isSelected = selectedDays.contains(dayInt)
-                        FilterChip(
-                            selected = isSelected,
-                            onClick = { onDayToggle(dayInt) },
-                            label = {
-                                Text(
-                                    text = dayLabel,
-                                    fontFamily = FontFamily.Default,
-                                    fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium
-                                )
-                            },
-                            colors = FilterChipDefaults.filterChipColors(
-                                containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-                                selectedContainerColor = MaterialTheme.colorScheme.primary,
-                                selectedLabelColor = MaterialTheme.colorScheme.onPrimary
-                            )
+                    FlowRow(
+                        horizontalArrangement = Arrangement.spacedBy(6.dp),
+                        verticalArrangement = Arrangement.spacedBy(6.dp),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        val daysMap = mapOf(
+                            1 to UiStrings.sun(userLanguageCode),
+                            2 to UiStrings.mon(userLanguageCode),
+                            3 to UiStrings.tue(userLanguageCode),
+                            4 to UiStrings.wed(userLanguageCode),
+                            5 to UiStrings.thu(userLanguageCode),
+                            6 to UiStrings.fri(userLanguageCode),
+                            7 to UiStrings.sat(userLanguageCode)
                         )
+
+                        daysMap.forEach { (dayInt, dayLabel) ->
+                            val isSelected = selectedDays.contains(dayInt)
+                            FilterChip(
+                                selected = isSelected,
+                                onClick = { onDayToggle(dayInt) },
+                                label = {
+                                    Text(
+                                        text = dayLabel,
+                                        fontFamily = FontFamily.Default,
+                                        fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium
+                                    )
+                                },
+                                colors = FilterChipDefaults.filterChipColors(
+                                    containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+                                    selectedContainerColor = MaterialTheme.colorScheme.primary,
+                                    selectedLabelColor = MaterialTheme.colorScheme.onPrimary
+                                )
+                            )
+                        }
                     }
                 }
             }

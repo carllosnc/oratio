@@ -16,23 +16,24 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.FilterListOff
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilterChip
-import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -58,7 +59,9 @@ import androidx.compose.ui.unit.sp
 import cnc.oratio.data.local.model.PrayerWithTranslations
 import cnc.oratio.ui.components.PrayerAudioPlayerBar
 import cnc.oratio.ui.components.PrayerCalendarFloatCard
+import cnc.oratio.ui.components.PrayerFilterBar
 import cnc.oratio.ui.components.PrayerListItemCard
+import cnc.oratio.ui.components.PrayerSearchBar
 import cnc.oratio.ui.theme.GermaniaOneFontFamily
 import cnc.oratio.ui.util.UiStrings
 import cnc.oratio.ui.viewmodel.HomeViewModel
@@ -148,7 +151,7 @@ fun HomeScreen(
 
                     tts?.voices?.find { voice ->
                         voice.locale.language == locale.language &&
-                        voice.name.contains("male", ignoreCase = true)
+                                voice.name.contains("male", ignoreCase = true)
                     }?.let { maleVoice ->
                         tts?.voice = maleVoice
                     }
@@ -253,58 +256,48 @@ fun HomeScreen(
                         .fillMaxSize()
                         .background(MaterialTheme.colorScheme.background)
                 ) {
-                    Spacer(modifier = Modifier.height(8.dp))
+                    // Search Bar
+                    PrayerSearchBar(
+                        query = uiState.searchQuery,
+                        onQueryChange = { viewModel.setSearchQuery(it) },
+                        userLanguageCode = uiState.userLanguageCode
+                    )
 
-                    // Category Filter Chips
-                    LazyRow(
-                        modifier = Modifier.fillMaxWidth(),
-                        contentPadding = PaddingValues(horizontal = 16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        item {
-                            FilterChip(
-                                selected = uiState.selectedCategoryId == null && !uiState.showOnlyFavorites,
-                                onClick = { viewModel.selectCategory(null) },
-                                label = { Text(UiStrings.allPrayers(uiState.userLanguageCode)) },
-                                colors = FilterChipDefaults.filterChipColors(
-                                    containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-                                    labelColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                                    selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
-                                    selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer
-                                )
-                            )
-                        }
+                    // Multi-Filter Chips Bar
+                    PrayerFilterBar(
+                        categories = uiState.categories,
+                        selectedCategoryId = uiState.selectedCategoryId,
+                        showOnlyFavorites = uiState.showOnlyFavorites,
+                        showOnlyWithAudio = uiState.showOnlyWithAudio,
+                        hasActiveFilters = uiState.hasActiveFilters,
+                        userLanguageCode = uiState.userLanguageCode,
+                        onSelectCategory = { viewModel.selectCategory(it) },
+                        onToggleFavorites = { viewModel.toggleShowOnlyFavorites() },
+                        onToggleAudio = { viewModel.toggleShowOnlyWithAudio() },
+                        onClearFilters = { viewModel.clearAllFilters() }
+                    )
 
-                        item {
-                            FilterChip(
-                                selected = uiState.showOnlyFavorites,
-                                onClick = { viewModel.toggleShowOnlyFavorites() },
-                                label = { Text(UiStrings.favorites(uiState.userLanguageCode)) },
-                                colors = FilterChipDefaults.filterChipColors(
-                                    containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-                                    labelColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                                    selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
-                                    selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer
-                                )
-                            )
-                        }
+                    Spacer(modifier = Modifier.height(6.dp))
 
-                        items(uiState.categories) { category ->
-                            FilterChip(
-                                selected = uiState.selectedCategoryId == category.id && !uiState.showOnlyFavorites,
-                                onClick = { viewModel.selectCategory(category.id) },
-                                label = { Text(UiStrings.categoryName(category.id, category.name, uiState.userLanguageCode)) },
-                                colors = FilterChipDefaults.filterChipColors(
-                                    containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-                                    labelColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                                    selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
-                                    selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer
-                                )
+                    // Results Counter Banner
+                    if (uiState.prayersState != null) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 20.dp, vertical = 2.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = UiStrings.prayersFoundCount(uiState.filteredPrayers.size, uiState.userLanguageCode),
+                                style = MaterialTheme.typography.labelMedium,
+                                color = MaterialTheme.colorScheme.primary,
+                                fontWeight = FontWeight.SemiBold
                             )
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(10.dp))
+                    Spacer(modifier = Modifier.height(4.dp))
 
                     HorizontalDivider(
                         color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.7f),
@@ -312,7 +305,7 @@ fun HomeScreen(
                         modifier = Modifier.fillMaxWidth()
                     )
 
-                    // Prayer List / Loading State
+                    // Prayer List / Loading / Empty Filter State
                     if (uiState.prayersState == null) {
                         Box(
                             modifier = Modifier
@@ -332,11 +325,26 @@ fun HomeScreen(
                                 .padding(32.dp),
                             contentAlignment = Alignment.Center
                         ) {
-                            Text(
-                                text = UiStrings.noPrayersFound(uiState.userLanguageCode),
-                                style = MaterialTheme.typography.bodyLarge,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
+                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                Icon(
+                                    imageVector = Icons.Default.FilterListOff,
+                                    contentDescription = "No prayers found",
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
+                                    modifier = Modifier.padding(bottom = 12.dp)
+                                )
+                                Text(
+                                    text = UiStrings.noPrayersFound(uiState.userLanguageCode),
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+
+                                if (uiState.hasActiveFilters) {
+                                    Spacer(modifier = Modifier.height(16.dp))
+                                    Button(onClick = { viewModel.clearAllFilters() }) {
+                                        Text(text = UiStrings.clearFilters(uiState.userLanguageCode))
+                                    }
+                                }
+                            }
                         }
                     } else {
                         LazyColumn(

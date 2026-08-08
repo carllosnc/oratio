@@ -72,10 +72,31 @@ object UiStrings {
     }
 
     fun searchPlaceholder(lang: String): String = when (lang) {
-        "pt" -> "Pesquisar oração ou passagem..."
-        "es" -> "Buscar oración o pasaje..."
+        "pt" -> "Buscar por oração ou texto..."
+        "es" -> "Buscar por oración o texto..."
         "la" -> "Quaerere precationem..."
-        else -> "Search prayer or passage..."
+        else -> "Search prayer or text..."
+    }
+
+    fun audioOnlyFilter(lang: String): String = when (lang) {
+        "pt" -> "Com Áudio 🔊"
+        "es" -> "Con Audio 🔊"
+        "la" -> "Cum Audio 🔊"
+        else -> "With Audio 🔊"
+    }
+
+    fun clearFilters(lang: String): String = when (lang) {
+        "pt" -> "Limpar Filtros ✕"
+        "es" -> "Limpiar Filtros ✕"
+        "la" -> "Purgare Colum ✕"
+        else -> "Clear Filters ✕"
+    }
+
+    fun prayersFoundCount(count: Int, lang: String): String = when (lang) {
+        "pt" -> if (count == 1) "1 oração encontrada" else "$count orações encontradas"
+        "es" -> if (count == 1) "1 oración encontrada" else "$count oraciones encontradas"
+        "la" -> if (count == 1) "1 precatio inventa" else "$count precationes inventae"
+        else -> if (count == 1) "1 prayer found" else "$count prayers found"
     }
 
     fun primaryLanguageLabel(lang: String): String = when (lang) {

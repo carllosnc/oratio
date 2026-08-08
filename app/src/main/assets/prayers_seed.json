@@ -606,6 +606,181 @@
           "notes": "Oración de arrepentimiento en español."
         }
       ]
+    },
+    {
+      "id": "regina_caeli",
+      "categoryId": "marian",
+      "defaultTitle": "Regina Caeli / Queen of Heaven",
+      "translations": [
+        {
+          "languageCode": "la",
+          "title": "Regina Caeli",
+          "subtitle": "Antiphona Paschalis",
+          "content": "Regina caeli, laetare, alleluia.\nQuia quem meruisti portare, alleluia.\nResurrexit, sicut dixit, alleluia.\nOra pro nobis Deum, alleluia.\n\nV. Gaude et laetare, Virgo Maria, alleluia.\nR. Quia resurrexit Dominus vere, alleluia.\n\nOremus: Deus, qui per resurrectionem Filii tui, Domini nostri Iesu Christi, mundum laetificare dignatus es: praesta, quaesumus; ut, per eius Genetricem Virginem Mariam, perpetuae capiamus gaudia vitae. Per eundem Christum Dominum nostrum. Amen.",
+          "notes": "Antiphona Mariana tempore Paschali."
+        },
+        {
+          "languageCode": "pt",
+          "title": "Regina Caeli",
+          "subtitle": "Rainha do Céu (Tempo Pascal)",
+          "content": "Rainha do Céu, alegrai-vos, aleluia.\nPorque Aquele que merecestes trazer em vosso ventre, aleluia.\nRessuscitou como disse, aleluia.\nRogai a Deus por nós, aleluia.\n\nV. Exultai e alegrai-vos, ó Virgem Maria, aleluia.\nR. Porque o Senhor ressuscitou verdadeiramente, aleluia.\n\nOremos: Ó Deus, que vos dignastes alegrar o mundo com a ressurreição do vosso Filho, Nosso Senhor Jesus Cristo, concedei-nos, vos pedimos, que por sua Mãe, a Virgem Maria, alcancemos os prazeres da vida eterna. Pelo mesmo Cristo, Senhor Nosso. Amém.",
+          "notes": "Oração rezada no Tempo Pascal em substituição ao Angelus."
+        },
+        {
+          "languageCode": "en",
+          "title": "Regina Caeli",
+          "subtitle": "Queen of Heaven (Eastertide)",
+          "content": "Queen of Heaven, rejoice, alleluia.\nFor He whom thou didst merit to bear, alleluia.\nHas risen, as he said, alleluia.\nPray for us to God, alleluia.\n\nV. Rejoice and be glad, O Virgin Mary, alleluia.\nR. For the Lord has truly risen, alleluia.\n\nLet us pray: O God, who gave joy to the world through the resurrection of Thy Son, Our Lord Jesus Christ, grant we beseech Thee, that through His Mother, the Virgin Mary, we may obtain the joys of everlasting life. Through the same Christ our Lord. Amen.",
+          "notes": "Eastertide Marian Antiphon."
+        },
+        {
+          "languageCode": "es",
+          "title": "Regina Caeli",
+          "subtitle": "Reina del Cielo (Tiempo Pascual)",
+          "content": "Reina del cielo, alégrate, aleluya.\nPorque el Señor, a quien has llevado en tu vientre, aleluya.\nHa resucitado según su palabra, aleluya.\nRuega a Dios por nosotros, aleluya.\n\nV. Gózate y alégrate, Virgen María, aleluya.\nR. Porque verdaderamente ha resucitado el Señor, aleluya.\n\nOremos: Oh Dios, que por la resurrección de tu Hijo, nuestro Señor Jesucristo, has llenado el mundo de alegría, concédenos, por intercesión de su Madre, la Virgen María, llegar a alcanzar los gozos de la vida eterna. Por Jesucristo nuestro Señor. Amén.",
+          "notes": "Oración mariana del Tiempo Pascual."
+        }
+      ]
+    },
+    {
+      "id": "crux_sancti_benedicti",
+      "categoryId": "basic",
+      "defaultTitle": "St. Benedict Prayer / Crux Sacra",
+      "translations": [
+        {
+          "languageCode": "la",
+          "title": "Crux Sancti Benedicti",
+          "subtitle": "Oratio ad Exorcismum",
+          "content": "Crux Sacra Sit Mihi Lux!\nNon Draco Sit Mihi Dux!\nVade Retro Satana!\nNumquam Suade Mihi Vana!\nSunt Mala Quae Libas;\nIpse Venena Bibas!\n\nIn nomine Patris, et Filii, et Spiritus Sancti. Amen.",
+          "notes": "Oratio S. Benedicti latine."
+        },
+        {
+          "languageCode": "pt",
+          "title": "Oração de São Bento",
+          "subtitle": "A Cruz Sagrada seja a minha Luz",
+          "content": "A Cruz Sagrada seja a minha luz,\nnão seja o dragão o meu guia.\nRetira-te, Satanás!\nNunca me aconselhes coisas vãs.\nÉ mau o que me ofereces,\nbebe tu mesmo os teus venenos!\n\nEm nome do Pai, do Filho e do Espírito Santo. Amém.",
+          "notes": "Oração de libertação de São Bento em português."
+        },
+        {
+          "languageCode": "en",
+          "title": "Prayer of St. Benedict",
+          "subtitle": "May the Holy Cross Be My Light",
+          "content": "May the Holy Cross be my light!\nLet not the dragon be my guide!\nBegone, Satan!\nNever tempt me with your vanities!\nWhat you offer me is evil;\ndrink the poison yourself!\n\nIn the name of the Father, and of the Son, and of the Holy Spirit. Amen.",
+          "notes": "Traditional St. Benedict Protection Prayer."
+        },
+        {
+          "languageCode": "es",
+          "title": "Oración de San Benito",
+          "subtitle": "La Cruz Sagrada sea mi Luz",
+          "content": "¡La Cruz Sagrada sea mi luz!\n¡No sea el dragón mi guía!\n¡Apártate, Satanás!\n¡No me aconsejes cosas vanas!\nEs malo lo que me ofreces,\n¡bebe tú mismo tu veneno!\n\nEn el nombre del Padre, del Hijo y del Espíritu Santo. Amén.",
+          "notes": "Oración de protección de San Benito en español."
+        }
+      ]
+    },
+    {
+      "id": "benedictus",
+      "categoryId": "basic",
+      "defaultTitle": "Canticle of Zechariah / Benedictus",
+      "translations": [
+        {
+          "languageCode": "la",
+          "title": "Benedictus",
+          "subtitle": "Canticum Zachariae",
+          "content": "Benedictus Dominus Deus Israel,\nquia visitavit et fecit redemptionem plebi suae,\net erexit cornu salutis nobis in domo David pueri sui.\nSicut locutus est per os sanctorum, qui a saeculo sunt, prophetarum eius,\nsalutem ex inimicis nostris et de manu omnium qui oderunt nos;\nad faciendam misericordiam cum patribus nostris et memorari testamenti sui sancti,\niusiurandum, quod iuravit ad Abraham patrem nostrum, daturum se nobis,\nut sine timore, de manu inimicorum liberati, serviamus illi\nin sanctitate et iustitia coram ipso omnibus diebus nostris.\nAmen.",
+          "notes": "Canticum Zachariae latine (Lc 1, 68-79)."
+        },
+        {
+          "languageCode": "pt",
+          "title": "Cântico de Zacarias",
+          "subtitle": "Benedictus (Lc 1, 68-79)",
+          "content": "Bendito seja o Senhor, Deus de Israel, porque visitou e remiu o seu povo;\ne nos suscitou uma força de salvação na casa de Davi, seu servo,\ncomo tinha prometido pela boca dos seus santos profetas desde os tempos antigos;\nsalvação dos nossos inimigos e da mão de todos os que nos odeiam;\npara usar de misericórdia com os nossos pais e lembrar-se da sua santa aliança,\ndo juramento que fez a Abraão, nosso pai, de nos conceder\nque, libertos da mão dos nossos inimigos, o sirvamos sem temor,\nem santidade e justiça perante Ele, em todos os dias da nossa vida.\nAmém.",
+          "notes": "Cântico de Zacarias das Laudes Matutinas."
+        },
+        {
+          "languageCode": "en",
+          "title": "Canticle of Zechariah",
+          "subtitle": "Benedictus (Luke 1:68-79)",
+          "content": "Blessed be the Lord God of Israel; for he hath visited and redeemed his people,\nAnd hath raised up an horn of salvation for us in the house of his servant David;\nAs he spake by the mouth of his holy prophets, which have been since the world began:\nThat we should be saved from our enemies, and from the hand of all that hate us;\nTo perform the mercy promised to our fathers, and to remember his holy covenant;\nThe oath which he swore to our father Abraham, that he would grant unto us,\nThat we being delivered out of the hand of our enemies might serve him without fear,\nIn holiness and righteousness before him, all the days of our life.\nAmen.",
+          "notes": "Canticle of Zechariah in English."
+        },
+        {
+          "languageCode": "es",
+          "title": "Cántico de Zacarías",
+          "subtitle": "Benedictus (Lc 1, 68-79)",
+          "content": "Bendito sea el Señor, Dios de Israel, porque ha visitado y redimido a su pueblo,\nsuscitándonos una fuerza de salvación en la casa de David, su siervo,\nsegún lo había predicho desde antiguo por boca de sus santos profetas.\nEs la salvación que nos libra de nuestros enemigos y de la mano de todos los que nos odian,\nrealizando la misericordia que tuvo con nuestros padres, recordando su santa alianza\ny el juramento que juró a nuestro padre Abrahán: para concedernos que, libres de temor,\narrancados de la mano de los enemigos, le sirvamos en santidad y justicia en su presencia, todos nuestros días.\nAmén.",
+          "notes": "Cántico de Zacarías en español."
+        }
+      ]
+    },
+    {
+      "id": "te_deum",
+      "categoryId": "basic",
+      "defaultTitle": "Te Deum / Hymn of Thanksgiving",
+      "translations": [
+        {
+          "languageCode": "la",
+          "title": "Te Deum",
+          "subtitle": "Hymnus Sollemne",
+          "content": "Te Deum laudamus: te Dominum confitemur.\nTe aeternum Patrem omnis terra veneratur.\nTibi omnes Angeli, tibi Caeli et universae Potestates:\nTibi Cherubim et Seraphim incessabili voce proclamant:\nSanctus, Sanctus, Sanctus Dominus Deus Sabaoth.\nPleni sunt caeli et terra maiestatis gloriae tuae.\nTe gloriosus Apostolorum chorus,\nTe Prophetarum laudabilis numerus,\nTe Martyrum candidatus laudat exercitus.\nTe per orbem terrarum sancta confitetur Ecclesia:\nPatrem immensae maiestatis;\nVenerandum tuum verum et unicum Filium;\nSanctum quoque Paraclitum Spiritum.\nTu Rex gloriae, Christe.\nAmen.",
+          "notes": "Hymnus sollemnis latine."
+        },
+        {
+          "languageCode": "pt",
+          "title": "Te Deum",
+          "subtitle": "Hino de Ação de Graças",
+          "content": "A Vós, ó Deus, louvamos, a Vós, Senhor, confessamos.\nA Vós, eterno Pai, toda a terra venera.\nA Vós todos os Anjos, a Vós os Céus e todas as Potestades;\nA Vós os Querubins e Serafins com voz incessante proclamam:\nSanto, Santo, Santo é o Senhor Deus dos Exércitos!\nOs céus e a terra estão cheios da majestade da vossa glória.\nA Vós o glorioso coro dos Apóstolos,\nA Vós a louvável multidão dos Profetas,\nA Vós o exército resplandecente dos Mártires louva.\nA Vós por toda a terra a santa Igreja confessa:\nPai de imensa majestade;\nVenerável, verdadeiro e único Filho;\nE o Santo Espírito Paráclito.\nVós sois o Rei da glória, ó Cristo!\nAmém.",
+          "notes": "Hino solene de ação de graças em português."
+        },
+        {
+          "languageCode": "en",
+          "title": "Te Deum",
+          "subtitle": "Hymn of Thanksgiving",
+          "content": "We praise thee, O God: we acknowledge thee to be the Lord.\nAll the earth doth worship thee, the Father everlasting.\nTo thee all Angels cry aloud: the Heavens, and all the Powers therein.\nTo thee Cherubim and Seraphim continually do cry:\nHoly, Holy, Holy, Lord God of Sabaoth;\nHeaven and earth are full of the Majesty of thy Glory.\nThe glorious company of the Apostles praise thee.\nThe goodly fellowship of the Prophets praise thee.\nThe noble army of Martyrs praise thee.\nThe holy Church throughout all the world doth acknowledge thee:\nThe Father of an infinite Majesty;\nThine honourable, true, and only Son;\nAlso the Holy Ghost, the Comforter.\nThou art the King of Glory, O Christ.\nAmen.",
+          "notes": "Solemn Hymn of Thanksgiving."
+        },
+        {
+          "languageCode": "es",
+          "title": "Te Deum",
+          "subtitle": "Himno de Acción de Gracias",
+          "content": "A ti, oh Dios, te alabamos, a ti, Señor, te reconocemos.\nA ti, eterno Padre, te venera toda la tierra.\nA ti todos los ángeles, a ti los cielos y todas las potestades,\na ti los querubines y serafines te aclaman sin cesar:\nSanto, Santo, Santo es el Señor, Dios del universo.\nLos cielos y la tierra están llenos de la majestad de tu gloria.\nA ti te alaba el glorioso coro de los apóstoles,\na ti la multitud admirable de los profetas,\na ti el blanco ejército de los mártires.\nA ti la santa Iglesia, extendida por toda la tierra, te confiesa:\nPadre de inmensa majestad,\nHijo único y verdadero, digno de adoración,\nEspíritu Santo, Defensor.\nTú eres el Rey de la gloria, Cristo.\nAmén.",
+          "notes": "Himno solemne de acción de gracias en español."
+        }
+      ]
+    },
+    {
+      "id": "sub_tuum_praesidium",
+      "categoryId": "marian",
+      "defaultTitle": "Under Thy Protection / Sub Tuum Praesidium",
+      "translations": [
+        {
+          "languageCode": "la",
+          "title": "Sub Tuum Praesidium",
+          "subtitle": "Antiquissima Oratio Mariana",
+          "content": "Sub tuum praesidium confugimus, sancta Dei Genetrix;\nnostras deprecationes ne despicias in necessitatibus nostris,\nsed a periculis omnibus libera nos semper, Virgo gloriosa et benedicta.\nAmen.",
+          "notes": "Antiquissima oratio mariana (saec. III) latine."
+        },
+        {
+          "languageCode": "pt",
+          "title": "À Vossa Proteção",
+          "subtitle": "Sub Tuum Praesidium (Século III)",
+          "content": "À vossa proteção recorremos, Santa Mãe de Deus;\nnão desprezeis as nossas súplicas em nossas necessidades,\nmas livrai-nos sempre de todos os perigos, ó Virgem gloriosa e bendita.\nAmém.",
+          "notes": "A oração mariana mais antiga preservada (Século III) em português."
+        },
+        {
+          "languageCode": "en",
+          "title": "Under Thy Protection",
+          "subtitle": "Sub Tuum Praesidium (3rd Century)",
+          "content": "We fly to thy protection, O Holy Mother of God;\ndespise not our petitions in our necessities,\nbut deliver us always from all dangers, O glorious and blessed Virgin.\nAmen.",
+          "notes": "The oldest known Marian prayer (3rd Century)."
+        },
+        {
+          "languageCode": "es",
+          "title": "Bajo tu Amparo",
+          "subtitle": "Sub Tuum Praesidium (Siglo III)",
+          "content": "Bajo tu amparo nos acogemos, Santa Madre de Dios;\nno me desprecies las súplicas que te dirigimos en nuestras necesidades,\nantes bien, líbranos de todo peligro, ¡oh Virgen gloriosa y bendita!\nAmén.",
+          "notes": "La oración mariana más antigua (Siglo III) en español."
+        }
+      ]
     }
   ]
 }

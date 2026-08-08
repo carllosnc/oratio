@@ -7,7 +7,7 @@
 ## 📱 Screenshots
 
 <p align="center">
-  <img src="docs/screenshots/home_screen.png?v=2" width="22%" alt="Home Screen" />
+  <img src="docs/screenshots/home_screen.png?v=3" width="22%" alt="Home Screen" />
   <img src="docs/screenshots/prayer_detail_screen.png?v=2" width="22%" alt="Prayer Detail Screen" />
   <img src="docs/screenshots/notifications_reminders_screen.png?v=2" width="22%" alt="Reminders Screen" />
   <img src="docs/screenshots/calendar_screen.png?v=2" width="22%" alt="Prayer Calendar Tracking" />

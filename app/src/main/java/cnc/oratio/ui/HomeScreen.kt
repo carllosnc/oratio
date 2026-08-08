@@ -264,24 +264,34 @@ fun HomeScreen(
                         FilterChip(
                             selected = !uiState.showOnlyFavorites,
                             onClick = { viewModel.setShowOnlyFavorites(false) },
-                            label = { Text(UiStrings.allPrayers(uiState.userLanguageCode)) },
+                            label = {
+                                Text(
+                                    text = UiStrings.allPrayers(uiState.userLanguageCode),
+                                    fontWeight = if (!uiState.showOnlyFavorites) FontWeight.Bold else FontWeight.Medium
+                                )
+                            },
                             colors = FilterChipDefaults.filterChipColors(
                                 containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
                                 labelColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                                selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
-                                selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer
+                                selectedContainerColor = MaterialTheme.colorScheme.primary,
+                                selectedLabelColor = MaterialTheme.colorScheme.onPrimary
                             )
                         )
 
                         FilterChip(
                             selected = uiState.showOnlyFavorites,
                             onClick = { viewModel.setShowOnlyFavorites(true) },
-                            label = { Text(UiStrings.favorites(uiState.userLanguageCode)) },
+                            label = {
+                                Text(
+                                    text = UiStrings.favorites(uiState.userLanguageCode),
+                                    fontWeight = if (uiState.showOnlyFavorites) FontWeight.Bold else FontWeight.Medium
+                                )
+                            },
                             colors = FilterChipDefaults.filterChipColors(
                                 containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
                                 labelColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                                selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
-                                selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer
+                                selectedContainerColor = MaterialTheme.colorScheme.primary,
+                                selectedLabelColor = MaterialTheme.colorScheme.onPrimary
                             )
                         )
                     }

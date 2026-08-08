@@ -213,7 +213,7 @@ fun AddReminderBottomSheet(
                             .weight(1f)
                             .clip(RoundedCornerShape(10.dp))
                             .background(
-                                if (isDaily) MaterialTheme.colorScheme.primaryContainer
+                                if (isDaily) MaterialTheme.colorScheme.primary
                                 else Color.Transparent
                             )
                             .clickable { onFrequencyChange(true) }
@@ -225,7 +225,7 @@ fun AddReminderBottomSheet(
                             style = MaterialTheme.typography.bodyMedium,
                             fontFamily = FontFamily.Default,
                             fontWeight = if (isDaily) FontWeight.Bold else FontWeight.Normal,
-                            color = if (isDaily) MaterialTheme.colorScheme.onPrimaryContainer
+                            color = if (isDaily) MaterialTheme.colorScheme.onPrimary
                             else MaterialTheme.colorScheme.onSurface
                         )
                     }
@@ -236,7 +236,7 @@ fun AddReminderBottomSheet(
                             .weight(1f)
                             .clip(RoundedCornerShape(10.dp))
                             .background(
-                                if (!isDaily) MaterialTheme.colorScheme.primaryContainer
+                                if (!isDaily) MaterialTheme.colorScheme.primary
                                 else Color.Transparent
                             )
                             .clickable { onFrequencyChange(false) }
@@ -248,7 +248,7 @@ fun AddReminderBottomSheet(
                             style = MaterialTheme.typography.bodyMedium,
                             fontFamily = FontFamily.Default,
                             fontWeight = if (!isDaily) FontWeight.Bold else FontWeight.Normal,
-                            color = if (!isDaily) MaterialTheme.colorScheme.onPrimaryContainer
+                            color = if (!isDaily) MaterialTheme.colorScheme.onPrimary
                             else MaterialTheme.colorScheme.onSurface
                         )
                     }
@@ -279,11 +279,17 @@ fun AddReminderBottomSheet(
                         FilterChip(
                             selected = isSelected,
                             onClick = { onDayToggle(dayInt) },
-                            label = { Text(dayLabel, fontFamily = FontFamily.Default) },
+                            label = {
+                                Text(
+                                    text = dayLabel,
+                                    fontFamily = FontFamily.Default,
+                                    fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium
+                                )
+                            },
                             colors = FilterChipDefaults.filterChipColors(
                                 containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-                                selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
-                                selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer
+                                selectedContainerColor = MaterialTheme.colorScheme.primary,
+                                selectedLabelColor = MaterialTheme.colorScheme.onPrimary
                             )
                         )
                     }

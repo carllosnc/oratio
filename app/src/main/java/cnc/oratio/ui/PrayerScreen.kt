@@ -184,7 +184,7 @@ fun MainPrayerScreen(
                         modifier = Modifier
                             .clip(RoundedCornerShape(20.dp))
                             .background(
-                                if (isBilingualMode) MaterialTheme.colorScheme.primaryContainer
+                                if (isBilingualMode) MaterialTheme.colorScheme.primary
                                 else MaterialTheme.colorScheme.surfaceContainerHigh
                             )
                             .clickable { isBilingualMode = !isBilingualMode }
@@ -193,7 +193,8 @@ fun MainPrayerScreen(
                         Text(
                             text = if (isBilingualMode) "Bilingual (Active)" else "Single",
                             style = MaterialTheme.typography.labelSmall,
-                            color = if (isBilingualMode) MaterialTheme.colorScheme.onPrimaryContainer
+                            fontWeight = if (isBilingualMode) FontWeight.Bold else FontWeight.Normal,
+                            color = if (isBilingualMode) MaterialTheme.colorScheme.onPrimary
                             else MaterialTheme.colorScheme.onSurface
                         )
                     }

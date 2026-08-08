@@ -126,18 +126,18 @@ fun PrayerListItemCard(
                             modifier = Modifier
                                 .clip(RoundedCornerShape(6.dp))
                                 .background(
-                                    if (isSelected) MaterialTheme.colorScheme.primaryContainer
-                                    else MaterialTheme.colorScheme.surfaceContainerHigh
+                                    if (isSelected) MaterialTheme.colorScheme.primary
+                                    else MaterialTheme.colorScheme.surfaceContainerHighest.copy(alpha = 0.7f)
                                 )
-                                .padding(horizontal = 6.dp, vertical = 2.dp)
+                                .padding(horizontal = 7.dp, vertical = 3.dp)
                         ) {
                             Text(
                                 text = flag,
                                 style = MaterialTheme.typography.labelSmall,
-                                fontSize = 10.sp,
-                                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-                                color = if (isSelected) MaterialTheme.colorScheme.onPrimaryContainer
-                                else MaterialTheme.colorScheme.onSurface
+                                fontSize = 10.5.sp,
+                                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
+                                color = if (isSelected) MaterialTheme.colorScheme.onPrimary
+                                else MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
                     }

@@ -10,6 +10,9 @@ import androidx.core.app.NotificationCompat
 import cnc.oratio.MainActivity
 import cnc.oratio.R
 
+import android.graphics.BitmapFactory
+import androidx.core.content.ContextCompat
+
 object NotificationHelper {
 
     const val CHANNEL_ID = "oratio_reminders_channel"
@@ -52,12 +55,21 @@ object NotificationHelper {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
+        val largeIconBitmap = try {
+            BitmapFactory.decodeResource(context.resources, R.mipmap.ic_launcher)
+        } catch (_: Exception) {
+            null
+        }
+
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .setSmallIcon(R.drawable.ic_notification)
+            .setLargeIcon(largeIconBitmap)
+            .setColor(ContextCompat.getColor(context, R.color.notification_color))
             .setContentTitle(title)
             .setContentText(message)
             .setStyle(NotificationCompat.BigTextStyle().bigText(message))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setDefaults(NotificationCompat.DEFAULT_ALL)
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
 

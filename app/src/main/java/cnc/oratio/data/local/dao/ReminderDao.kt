@@ -18,10 +18,13 @@ interface ReminderDao {
     @Query("SELECT * FROM reminders WHERE isEnabled = 1")
     suspend fun getEnabledRemindersDirect(): List<ReminderEntity>
 
+    @Query("SELECT * FROM reminders")
+    suspend fun getAllRemindersDirect(): List<ReminderEntity>
+
     @Query("SELECT * FROM reminders WHERE id = :id")
     suspend fun getReminderById(id: Int): ReminderEntity?
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert
     suspend fun insertReminder(reminder: ReminderEntity): Long
 
     @Update

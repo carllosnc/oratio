@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -60,10 +61,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
@@ -423,7 +426,7 @@ fun ReminderCard(
         modifier = Modifier
             .fillMaxWidth()
             .clickable { onEditClick() },
-        shape = RoundedCornerShape(16.dp),
+        shape = RoundedCornerShape(14.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerLow
         ),
@@ -433,7 +436,7 @@ fun ReminderCard(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 16.dp, end = 16.dp, top = 14.dp, bottom = 12.dp),
+                    .padding(horizontal = 14.dp, vertical = 10.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -443,43 +446,30 @@ fun ReminderCard(
                 ) {
                     Text(
                         text = formattedTime,
-                        style = MaterialTheme.typography.headlineMedium,
+                        style = MaterialTheme.typography.titleLarge,
+                        fontSize = 22.sp,
                         fontFamily = FontFamily.Default,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.primary
                     )
 
-                    Spacer(modifier = Modifier.height(1.dp))
+                    Spacer(modifier = Modifier.height(2.dp))
 
                     Text(
                         text = titleText,
                         style = MaterialTheme.typography.bodyMedium,
                         fontFamily = FontFamily.Default,
-                        fontWeight = FontWeight.SemiBold,
-                        color = MaterialTheme.colorScheme.onSurface
+                        fontWeight = FontWeight.Medium,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
-
-                    Spacer(modifier = Modifier.height(6.dp))
-
-                    Box(
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(6.dp))
-                            .background(MaterialTheme.colorScheme.surfaceContainerHighest)
-                            .padding(horizontal = 8.dp, vertical = 3.dp)
-                    ) {
-                        Text(
-                            text = frequencyText,
-                            style = MaterialTheme.typography.labelSmall,
-                            fontSize = 11.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            color = MaterialTheme.colorScheme.onSurface
-                        )
-                    }
                 }
 
                 Switch(
                     checked = reminder.isEnabled,
                     onCheckedChange = onToggleEnabled,
+                    modifier = Modifier.scale(0.85f),
                     colors = SwitchDefaults.colors(
                         checkedThumbColor = MaterialTheme.colorScheme.onPrimary,
                         checkedTrackColor = MaterialTheme.colorScheme.primary
@@ -488,7 +478,7 @@ fun ReminderCard(
             }
 
             HorizontalDivider(
-                color = MaterialTheme.colorScheme.outline.copy(alpha = 0.6f),
+                color = MaterialTheme.colorScheme.outline.copy(alpha = 0.25f),
                 thickness = 1.dp,
                 modifier = Modifier.fillMaxWidth()
             )
@@ -496,15 +486,34 @@ fun ReminderCard(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 8.dp, vertical = 2.dp),
-                horizontalArrangement = Arrangement.End,
+                    .padding(start = 14.dp, end = 6.dp, top = 4.dp, bottom = 4.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                IconButton(onClick = onDeleteClick) {
+                Box(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(6.dp))
+                        .background(MaterialTheme.colorScheme.surfaceContainerHighest)
+                        .padding(horizontal = 8.dp, vertical = 3.dp)
+                ) {
+                    Text(
+                        text = frequencyText,
+                        style = MaterialTheme.typography.labelSmall,
+                        fontSize = 11.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                }
+
+                IconButton(
+                    onClick = onDeleteClick,
+                    modifier = Modifier.size(36.dp)
+                ) {
                     Icon(
                         imageVector = Icons.Default.Delete,
                         contentDescription = "Delete Reminder",
-                        tint = MaterialTheme.colorScheme.error
+                        tint = MaterialTheme.colorScheme.error.copy(alpha = 0.85f),
+                        modifier = Modifier.size(18.dp)
                     )
                 }
             }

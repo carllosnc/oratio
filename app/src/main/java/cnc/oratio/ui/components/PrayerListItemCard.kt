@@ -16,8 +16,8 @@ import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.automirrored.filled.VolumeUp
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.EventAvailable
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.material.icons.filled.Stop
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -160,9 +160,9 @@ fun PrayerListItemCard(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     IconButton(onClick = onFavoriteToggle) {
                         Icon(
-                            imageVector = if (prayerItem.prayer.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                            imageVector = if (prayerItem.prayer.isFavorite) Icons.Default.Star else Icons.Default.StarBorder,
                             contentDescription = "Bookmark Favorite",
-                            tint = if (prayerItem.prayer.isFavorite) Color.Red else MaterialTheme.colorScheme.onSurfaceVariant
+                            tint = if (prayerItem.prayer.isFavorite) Color(0xFFFFB300) else MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
 

@@ -126,7 +126,7 @@ fun PrayerListItemCard(
                             modifier = Modifier
                                 .clip(RoundedCornerShape(6.dp))
                                 .background(
-                                    if (isSelected) MaterialTheme.colorScheme.primary
+                                    if (isSelected) MaterialTheme.colorScheme.primaryContainer
                                     else MaterialTheme.colorScheme.surfaceContainerHighest.copy(alpha = 0.7f)
                                 )
                                 .padding(horizontal = 7.dp, vertical = 3.dp)
@@ -136,7 +136,7 @@ fun PrayerListItemCard(
                                 style = MaterialTheme.typography.labelSmall,
                                 fontSize = 10.5.sp,
                                 fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
-                                color = if (isSelected) MaterialTheme.colorScheme.onPrimary
+                                color = if (isSelected) MaterialTheme.colorScheme.onPrimaryContainer
                                 else MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }

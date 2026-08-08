@@ -12,8 +12,8 @@ val NeutralDarkSurfaceContainerHigh = Color(0xFF33302D)
 val NeutralDarkSurfaceContainerHighest = Color(0xFF3E3B37)
 val NeutralDarkPrimary = Color(0xFFE8D6B8) // Warm Champagne Gold
 val NeutralDarkOnPrimary = Color(0xFF1D1C1A)
-val NeutralDarkPrimaryContainer = Color(0xFF403628)
-val NeutralDarkOnPrimaryContainer = Color(0xFFF7EDDA)
+val NeutralDarkPrimaryContainer = Color(0xFF483A28) // Soft glowing warm amber dark container
+val NeutralDarkOnPrimaryContainer = Color(0xFFFBE8C8) // Soft warm gold text
 val NeutralDarkSecondary = Color(0xFFC9C6BF)
 val NeutralDarkOnSecondary = Color(0xFF1D1C1A)
 val NeutralDarkSecondaryContainer = Color(0xFF33302D)
@@ -27,7 +27,7 @@ val NeutralDarkOnSurfaceVariant = Color(0xFFB8B4AB)
 val NeutralDarkOutline = Color(0xFF545048)
 val NeutralDarkOutlineVariant = Color(0xFF3D3933)
 
-// Light Theme Warm Neutral Palette (Parchment Paper & Bronze Gold)
+// Light Theme Warm Neutral Palette (Parchment Paper & Soft Honey Gold Accent)
 val NeutralLightBackground = Color(0xFFFAF8F5)
 val NeutralLightSurface = Color(0xFFF4F1EC)
 val NeutralLightSurfaceVariant = Color(0xFFE6E1D7)
@@ -37,8 +37,8 @@ val NeutralLightSurfaceContainerHigh = Color(0xFFE4DFD6)
 val NeutralLightSurfaceContainerHighest = Color(0xFFDCD7CC)
 val NeutralLightPrimary = Color(0xFF7A5923) // Deep Warm Gold/Bronze
 val NeutralLightOnPrimary = Color(0xFFFFFFFF)
-val NeutralLightPrimaryContainer = Color(0xFFF5E8D0)
-val NeutralLightOnPrimaryContainer = Color(0xFF44300D)
+val NeutralLightPrimaryContainer = Color(0xFFDFC696) // Soft warm honey gold tint
+val NeutralLightOnPrimaryContainer = Color(0xFF382305) // Deep contrast text on honey gold tint
 val NeutralLightSecondary = Color(0xFF5D5952)
 val NeutralLightOnSecondary = Color(0xFFFFFFFF)
 val NeutralLightSecondaryContainer = Color(0xFFE8E3DA)
